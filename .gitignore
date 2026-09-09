@@ -1,0 +1,74 @@
+﻿# EvidenceHunter 鈥?proposed .gitignore
+# Reviewed by user (PROJECT_OWNER) + GPT (INDEPENDENT_REVIEWER) before creation.
+
+# --- SECRET: must never enter Git history ---
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+
+# Testing
+.pytest_cache/
+
+# Runtime data
+runtime/
+
+# Local configuration
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unresolved backup 鈥?kept on disk, NOT deleted, NOT tracked in this baseline.
+# Flagged BACKUP_REVIEW_REQUIRED / PRE_GIT_HISTORICAL_VALUE_POSSIBLE; may
+# predate Git bootstrap and could hold historical value the baseline commit
+# cannot reconstruct. Do not delete after Git exists merely because Git exists.
+archive_recovery_v2_backup_20260902_134152/
+
+# Raw, continuously-appended live dataset streams (the 168h collector's own
+# output) 鈥?irreplaceable but too large/fast-growing for Git history.
+# Identity tracked separately via RESEARCH_ARTIFACT_MANIFEST
+# (LIVE vs FROZEN state), not via Git.
+logs/v2/*.jsonl
+archive/checkpoints/**/logs/*.jsonl
+archive/datasets/**/logs_v2/*.jsonl
+archive/legacy/**/*.jsonl
+
+# Continuously-overwritten current-state snapshots (mutable, not historical
+# append-only records 鈥?tracking these would just produce noise diffs)
+runtime/account_snapshot.json
+runtime/evidence_hunter_state.json
+runtime/features_snapshot.json
+runtime/market_snapshot.json
+runtime/v2/orderflow_snapshot.json
+archive/checkpoints/**/runtime/*.json
+# FIX 2026-09-07 (PROJECT_HYGIENE_CLEANUP_20260907): the datasets/ side of the
+# archive uses "runtime_v2" (not "runtime") as its mutable-snapshot folder
+# name. The rule above never matched it, so dataset_session.json /
+# orderflow_snapshot.json under archive/datasets/**/runtime_v2/ were neither
+# tracked nor ignored -- exposed to accidental `git clean`. This line closes
+# that gap; it does not touch archive/datasets/**/ACTIVE_DATASET_POINTER.json
+# (not under a runtime_v2/ subfolder) or any checkpoint/closure/audit file.
+archive/datasets/**/runtime_v2/*.json
+
+# Public Binance historical-data cache 鈥?re-downloadable from Binance at any
+# time, self-verifying via its own .CHECKSUM/.VERIFIED sidecar files.
+runtime/binance_public_data_cache/
+
+# Project-local virtual environment used for running the pytest test
+# suite (created 2026-09-04). Fully recreatable via
+# `python -m venv .venv` + `.venv\Scripts\python.exe -m pip install
+# pytest` 鈥?must never enter Git history.
+.venv/
+
+# Collector-generated formal runtime/session evidence.
+# Keep locally or archive externally; do not add raw runtime evidence to Git.
+/runtime_formal_*/
+
+

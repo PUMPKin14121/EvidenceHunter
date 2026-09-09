@@ -1,0 +1,104 @@
+﻿{
+  "CHANGE_ID": "LIFECYCLE_AND_GOVERNANCE_20260907",
+  "PURPOSE": "Protect frozen research, retire CPH entrypoints, register real Discovery outcome and provide version-bound review evidence",
+  "MASTER_REQUIREMENTS_ADDRESSED": [
+    "2-X implementation registry and handoff",
+    "2-Z scoped project reconciliation",
+    "2-AB builder != final verifier",
+    "2-BL lifecycle fixes",
+    "A5-7 OF-2 preparation"
+  ],
+  "BASE_COMMIT_OR_VERSION": {
+    "formal": "1242d1eaed199dc5ec9fe2a28ba57928bf9a9d77",
+    "v11r1": "719e8e97b8530ae967ef08f4941678b825c133c3"
+  },
+  "FINAL_COMMIT_OR_VERSION": {
+    "registry_sha256": "fe4305fc43895efe3ec789facd17180e8ee1f6b010b91a9e271ea16ba7bc6a38",
+    "type": "UNCOMMITTED_WORKTREE_WITH_PER_ASSET_SHA256",
+    "registry": "IMPLEMENTATION_STATE_REGISTRY.json"
+  },
+  "FILES_ADDED": [
+    "formal:dataset_lifecycle.json",
+    "formal:tests/test_lifecycle_guards.py",
+    "formal:tests/test_project_reconciliation.py",
+    "v11r1:research/control_transfer_outcome_v1/CONTROL_PERSISTENCE_HORIZON_V1_lifecycle.json",
+    "formal:research_design_next/EFFORT_RESULT_DIVERGENCE_V1/EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_DISPOSITION_20260907.json",
+    "formal:research_design_next/SESSION_CONTEXT_V1/OF2_IMPLEMENTATION_PLAN.json",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/CHANGE_ROLES_20260907.json",
+    "research/governance/IMPLEMENTATION_HANDOFF_20260907.json"
+  ],
+  "FILES_MODIFIED": [
+    "formal:EvidenceHunter_config.py",
+    "formal:EvidenceHunter_dataset.py",
+    "formal:EvidenceHunter_shadow.py",
+    "formal:EvidenceHunter_shadow_outcome.py",
+    "formal:EvidenceHunter_shadow_outcome_backfill.py",
+    "formal:EvidenceHunter_shadow_analysis_v2.py",
+    "formal:EvidenceHunter_shadow_outcome_diag.py",
+    "formal:audit_order.py",
+    "v11r1:control_persistence_horizon_v1_shadow_recorder.py",
+    "MASTER/CHANGELOG and both project indexes (append-only progress annotations)"
+  ],
+  "FILES_REMOVED": [],
+  "FILES_RENAMED_OR_MERGED": [],
+  "BEHAVIOR_CHANGED": [
+    "Research readers resolve hash-checked corrected V2",
+    "Frozen write/prepare guards",
+    "CPH refuses restart before runtime registration write",
+    "audit_order.py --project-reconciliation checks registered asset versions"
+  ],
+  "RUNTIME_CHANGED": "Entry behavior changed; no collector started",
+  "UI_CHANGED": false,
+  "SCHEMA_CHANGED": false,
+  "RESEARCH_SEMANTICS_CHANGED": false,
+  "TRADE_PERMISSION_CHANGED": false,
+  "TESTS_RUN": [
+    ".venv/Scripts/python.exe -B -m pytest tests -q -p no:cacheprovider"
+  ],
+  "TEST_RESULTS": "See TEST_RESULT_20260907.json and raw UTF-8 test output; initial lifecycle suite 72 passed",
+  "RECONCILIATION_RESULT": "See PROJECT_RECONCILIATION_20260907.json; limited asset/version scope, independent review pending",
+  "IMPLEMENTED_REQUIREMENTS": [
+    "LIFECYCLE_READ_WRITE",
+    "FROZEN_START_GUARD",
+    "CPH_RETIREMENT_GUARD"
+  ],
+  "PARTIALLY_IMPLEMENTED_REQUIREMENTS": [
+    "SCOPED_RECONCILIATION: registered assets only"
+  ],
+  "NOT_IMPLEMENTED_REQUIREMENTS": [
+    "Full MASTER inventory",
+    "Runtime/UI reconciliation",
+    "General dependency and artifact hygiene engine",
+    "OF2 calendar feature and new schema"
+  ],
+  "TEMPORARY_ARTIFACTS_CREATED": [
+    "runtime/codex_*_tests*",
+    "runtime/*20260907.ps1",
+    "runtime/lifecycle_audit_20260907.json"
+  ],
+  "BACKUPS_CREATED": [],
+  "RETIREMENT_CANDIDATES_CREATED": [],
+  "TECHNICAL_DEBT_CREATED": [
+    "Registry scope must be expanded before claiming project-wide reconciliation"
+  ],
+  "KNOWN_ISSUES": [
+    "Code remains uncommitted",
+    "Historical untracked Outcome/oracle artifacts remain unmodified",
+    "No actual runtime or V11 network smoke test"
+  ],
+  "KNOWN_UNKNOWNS": [
+    "Independent reviewer findings",
+    "OF2 Asia/Europe/US reference definitions and overlap priority not specified by MASTER"
+  ],
+  "REVIEWER_SHOULD_KNOW": [
+    "TESTED is not VERIFIED; prior completion wording described implementation/testing only",
+    "Do not rerun formal Discovery or retune hypothesis",
+    "Check read/write separation and frozen-path protections, including prepare and direct call entrypoints",
+    "Asset reconciliation cannot prove behavioral correctness or comprehensive coverage",
+    "No schema migration or new dataset started"
+  ],
+  "MESSAGE_TO_REVIEWER": "Review the exact asset hashes and diffs against the two base commits, test evidence and reconciliation report. Return REVIEW_HANDOFF_PACKET with PASS/PASS_WITH_REQUIRED_ACTIONS/FAIL, findings, scope alignment and required changes. Do not alter frozen inputs, rerun Discovery, or treat the builder as final verifier."
+}
+
+

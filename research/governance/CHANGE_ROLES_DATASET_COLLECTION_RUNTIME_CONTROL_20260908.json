@@ -1,0 +1,35 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "DATASET_COLLECTION_RUNTIME_CONTROL",
+  "revision": "v3_WITH_I1_I2_I3",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "primary_builder": "Codex",
+  "initial_design_author": "Claude",
+  "initial_design_source": "PROJECT_OWNER-relayed Claude STAGE-1 final report",
+  "builder_may_self_certify_final_verified": false,
+  "verification_mechanism": "PROJECT_OWNER + GPT via relay",
+  "upstream_commit": "d9d0a6bece342223190f6a29b3e9bd8f7ccdb371",
+  "governance_write_authorized": true,
+  "implementation_authorized": true,
+  "test_execution_authorized": true,
+  "live_smoke_authorized": false,
+  "continuous_collection_authorized": false,
+  "invariants": {
+    "I2": "Explicit dataset validation, normalized root, lease, owner then RUNNING session persisted/read back before build_components/writers; failure closes lease and writes no raw",
+    "I1": "CreateMutexW(NULL,FALSE,name); use_last_error=True; clear then immediately capture LastError; CloseHandle only, never ReleaseMutex",
+    "I3": "Canonical UUID session/request IDs validated before path construction"
+  },
+  "budgets": {
+    "MAX_EXISTING_TEST_FILES_MODIFIED": 1,
+    "MAX_EXISTING_SOURCE_FILES_MODIFIED": 3,
+    "MAX_LIVE_SMOKE_SECONDS": 120,
+    "MAX_TARGETED_PYTEST_INVOCATIONS": 2,
+    "MAX_NEW_REPO_FILES": 4,
+    "MAX_LIVE_SMOKE_RUNS": 1,
+    "FORMAL_DATASET_RUNS": 0,
+    "live_smoke_authorized": false,
+    "second_invocation": "only after directly-caused bounded fix",
+    "MAX_FULL_PYTEST_INVOCATIONS": 2
+  }
+}
+

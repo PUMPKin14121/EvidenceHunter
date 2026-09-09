@@ -1,0 +1,82 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "DATASET_COLLECTION_OPERATIONS",
+  "stage": "DESIGN_GOVERNANCE_ONLY",
+  "revision": "FINAL -- APPROVED FOR FREEZE by PROJECT_OWNER + GPT, 2026-09-08. Content identical to DRAFT v6 except this revision/status/successor-chain wording.",
+  "requested_by": "PROJECT_OWNER, relaying GPT's opening authorization and U1-U10 adjudication, 2026-09-08",
+  "primary_builder": "Claude",
+  "builder_may_self_certify_final_verified": false,
+  "execution_agent": "EXECUTION_AGENT_VIA_USER_RELAY: PROJECT_OWNER pastes any real-machine command into local PowerShell and relays raw output back verbatim. No shell-execution tool exists for the Windows machine from this session's perspective, for this design stage or any future execution stage.",
+  "verification_mechanism": "PROJECT_OWNER + GPT scope/governance review. U1-U10 are adjudicated (v2). This draft still authorizes NO execution of any kind beyond the explicitly-permitted READ-ONLY source inspection of EvidenceHunter_collector.py / EvidenceHunter_collector_supervisor.py / EvidenceHunter_collector_ws.py / EvidenceHunter_gap_ledger.py already performed (no collector start, no code/test/Manifest/dataset_lifecycle edits, no Readiness or 900s acceptance rerun, no .gitignore change). Builder does not self-certify design completeness or correctness.",
+  "status": "APPROVED_FINAL -- closes as DATASET_COLLECTION_OPERATIONS / CLOSED_DESIGN_FREEZE_PASS upon this write+commit; canonical closure record lives in PROJECT_CURRENT_STATE.json.",
+  "readiness_precondition": {
+    "prior_changeset": "NEXT_DATASET_FORMAL_START",
+    "prior_changeset_status": "CLOSED_2026-09-08_PASS",
+    "prior_changeset_closure_commit": "bd8dde02db4e7e410d022466847b19d8d048a7d7",
+    "active_dataset_id": "BTCOF2C1_20260908T083048Z_fc9937db",
+    "dataset_status": "ACTIVE",
+    "collector_run_state": "STOPPED_AFTER_START_ACCEPTANCE",
+    "continuous_collection_authorized": false,
+    "discovery_status": "NOT_STARTED",
+    "trade_permission": false,
+    "note": "This changeset does not itself change any of the readiness_precondition values above. continuous_collection_authorized stays false until a SEPARATE, later, explicitly authorized EXECUTION phase is approved by PROJECT_OWNER + GPT."
+  },
+  "u2_source_inspection_performed": {
+    "type": "READ-ONLY, as explicitly authorized",
+    "files_read": [
+      "EvidenceHunter_collector.py (full)",
+      "EvidenceHunter_collector_supervisor.py (constants)",
+      "EvidenceHunter_collector_ws.py (constants)",
+      "EvidenceHunter_gap_ledger.py (write-mode check)",
+      "EvidenceHunter_collector.py re-verified fresh (sha256 09ac8b1d30a802bbc62ee981867eee34792826046bd1d5a7188fc1f7241ff7f2, unchanged mtimeMs) specifically for lock/PID/signal-handling mechanisms"
+    ],
+    "no_code_run_no_tests_run": true,
+    "verdict": "CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE",
+    "see": "SCOPE_DECLARATION area_02b_multi_session_source_verdict for full evidence citations",
+    "v3_finding": "No live on-demand graceful-pause mechanism exists in the collector (no signal handler; only --duration-seconds elapsing naturally reaches the drain/checkpoint/summary path). Does not change the CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE verdict; adds a new session_end_type=UNCLEAN_OPERATOR_INITIATED_EARLY_STOP category and a non-blocking future-changeset candidate (optional signal-handler harness). See SCOPE v3 area_02b and remaining_open_items.NEW-OPEN-ITEM-1.",
+    "verdict_meaning": "Sequential bounded collection sessions may reuse the same Dataset/runtime root with append/checkpoint/reconciliation semantics, PROVIDED sessions never overlap and single-instance ownership is externally guaranteed. This is NOT a claim that the current collector is ready for unattended continuous-collection operations.",
+    "v5_note": "Taxonomy refinement only -- verdict, verdict_meaning, and the underlying evidence are UNCHANGED from v4.",
+    "v6_note": "Taxonomy/approval refinement only -- verdict, verdict_meaning, and the underlying U2 evidence are UNCHANGED from v4/v5."
+  },
+  "design_stage_budget": {
+    "MAX_NEW_FILES": 2,
+    "MAX_NEW_DIRS": 0,
+    "MAX_CODE_FILES_MODIFIED": 0,
+    "MAX_TEST_RUNS": 0,
+    "MAX_LIVE_RUNS": 0,
+    "note": "Unchanged from v1. The U2 verdict (CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE) means no collector code change is required for the bounded-multi-session architecture, so this budget did not need to expand."
+  },
+  "explicit_prohibitions_this_stage": [
+    "start collector",
+    "start continuous collection",
+    "modify collector source",
+    "modify tests",
+    "modify Manifest",
+    "modify dataset_lifecycle.json",
+    "change Trade Permission",
+    "start Discovery",
+    "rerun Readiness",
+    "rerun the 900s acceptance",
+    "touch .gitignore"
+  ],
+  "successor_stage": "PROJECT_OWNER + GPT v6 DESIGN FREEZE AUTHORIZATION, 2026-09-08: this changeset is the DATASET_COLLECTION_OPERATIONS design-and-freeze stage ONLY -- it is not a parent changeset that stays open while a child changeset executes. It closes as CLOSED_DESIGN_FREEZE_PASS upon this write+commit (see PROJECT_CURRENT_STATE.json last_closed_changeset for the canonical closure record). DATASET_COLLECTION_RUNTIME_CONTROL is the next INDEPENDENT changeset -- it must be separately opened, scoped, and closed before any continuous-collection start is authorized. After DATASET_COLLECTION_RUNTIME_CONTROL closes, a further separate future changeset (tentatively named DATASET_COLLECTION_START) will authorize the actual continuous-collection start. No changesets are nested or left open across this boundary.",
+  "handoff_protocol_note": "Unchanged from v1 -- governed by the permanent AI_EXECUTION_HANDOFF_PROTOCOL_V1.txt.",
+  "continuous_collection_operations_readiness": {
+    "CONTINUOUS_COLLECTION_OPERATIONS_READY": false,
+    "reasons": [
+      "no single-instance lock/PID ownership mechanism",
+      "no operator-triggered graceful pause/stop path"
+    ],
+    "note": "NOT a blocker to freezing this DESIGN_GOVERNANCE_ONLY stage. IS a blocker to authorizing continuous-collection execution -- see execution_blockers and proposed_next_implementation_changeset in the paired SCOPE_DECLARATION."
+  },
+  "execution_blockers": [
+    "EXECUTION_BLOCKER-1: SINGLE_INSTANCE_ENFORCEMENT_REQUIRED",
+    "EXECUTION_BLOCKER-2: GRACEFUL_OPERATOR_STOP_REQUIRED"
+  ],
+  "changelog_master_decision_v4": {
+    "changelog_append_now": false,
+    "master_append_now": false,
+    "reason": "Governance drafts not yet canonical (not written/hashed/committed) -- do not permanently append draft-state narrative to the append-only CHANGELOG.",
+    "correct_sequence_summary": "approval -> write+hash-verify -> commit -> ONE concise DESIGN_FREEZE CHANGELOG entry citing the commit -- MASTER stays untouched until a separate design-freeze index entry or full changeset closure."
+  }
+}

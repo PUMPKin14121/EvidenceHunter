@@ -1,0 +1,22 @@
+{
+  "record_type": "DISCOVERY_REVIEW_AND_LIFECYCLE_DISPOSITION",
+  "recorded_date": "2026-09-07",
+  "hypothesis_id": "EFFORT_RESULT_DIVERGENCE_V1",
+  "execution_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001",
+  "DISCOVERY_EXECUTED": true,
+  "DISCOVERY_STATUS": "NO_ROBUST_REPEATABLE_EVIDENCE",
+  "CORE_HYPOTHESIS_SUPPORTED": "NO",
+  "HYPOTHESIS_PROVEN_FALSE": false,
+  "POSSIBLE_REVERSAL_HINT_IN_STRONGEST_EFFORT_LOWEST_RESPONSE": "OBSERVED_DESCRIPTIVELY",
+  "REPEATABILITY_ACROSS_DEPENDENCE_CONTROLS": "NOT_ESTABLISHED",
+  "LIFECYCLE_DISPOSITION": "DISCOVERY_REVIEW_COMPLETE_NO_PROMOTION_TO_CONFIRMATION",
+  "CONFIRMATION": "NOT_AUTHORIZED",
+  "TRADE_SIGNAL": false,
+  "TRADE_PERMISSION": false,
+  "summary_sha256": "7be3f599aea29b44798325a53e51e8d256c80d5c3cd8f0a7d95b35437088c7c1",
+  "raw_rows_sha256": "818f63e72a5a39ac7b9790620cfeef196a23c69127ad90cb012b9e661df6a00c",
+  "review_scope": "Existing official summary and provenance cross-checked against reviewer conclusion supplied by PROJECT_OWNER; no formal rerun or new subgroup analysis.",
+  "evidence": "Cell 4_0 all three bootstrap intervals cross zero; non-overlap means change direction with n=15/4/3. Cells 4_1 and 4_2 means are near zero and intervals include zero.",
+  "interpretation_limits": "Non-overlap does not prove independence. Positive effort-signed return rate is not reversal-strategy win rate. No claim that the hypothesis is proven false.",
+  "future_work_rule": "Preserve frozen inputs and execution artifacts. No post-hoc tuning or relabeling this dataset as confirmation; any new research requires separately specified scope and authorization."
+}

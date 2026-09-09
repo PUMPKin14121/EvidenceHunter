@@ -1,0 +1,13 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "NEXT_DATASET_COLLECTOR_READINESS",
+  "project_owner": "PROJECT_OWNER (user)",
+  "primary_builder": "Claude (cloud session)",
+  "independent_reviewer": "GPT",
+  "builder_may_self_certify_final_verified": false,
+  "scope": "Determine whether the implemented collector (NEXT_DATASET_COLLECTOR_IMPLEMENTATION, CLOSED, commit 4d5446a2477f488afbe47a9729c5e139397141ad) is qualified to start a formal Dataset. Covers 8 required gates: G1 worker/thread unexpected-death observability, G2 gap-ledger semantic validation, G3 repair/resync provenance validation, G4 a single bounded 60-minute real-network soak test, G5 storage/throughput/resource measurement, G6 a real process-level restart/recovery validation, G7 dependency/environment freeze, G8 a machine-readable formal-Dataset startup gate. Final output is exactly one of: READINESS = PASS, or READINESS = FAIL with an explicit BLOCKERS list, recorded in research/governance/COLLECTOR_READINESS_REPORT_V1.json. No formal Dataset creation, no 168h or any long-running unattended collection start, no Discovery, no hypothesis testing, no feature/threshold tuning, no Trade Permission change. Full bounded rules in SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_READINESS_20260907.json.",
+  "canonical_artifact": "research/governance/SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_READINESS_20260907.json",
+  "review_status": "SCOPE_APPROVED_READINESS_IN_PROGRESS_PENDING_OWNER_AND_REVIEWER_FINAL_SIGNOFF",
+  "recorded_at": "2026-09-07"
+}
+

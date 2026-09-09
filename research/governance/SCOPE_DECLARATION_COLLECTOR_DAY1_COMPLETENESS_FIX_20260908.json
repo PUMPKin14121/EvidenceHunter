@@ -1,0 +1,240 @@
+﻿{
+  "changeset_id": "COLLECTOR_DAY1_COMPLETENESS_FIX",
+  "recorded_at": "2026-09-08",
+  "approved_by": "PROJECT_OWNER + GPT, 2026-09-08: APPROVED_WITH_REQUIRED_EDITS (E1-E6), then corrected the same day per the implementation-architecture review (E7: run_component_lifecycle wording + smoke closure-acceptance checks). headers_to_dict() approved to stay in EvidenceHunter_orderbook.py as a pure HTTP response-header normalization helper; MAX_NEW_FILES remains 4. CHANGE_ROLES unchanged.",
+  "prerequisite_for": "NEXT_DATASET_FORMAL_START (currently PAUSED_PENDING_PREREQUISITE -- not FAIL, not cancelled; its two draft JSONs were deliberately NOT written, because their preconditions bind commit 5fa94c9 and readiness V2, both of which this changeset supersedes)",
+  "objective": "Close exactly three Day-1 raw-truth completeness gaps so that the first record of a formal Dataset is not permanently missing evidence that cannot be backfilled later.",
+  "gaps_to_close": [
+    {
+      "id": "GAP1_REST_DEPTH_SNAPSHOT_NOT_PERSISTED",
+      "current_behaviour": "EvidenceHunter_orderbook.fetch_depth_snapshot() loads bids/asks/lastUpdateId into memory only. The raw REST response is discarded. lastUpdateId reaches disk only via the process-restart discontinuity gap record, i.e. not on ordinary initialization or resync.",
+      "required_after_fix": "On EVERY initialization and EVERY resync: persist the raw REST response VERBATIM -- defined strictly as the HTTP response body bytes/text as received, BEFORE any JSON parsing. Re-serialising the parsed object (json.dumps of the parsed dict) and presenting it as 'raw' is PROHIBITED: it silently launders parser behaviour into what is supposed to be untouched wire truth. Persist alongside it: lastUpdateId, rest_request_id (see E3), request provenance (endpoint, symbol, limit, request instant) and receive provenance (local wall-clock and monotonic receive instants). Frozen design reference: OF2_PRESTART_DESIGN_V1.must_collect_from_day_1 item 'REST initial order-book snapshot + lastUpdateId (every initialization/resync, not just the first)', irrecoverable_if_missing=true, plus frozen principle 5 ('the raw response is retained verbatim, not only the parsed fields')."
+    },
+    {
+      "id": "GAP2_CLOCK_NTP_OBSERVATION_MISSING",
+      "current_behaviour": "No NTP/clock-offset sampling exists anywhere in the collector modules.",
+      "required_after_fix": "Persist periodic local clock observations drawn from WINDOWS OS-NATIVE time-synchronization evidence only: the OS's own reported sync state/status and, where the OS provides one, its reported offset -- each with its own observation instant. This changeset does NOT query any external public NTP server; that option is explicitly out of scope this round. When the OS cannot supply a value, the observation is recorded as unavailable/failure with its reason. Fabricating, defaulting, interpolating or carrying forward a previous offset is PROHIBITED. This evidence NEVER adjusts, corrects or smooths any collected timestamp -- OF2_PRESTART_DESIGN_V1 forbids smoothed/averaged timestamps outright."
+    },
+    {
+      "id": "GAP3_REST_TELEMETRY_MISSING",
+      "current_behaviour": "_rest_request_json() in EvidenceHunter_collector.py and fetch_depth_snapshot() in EvidenceHunter_orderbook.py both discard HTTP status and headers; failures survive only as a CollectorError string, sometimes ending up inside a gap-ledger detail field.",
+      "required_after_fix": "Persist per-request telemetry for every REST request, keyed by a rest_request_id generated per request and shared with any evidence record produced from that same request (E3: a depth_snapshot record and its telemetry record carry the SAME rest_request_id, giving transaction-level provenance). ALLOWED and required content: endpoint path, request class, SANITIZED request parameters, HTTP status, ALL x-mbx-* response headers, Retry-After when present, request and receive instants, and failure provenance for network-level failures. PROHIBITED content (E4, secret-leakage prevention): Authorization headers, API keys, signatures, cookies, and any secret query parameter value. A parameter that cannot be proven non-secret is redacted rather than stored. Frozen design reference: must_collect_from_day_1 item 'REST call HTTP status / rate-limit events', irrecoverable_if_missing=true."
+    }
+  ],
+  "binding_design_constraints": [
+    "COLLECTOR COLLECTS FACTS. None of the three additions may write a derived, interpretive or research-hypothesis field. No absorption/liquidity/regime/edge labels, no smoothed timestamps, no future-outcome information.",
+    "BACKWARD-COMPATIBLE AND ADDITIVE. New behaviour is opt-in via optional parameters/sinks with inert defaults, so that the existing test suites for the modified modules pass UNMODIFIED. If an existing test genuinely must change, that diff is shown for approval before it is made -- it is never edited silently to make a suite green.",
+    "NO GAP/RESTART SEMANTIC CHANGE. gap-ledger record schema, recoverability semantics, resync procedure and restart-discontinuity behaviour are untouched. Persisting a snapshot must not alter the order book's resulting state; this must be proven by test, not asserted.",
+    "NO NEW PIP DEPENDENCY. Standard library + Windows OS-native time-sync observation only; no new pip dependency and no external NTP query. Adding a dependency would move G7 from carry-forward to must-re-verify and change requirements-collector.txt; if the implementation genuinely cannot avoid one, that is escalated for approval rather than absorbed.",
+    "NO SILENT THREAD. Any new long-running periodic component must register through the existing Supervisor public lifecycle/state APIs and implement the same fail-visible STATE_LIFECYCLE_THREAD_CRASHED semantics used by the existing supervised components. Direct reuse of run_component_lifecycle() is not required where that runner is transport-specific (it is WebSocket-specific: url_fn / route_class / stream_name / on_message). EvidenceHunter_collector_supervisor.py itself remains unmodified.",
+    "NO SECRET LEAKAGE. REST telemetry stores only the E4 allow-list. Authorization headers, API keys, signatures, cookies and secret query values are never written to any evidence file. EvidenceHunter_config.py is never read, imported or echoed.",
+    "RAW MEANS RAW. Any field named or described as a raw payload/response must be the pre-parse bytes/text as received. No re-serialisation, no normalisation, no key reordering, no pretty-printing."
+  ],
+  "new_evidence_paths": {
+    "raw/depth_snapshot.jsonl": "GAP1 -- raw REST snapshot responses with lastUpdateId and provenance",
+    "quality/clock_observations.jsonl": "GAP2 -- periodic clock/NTP observations, including failed-observation records",
+    "quality/rest_telemetry.jsonl": "GAP3 -- per-request REST telemetry",
+    "validator_coverage_note": "EvidenceHunter_collector_readiness.py's G3 validator iterates an EXPLICIT three-entry whitelist (RAW_STREAM_FILES = aggTrade.jsonl / depth.jsonl / forceOrder.jsonl), not a glob of raw/*.jsonl. Verified by reading the tool. Consequence: these three new files neither break nor are covered by G3's existing provenance validation. Whether to extend the validator's coverage is a decision for the readiness rebind changeset, NOT for this one -- but the gap is recorded here so it cannot be lost.",
+    "storage_accounting_requirement": "E6 PRINCIPLE: ALL collector-persisted evidence bytes must be counted in soak_summary.json's per-stream and totals accounting -- not only the three original raw streams. G5's validator checks totals.raw_bytes == sum of per-stream raw_bytes, so omitting the new streams would keep G5 internally consistent while knowingly understating real storage growth. If the legacy field name raw_bytes is retained for compatibility with the unmodified readiness tool, the summary must carry an explicit note that this field now INCLUDES the new evidence streams (depth_snapshot, clock_observations, rest_telemetry), so no future reader mistakes it for the old three-stream-only quantity."
+  },
+  "allowed_paths_modify": [
+    "EvidenceHunter_collector.py -- REST telemetry capture at the request helper, snapshot-sink wiring, registration of the periodic clock-observation component, and inclusion of the new streams in soak_summary accounting. No gap/restart/collector-core redesign.",
+    "EvidenceHunter_orderbook.py -- return/emit the raw snapshot response and its provenance additively via an optional sink. Resync procedure and resulting book state unchanged.",
+    "PROJECT_CURRENT_STATE.json -- closure record only"
+  ],
+  "allowed_paths_create": [
+    "research/governance/CHANGE_ROLES_COLLECTOR_DAY1_COMPLETENESS_FIX_20260908.json",
+    "research/governance/SCOPE_DECLARATION_COLLECTOR_DAY1_COMPLETENESS_FIX_20260908.json",
+    "EvidenceHunter_clock_observer.py -- periodic clock/NTP observation component (stdlib only)",
+    "tests/test_day1_completeness.py -- targeted tests for these three fixes only"
+  ],
+  "conditionally_modifiable_requires_diff_approval_first": [
+    "tests/test_collector_orderbook.py",
+    "tests/test_collector_integration.py"
+  ],
+  "conditional_modification_rule": "Default expectation is ZERO change to these two files: the additive/opt-in design is chosen precisely so they keep passing untouched. If one legitimately breaks, the failure and the proposed diff are shown to PROJECT_OWNER + GPT for approval BEFORE any edit. A test is never rewritten to hide a real behavioural change.",
+  "forbidden_paths": [
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_collector_ws.py",
+    "EvidenceHunter_gap_ledger.py",
+    "EvidenceHunter_clock.py",
+    "EvidenceHunter_collector_readiness.py",
+    "EvidenceHunter_resource_sampling.py",
+    "tests/test_collector_readiness.py",
+    "tests/test_resource_sampling.py",
+    "tests/test_collector_ws_client.py",
+    "tests/test_collector_gap_ledger.py",
+    "tests/test_collector_supervisor.py",
+    "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V2.json",
+    "EvidenceHunter_config.py",
+    "EvidenceHunter_config.py",
+    "dataset_lifecycle.json",
+    "logs/v2/",
+    "runtime/v2/",
+    "research_design_next/",
+    "archive/",
+    ".venv/",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/AI_EXECUTION_CONTRACT_V1.json"
+  ],
+  "readiness_rebind_contract": {
+    "v2_status": "research/governance/COLLECTOR_READINESS_REPORT_V2.json (sha256 fc366e13b6fdecf6eba5f5a45349d1f6f0ea6530d6f765054d38bec94618715c) remains PERMANENT historical PASS evidence and must never be modified or overwritten. It proves readiness for the PRE-fix source at commit 5fa94c9 and for nothing else.",
+    "v1_status": "research/governance/COLLECTOR_READINESS_REPORT_V1.json (sha256 30668fc52e20965ee68f4b1dae126b3de3df41b919ae0473a1acc75af624ada0) remains permanent historical FAIL evidence, likewise never modified or overwritten.",
+    "requirement": "After this changeset closes, a SEPARATE bounded readiness rebind changeset must produce a NEW versioned readiness report (e.g. COLLECTOR_READINESS_REPORT_V3.json) bound to the post-fix source hashes and commit. NEXT_DATASET_FORMAL_START may only resume after that report exists and reads PASS.",
+    "this_changeset_does_not": [
+      "produce a readiness report",
+      "declare readiness for the post-fix source",
+      "authorize a formal Dataset start"
+    ]
+  },
+  "budget_overrides": {
+    "MAX_NEW_FILES": 4,
+    "MAX_NEW_DIRS": 0,
+    "MAX_FULL_REPO_SCANS": 0,
+    "MAX_FULL_TEST_RUNS": 0,
+    "MAX_TARGETED_TEST_RUNS": 2,
+    "MAX_SHORT_LIVE_SMOKE_RUNS": 1,
+    "MAX_LIVE_SOAK_RUNS": 0,
+    "MAX_PROCESS_RESTART_TEST_RUNS": 0,
+    "MAX_RECONCILIATION_RUNS": 1,
+    "CHANGELOG_MAX_ENTRIES": 1,
+    "note": "MAX_NEW_DIRS=0 applies to repository directories; the single bounded OS-%TEMP% smoke directory is not a repository artifact and is not counted, consistent with how the same clarification was frozen in COLLECTOR_RESOURCE_SAMPLING_FIX. MAX_TARGETED_TEST_RUNS=2 allows one run plus one re-run after fixing a genuine failure; it is not licence for iterative trial-and-error. MAX_SHORT_LIVE_SMOKE_RUNS=1 at SHORT_LIVE_SMOKE_DURATION_SECONDS=300 is the single approved smoke and is NOT a soak. MAX_LIVE_SOAK_RUNS=0 and MAX_PROCESS_RESTART_TEST_RUNS=0 mean this changeset runs neither the 60-minute readiness soak nor the G6 real process restart -- both belong to COLLECTOR_READINESS_REBIND.",
+    "SHORT_LIVE_SMOKE_DURATION_SECONDS": 300
+  },
+  "prohibited_this_round": [
+    "starting a formal Dataset",
+    "minting a Dataset ID or creating a Dataset root",
+    "continuous or unattended collection",
+    "adding markPriceUpdate",
+    "redesigning gap, restart, resync or supervisor semantics",
+    "unrelated collector redesign",
+    "producing any readiness report or declaring readiness for the post-fix source",
+    "modifying COLLECTOR_READINESS_REPORT_V1.json or V2.json",
+    "re-running the 60-minute soak or the process restart test",
+    "full-repository audit",
+    "Discovery execution",
+    "defining or testing any hypothesis",
+    "changing Trade Permission"
+  ],
+  "downstream_notes_not_scope": {
+    "purpose": "Recorded so they are not lost while NEXT_DATASET_FORMAL_START is paused. These are NOT actions of this changeset.",
+    "corrections_to_apply_when_next_dataset_formal_start_is_redrafted": [
+      "Dataset ID timestamp must derive from created_at_utc / prepared_at_utc (the PREPARED instant), not from formal_start_time_utc, which does not exist until STARTING.",
+      "dataset_lifecycle.json protection must be stated as 'existing dataset entries unchanged by parsed-value deep equality', not 'byte-identical' -- adding a sibling key legitimately changes bytes (comma/formatting).",
+      "Acceptance A4 must require the exchange timestamp to be PRESENT and deterministically convertible to UTC (Binance sends epoch milliseconds), not to be a timezone-aware UTC string.",
+      "Acceptance A5 must require continuity WITHIN each valid diff-depth continuity segment, with every break carrying gap/resync provenance -- not one unbroken chain across the whole file.",
+      "D3 resolution changes: split the physical paths (collector_runtime_root / active_acquisition_root as the writable acquisition area, formal Dataset identity carried by manifest + dataset_id, promotion to an immutable dataset artifact deferred to closure) instead of declaring the collector's --runtime-dir help text superseded.",
+      "D4 wording changes: markPriceUpdate is recorded as DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN, not as a contract deviation.",
+      "D2 wording: alongside dataset_status=ACTIVE, record collector_run_state=STOPPED_AFTER_START_ACCEPTANCE and continuous_collection_authorized=false."
+    ]
+  },
+  "required_edits_applied": {
+    "E1": "short live smoke fixed at exactly one run of exactly 300 seconds",
+    "E2": "REST depth-snapshot 'raw response verbatim' means the HTTP body bytes/text BEFORE JSON parsing; re-serialising parsed JSON is prohibited",
+    "E3": "every REST request generates a rest_request_id, shared by the depth_snapshot record and its REST telemetry record, giving transaction-level provenance",
+    "E4": "REST telemetry secret-leakage prohibition (allow-list of what may be stored; never credentials/signatures/cookies/secret query values)",
+    "E5": "clock observation uses Windows OS-native time-sync evidence only this round; no external public NTP server is queried; unavailable means recorded as unavailable/failure, never fabricated or defaulted",
+    "E6": "storage accounting principle: ALL collector-persisted evidence bytes must be counted",
+    "E7": "governance correction 2026-09-08 (post implementation-architecture review): the 'NO SILENT THREAD' constraint no longer requires direct reuse of the WebSocket-specific run_component_lifecycle() runner; it requires registration through the Supervisor's public lifecycle/state APIs plus the same fail-visible STATE_LIFECYCLE_THREAD_CRASHED semantics. This aligns the already-approved governance intent with the real API structure and is not a scope expansion. Also added: the hard closure-acceptance checks for the single 300-second smoke."
+  },
+  "short_live_smoke_decision": {
+    "status": "APPROVED by PROJECT_OWNER + GPT, 2026-09-08",
+    "SHORT_LIVE_SMOKE_DURATION_SECONDS": 300,
+    "MAX_SHORT_LIVE_SMOKE_RUNS": 1,
+    "reason": "All three fixes are network/OS-facing. Injected fakes cannot prove the real shape of a live Binance depth-snapshot body, the actual x-mbx-* header names present on real responses, or how this specific Windows machine reports its time-sync state. Fixing three permanent Day-1 evidence formats on assumed shapes is the exact failure mode this changeset exists to prevent.",
+    "constraints": [
+      "OS %TEMP% directory only, never a repo path and never a formal Dataset path",
+      "no Dataset ID, no Dataset root, no formal Dataset",
+      "not a soak and not a readiness run -- it produces no readiness verdict and no readiness report",
+      "evidence tagged KEEP_UNTIL_EVENT = DAY1_COMPLETENESS_FIX_CLOSED"
+    ],
+    "closure_acceptance_checks": [
+      "evidence_sink_failure_count == 0 (a failing sink must not propagate into resync, but a Day-1 completeness fix cannot be called complete while evidence writes are failing)",
+      "dropped_count == 0 for every new evidence writer (depth_snapshot, clock_observations, rest_telemetry)",
+      "count(depth_snapshot records where parse_status == \"PARSED\" AND raw_body != null AND last_update_id != null) > 0",
+      "rest_telemetry records > 0",
+      "clock_observation records > 0",
+      "at least ONE clock observation is a SUCCESSFUL Windows OS sync-state/source observation (availability=AVAILABLE with real sync_status). offset_seconds may legitimately be unavailable, but a window in which every observation is UNAVAILABLE / query-failed / parse-failed does NOT satisfy GAP2: recording failures honestly proves we do not fabricate evidence, it does not prove Day-1 clock state was actually captured",
+      "rest_request_id correlation PASS: every depth_snapshot record's rest_request_id is present in rest_telemetry",
+      "snapshot raw-body pre-parse preservation PASS: raw_body is the response body as received, not a re-serialisation",
+      "no secret-bearing field persisted anywhere in the evidence files",
+      "storage accounting reconciliation PASS: totals.raw_bytes equals the sum of all six per-stream raw_bytes, and every stream's written_count equals its file's line count"
+    ],
+    "on_any_check_failing": "COLLECTOR_DAY1_COMPLETENESS_FIX != CLOSED_PASS. The only permitted response is the bounded fix directly related to the failure plus the one allowed targeted rerun (MAX_TARGETED_TEST_RUNS=2). A SECOND live smoke is NOT permitted without separate PROJECT_OWNER + GPT authorization."
+  },
+  "impacted_gate_analysis_frozen": {
+    "status": "FROZEN by PROJECT_OWNER + GPT, 2026-09-08. These dispositions are decided, not proposed.",
+    "G1_THREAD_CRASH_OBSERVABILITY": {
+      "disposition": "RE_VERIFY_TARGETED",
+      "reason": "A new periodic clock-observation component adds a new long-running thread. Registering it through the existing Supervisor public lifecycle/state APIs and implementing equivalent fail-visible STATE_LIFECYCLE_THREAD_CRASHED semantics should extend the existing crash-observability guarantee to it (direct reuse of the transport-specific run_component_lifecycle() is not required), but that must be PROVEN by targeted test rather than assumed. EvidenceHunter_collector_supervisor.py itself stays unmodified, so its hash-bound pytest evidence (75 passed, supervisor sha256 e74193cbd12bdc285a29c0e5c4acd765b28130ea99d55d60bfa5b90d1a521180) still stands for the supervisor code."
+    },
+    "G2_GAP_LEDGER_SEMANTICS": {
+      "disposition": "CARRY_FORWARD_CONDITIONAL",
+      "reason": "Conditional on this changeset writing NO new gap-ledger record type and changing no gap-ledger field semantics -- which its binding constraints forbid. If a REST failure ends up recorded as a new ledger record type, G2 flips to RE_VERIFY."
+    },
+    "G3_REPAIR_RESYNC_PROVENANCE": {
+      "disposition": "CARRY_FORWARD_WITH_RECORDED_COVERAGE_GAP",
+      "reason": "G3's validator uses an explicit three-file whitelist rather than a glob, so the three new evidence files change none of its arithmetic and cannot break it. The honest caveat, recorded rather than hidden: the new Day-1 evidence is therefore OUTSIDE G3's validation coverage. Extending that coverage is a decision for the rebind changeset."
+    },
+    "G4_60_MINUTE_SOAK": {
+      "disposition": "RE_VERIFY",
+      "reason": "Runtime behaviour changed: new disk writes on the resync path, a new periodic component, and new per-request work. Soak evidence bound to the pre-fix source cannot certify the post-fix source."
+    },
+    "G5_STORAGE_THROUGHPUT_MEASURED": {
+      "disposition": "RE_VERIFY_MANDATORY",
+      "reason": "Storage growth changes materially. A depth snapshot at limit=1000 is tens of KB and is now persisted on every initialization/resync, plus two new telemetry streams. The previously measured ~1.03 GiB/day projection is no longer valid, and the new streams must appear in soak_summary's byte accounting."
+    },
+    "G6_PROCESS_RESTART_RECOVERY": {
+      "disposition": "RE_VERIFY with ONE real process restart run, executed in the later COLLECTOR_READINESS_REBIND changeset -- NOT in this one",
+      "reason": "ensure_initial_sync() is precisely the code path that both takes the fresh REST snapshot (now persisted) and records restart discontinuity, so a purely additive change still sits directly on the restart-recovery path. PROJECT_OWNER + GPT decided a real process-kill/restart run is required rather than a targeted-test-only argument."
+    },
+    "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": {
+      "disposition": "CARRY_FORWARD_CONDITIONAL",
+      "reason": "Conditional on the stdlib-only constraint holding. requirements-collector.txt (sha256 404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6, 2168 bytes) stays unchanged. Any new dependency flips G7 to RE_VERIFY and requires updating that manifest."
+    },
+    "G8_FORMAL_DATASET_STARTUP_GUARD": {
+      "disposition": "NEVER_REOPENED_VERDICT_MECHANICALLY_RECOMPUTED",
+      "reason": "Same semantics already frozen in COLLECTOR_RESOURCE_SAMPLING_FIX: G8's implementation is not reopened or modified; its startup-guard verdict is mechanically recomputed by the same unmodified evaluate_startup_gate() against whatever gate results the rebind produces."
+    }
+  },
+  "targeted_tests": {
+    "new": "tests/test_day1_completeness.py",
+    "cases": [
+      "GAP1: a snapshot record is persisted on initial sync AND on every resync, containing the verbatim pre-parse response body, lastUpdateId, rest_request_id, request provenance and receive provenance",
+      "E2 raw-means-raw: the persisted raw field equals the exact response body as received and is NOT a re-serialisation of the parsed object (proven with a body whose formatting/key order differs from json.dumps output)",
+      "E3 transaction provenance: the depth_snapshot record and the REST telemetry record produced by the same request carry the SAME rest_request_id, and ids differ across requests",
+      "GAP1 no-semantic-drift: the resulting order-book state is identical with and without the snapshot sink attached (the persistence must be observationally inert to book reconstruction)",
+      "E5 clock observation: a successful OS-native observation record carries its observation instant and the OS-reported sync state/status (and offset when the OS supplies one); an unavailable/failed query is recorded explicitly with its reason and NO fabricated, defaulted or carried-forward offset",
+      "E5 no-external-NTP: no external NTP/public time server is contacted by the clock observer",
+      "GAP2 no-timestamp-mutation: collected record timestamps are byte-identical whether or not a clock observation reports an offset",
+      "GAP3: telemetry is written for a successful REST call, for an HTTP error (status captured), and for a network failure (failure provenance captured); all x-mbx-* headers and Retry-After present in a response are captured",
+      "E4 no-secret-leakage: given a request carrying an Authorization header, an api key, a signature and a cookie, none of those values appears anywhere in the persisted telemetry, and secret-bearing parameters are redacted",
+      "no-derived-fields: none of the three new record types contains any interpretive/research field",
+      "new component crash observability: if the periodic clock component's lifecycle thread dies from an uncaught exception, it becomes visible through the existing supervisor mechanism and does not silently continue"
+    ],
+    "reruns_of_existing_targeted_suites": [
+      "tests/test_collector_orderbook.py",
+      "tests/test_collector_integration.py"
+    ],
+    "not_run": "the full repository test suite (MAX_FULL_TEST_RUNS = 0 this changeset)"
+  },
+  "closure_condition": "This changeset closes after: the three fixes are implemented within the whitelist, the targeted tests pass, and the single approved 300-second live smoke has run and been reviewed. It does NOT run the G6 real process restart and does NOT run the 60-minute readiness soak.",
+  "successor_changeset": "COLLECTOR_READINESS_REBIND -- produces a NEW versioned readiness report (expected COLLECTOR_READINESS_REPORT_V3.json), bound to the post-fix source hashes and commit, and including the frozen G1/G4/G5 re-verification plus ONE real G6 process restart run. It never overwrites V1 or V2. Only after that report reads PASS may NEXT_DATASET_FORMAL_START resume.",
+  "CLOCK_ACCEPTANCE_CLARIFICATION": {
+    "approved_by": "PROJECT_OWNER via GPT relay, 2026-09-08",
+    "meaning": "Successful Windows OS sync-state/source observation means the OS query succeeded and the collector captured real parseable source, stratum and leap_indicator. It does NOT require the host to be synchronized to external NTP. Honestly captured UNSYNCHRONIZED state is valid evidence; offset may be unavailable. Earlier Leap!=3 / Stratum>0 preflight interpretation is superseded.",
+    "bounded_fix": "Only EvidenceHunter_clock_observer.py and tests/test_day1_completeness.py: English/Simplified Chinese labels, verbose phase offset, fail-closed required status fields. Last targeted invocation authorized: 2/2. No collector/orderbook/supervisor changes."
+  },
+  "additional_smoke_exception": {
+    "original_max_short_live_smoke_runs": 1,
+    "additional_authorized_smoke_runs": 1,
+    "effective_max_for_this_changeset": 2,
+    "smoke_1": "Preserved immutable FAIL: W32Time service stopped; all non-clock closure checks passed. Evidence: OS TEMP/btc_day1_smoke_20260908_104557.",
+    "conditions": ["bounded localized-parser fix", "targeted rerun PASS", "one-shot CLOCK_CAPTURE_PREFLIGHT PASS: AVAILABLE with non-null source/stratum/leap_indicator", "preserve smoke_1 evidence"],
+    "source_change_provenance": "Earlier no-code-change exception condition is superseded only for the explicitly approved localized clock-parser/test fix; collector/orderbook/supervisor remain unchanged.",
+    "execution": "Smoke 2 not consumed; return targeted/preflight results to PROJECT_OWNER + GPT before execution. Original budget fields remain historical."
+  }
+}
+
+

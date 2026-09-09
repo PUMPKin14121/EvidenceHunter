@@ -1,0 +1,102 @@
+﻿{
+  "changeset_id": "NEXT_DATASET_COLLECTOR_READINESS",
+  "recorded_at": "2026-09-07",
+  "approved_by": "PROJECT_OWNER, independently reviewed by GPT (relayed in chat 2026-09-07)",
+  "allowed_paths_modify": [
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_collector.py",
+    "PROJECT_CURRENT_STATE.json"
+  ],
+  "allowed_paths_create": [
+    "EvidenceHunter_collector_readiness.py",
+    "tests/test_collector_readiness.py",
+    "research/governance/CHANGE_ROLES_NEXT_DATASET_COLLECTOR_READINESS_20260907.json",
+    "research/governance/SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_READINESS_20260907.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+    "requirements-collector.txt -- ONLY if the bounded dependency-manifest lookup at repo root finds no existing requirements*.txt / pyproject.toml / Pipfile; if one already exists, that exact existing file is modified instead and this 6th file slot is NOT used"
+  ],
+  "forbidden_paths": [
+    "EvidenceHunter_config.py",
+    "dataset_lifecycle.json",
+    "logs/v2/",
+    "research_design_next/",
+    "archive/",
+    ".venv/",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/AI_EXECUTION_CONTRACT_V1.json",
+    "tests/test_collector_ws_client.py",
+    "tests/test_collector_orderbook.py",
+    "tests/test_collector_gap_ledger.py",
+    "tests/test_collector_supervisor.py",
+    "tests/test_collector_integration.py"
+  ],
+  "budget_overrides": {
+    "MAX_NEW_FILES": 6,
+    "MAX_NEW_DIRS": 0,
+    "MAX_FULL_TEST_RUNS": 1,
+    "MAX_RECONCILIATION_RUNS": 1,
+    "MAX_LIVE_SOAK_RUNS": 1,
+    "MAX_PROCESS_RESTART_TEST_RUNS": 1,
+    "MAX_FULL_REPO_SCANS": 0
+  },
+  "out_of_scope_findings_policy": "default NON_BLOCKING_BACKLOG; zero additional investigation this changeset",
+  "readiness_tool_consolidation": "All new validation logic (gap-ledger semantic validation, repair/resync provenance validation, soak-summary validation, formal-Dataset startup-gate evaluation) lives in a single new read-only tool, EvidenceHunter_collector_readiness.py, with its tests in tests/test_collector_readiness.py. No separate validator scripts are created. Because tests/test_collector_supervisor.py etc. are in forbidden_paths this round, the G1 thread-crash-observability tests also live in tests/test_collector_readiness.py rather than in the (already-committed, out-of-scope-to-touch) existing test files.",
+  "g1_thread_crash_observability": {
+    "requirement": "If a component's run_component_lifecycle background thread exits via an uncaught exception, the Supervisor must become aware within a bounded time, the component must stop showing a stale HEALTHY/STREAM_NOT_READY state, it must explicitly enter a new STATE_LIFECYCLE_THREAD_CRASHED state, an incident must be recorded (via the existing alert_fn + persisted supervisor_state.json mechanism -- no new incident-storage mechanism), and it must never continue silently.",
+    "must_not_misclassify": ["a requested shutdown (stop_event set)", "a normal/controlled stop", "normal lifecycle completion"],
+    "allowed_to_modify": ["EvidenceHunter_collector_supervisor.py", "EvidenceHunter_collector.py"],
+    "no_supervisor_rearchitecture": true
+  },
+  "soak_test_policy": {
+    "soak_duration_seconds": 3600,
+    "max_live_soak_runs": 1,
+    "output_location": "OS %TEMP%\\EvidenceHunter_readiness_<timestamp>\\ only, never repo runtime/",
+    "no_formal_dataset_id_created": true,
+    "no_mid_run_parameter_changes": true,
+    "required_measurements": [
+      "per-stream message count", "per-stream raw bytes", "bytes/sec", "projected GB/day",
+      "queue current/peak depth", "writer progress", "reconnect count", "stale events",
+      "gap count", "repair count", "unrecoverable gap count",
+      "process RSS periodic samples (via OS/PowerShell process info only, no psutil dependency)",
+      "process CPU-time delta (via OS/PowerShell process info only, no psutil dependency)"
+    ],
+    "evaluation_target": "storage growth is measurable; no unbounded queue growth observed; writer keeps pace; resource usage shows no obvious monotonic runaway -- this is NOT a fixed GB/day pass/fail threshold; formal capacity planning happens later from the measured values",
+    "disposition": "KEEP_UNTIL_EVENT = READINESS_EVIDENCE_RECORDED; deleted only after the formal Readiness report is generated; if READINESS=FAIL, keep until blockers are resolved",
+    "no_recovery_of_deleted_prior_smoke_evidence": "the two OS %TEMP% directories from NEXT_DATASET_COLLECTOR_IMPLEMENTATION's live smoke tests were already deleted after that changeset closed and are NOT to be recreated or investigated; this changeset's own soak run plus synthetic fault/replay against already-committed raw evidence are the evidence inputs"
+  },
+  "restart_recovery_test_policy": {
+    "must_be_real_process_kill": true,
+    "allowed_kill_command": "Stop-Process -Id <exact PID of the readiness collector process started this changeset> -Force",
+    "forbidden_kill_commands": ["taskkill /IM python.exe", "Stop-Process -Name python", "any broad/wildcard process-matching kill"],
+    "max_process_restart_test_runs": 1,
+    "must_demonstrate": [
+      "the prior persisted supervisor_state.json is diagnostic evidence only and is never used to silently resume a component into HEALTHY",
+      "every component in the restarted process begins again at CONNECTING -> STREAM_NOT_READY -> HEALTHY",
+      "the diff-depth order book performs a fresh REST snapshot + resync after restart, not a resume of the old in-memory book",
+      "the interruption window is represented as an explicit gap/provenance record, not silently absent"
+    ]
+  },
+  "dependency_freeze_policy": {
+    "bounded_manifest_lookup_scope": "repo root only (D:\\EvidenceHunter), not a full-repo scan",
+    "if_existing_manifest_found": "modify that exact existing file to add websocket-client==1.9.2; do not create requirements-collector.txt",
+    "if_no_existing_manifest_found": "may create requirements-collector.txt (uses the 6th of 6 MAX_NEW_FILES; if unused, the file budget for this changeset is 5, not 6 -- an unused slot must never be spent on anything else)",
+    "must_record": ["exact Python version", "websocket-client==1.9.2", "OS = Windows", "architecture, if relevant"],
+    "no_full_venv_freeze": "do not freeze/pin the full transitive dependency set of the .venv"
+  },
+  "formal_dataset_startup_gate": {
+    "canonical_output": "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+    "required_gates": [
+      "G1_THREAD_CRASH_OBSERVABILITY", "G2_GAP_LEDGER_SEMANTICS", "G3_REPAIR_RESYNC_PROVENANCE",
+      "G4_60_MINUTE_SOAK", "G5_STORAGE_THROUGHPUT_MEASURED", "G6_PROCESS_RESTART_RECOVERY",
+      "G7_ENVIRONMENT_DEPENDENCIES_FROZEN", "G8_FORMAL_DATASET_STARTUP_GUARD"
+    ],
+    "final_conclusion_values": ["PASS", "FAIL"],
+    "on_any_gate_fail": "overall readiness = FAIL with an explicit blockers list; a future changeset creating a formal Dataset must first read this report and confirm readiness == PASS"
+  },
+  "prohibited_this_round": [
+    "formal Dataset creation", "168h or any long-running unattended live collection start",
+    "Discovery execution", "hypothesis testing", "feature/threshold tuning", "Trade Permission change"
+  ]
+}
+
+

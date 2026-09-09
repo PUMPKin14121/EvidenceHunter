@@ -1,0 +1,38 @@
+﻿{
+  "plan_id": "OF2_SESSION_CONTEXT_V1_PLAN_20260907",
+  "status": "PLANNED",
+  "source": "MASTER A5-7 PHASE OF-2 and research session taxonomy",
+  "purpose": "Add deterministic calendar context to a future schema, without using it to rescue EFFORT_RESULT_DIVERGENCE_V1.",
+  "existing_module_to_extend": "EvidenceHunter_features.py",
+  "new_python_module_required": false,
+  "schema_migration_executed": false,
+  "new_dataset_started": false,
+  "session_definition_frozen": false,
+  "defined_requirements": {
+    "research_day_boundary": "00:00 UTC",
+    "fields": ["research_day_utc", "day_of_week_utc", "minute_of_day_utc", "minute_of_week_utc", "is_weekend_utc", "is_weekend_research_day", "session_definition_version", "session_primary_label", "session_tags", "session_overlap_tags", "reference_timezone_name", "reference_local_datetime", "reference_utc_offset_minutes", "dst_active", "timezone_database_version"],
+    "us_equity_core_clock_reference": {"timezone": "America/New_York", "start_inclusive": "09:30", "end_exclusive": "16:00", "source": "MASTER explicit clock-reference requirement", "actual_exchange_open_status": "NOT_INFERRED_FROM_CLOCK_WINDOW"},
+    "input_time": "Explicit timezone-aware observation known time; no wall-clock fallback and no future outcome input",
+    "dst_rule": "Timezone database conversion, never a fixed year-round UTC opening time",
+    "windows_rule": "Half-open intervals; definition and timezone-data identity preserved for replay"
+  },
+  "decisions_not_fixed_by_master": [
+    "Asia reference start/end and timezone",
+    "Europe reference start/end and timezone",
+    "US_REFERENCE_WINDOW definition distinct from US_EQUITY_CORE_WINDOW",
+    "Primary-label priority when multiple reference tags overlap",
+    "Trading-day/holiday/early-close calendar support versus clock-reference-only labeling"
+  ],
+  "implementation_sequence": [
+    "Finish independent review of lifecycle protections using the supplied version-bound handoff",
+    "Specify and record the currently unresolved session choices before freezing SESSION_DEFINITION_V1",
+    "Implement pure timezone-aware context function in the existing feature module with synthetic boundary/DST tests",
+    "Wire only to a separately versioned future schema; preserve the closed V1.2.3 dataset and existing frozen contract",
+    "Reconcile schema/collector compatibility and create separate new dataset paths before collection"
+  ],
+  "acceptance_tests": ["UTC midnight", "UTC weekend boundary", "NY winter/summer offsets", "DST transition and repeated local times", "session start included/end excluded", "overlapping tags", "naive/malformed timestamp rejected", "missing timezone database fails closed", "deterministic replay", "no existing frozen dataset mutation"],
+  "TRADE_PERMISSION": false,
+  "CONFIRMATION_AUTHORIZED": false,
+  "limitations": "This is a plan, not an implemented feature, frozen session definition, new hypothesis confirmation, or justification for post-hoc subgroup analysis."
+}
+

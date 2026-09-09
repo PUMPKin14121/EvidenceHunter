@@ -1,0 +1,478 @@
+﻿{
+  "changeset_id": "NEXT_DATASET_FORMAL_START",
+  "recorded_at": "2026-09-08",
+  "stage": "GOVERNANCE_REDRAFT_WITH_REQUIRED_EDITS_APPLIED -- writing these two governance files to disk is the ONLY action authorized by the current review state. No manifest, no Dataset ID, no dataset_lifecycle.json edit, no collector run, no 900-second acceptance run are authorized yet.",
+  "review_status": {
+    "scope_review": "APPROVED_WITH_REQUIRED_EDITS",
+    "required_edits_status": "ALL 8 EDITS APPLIED IN THIS WRITE (see gpt_required_edits_applied)",
+    "dataset_id_minting": "NOT_YET_AUTHORIZED",
+    "startup_acceptance_900s_run": "NOT_YET_AUTHORIZED",
+    "prepare_preflight": "NOT_YET_AUTHORIZED",
+    "next_step": "PROJECT_OWNER + GPT perform one small final scope-binding review of this file's and CHANGE_ROLES_NEXT_DATASET_FORMAL_START_20260908.json's final written hashes. Only after that review explicitly authorizes it may PREPARE_PREFLIGHT run, followed by Dataset ID minting and the single 900-second startup acceptance.",
+    "approved_by_2026_09_08": "PROJECT_OWNER + GPT via relay: 'NEXT_DATASET_FORMAL_START SCOPE REVIEW = APPROVED_WITH_REQUIRED_EDITS; DATASET ID MINTING = NOT YET AUTHORIZED; 900s STARTUP RUN = NOT YET AUTHORIZED', with the 8 corrections applied in this document."
+  },
+  "objective": "Formally open exactly one new Dataset under the post-Day1, readiness-rebound collector source, bounded to a SINGLE 900-second attended startup-acceptance run. On PASS, the dataset becomes ACTIVE but collection is immediately stopped (collector_run_state=STOPPED_AFTER_START_ACCEPTANCE, continuous_collection_authorized=false) -- this changeset never authorizes continuous or unattended collection.",
+  "prerequisite_chain": [
+    "COLLECTOR_DAY1_COMPLETENESS_FIX -- CLOSED_2026-09-08_PASS",
+    "COLLECTOR_READINESS_REBIND -- CLOSED_2026-09-08_PASS, immutable V3 (sha256 03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec), readiness=PASS, formal_dataset_start_allowed=true",
+    "NEXT_DATASET_FORMAL_START -- THIS changeset; governance redraft stage, GPT APPROVED_WITH_REQUIRED_EDITS, all 8 edits applied in this write"
+  ],
+  "readiness_binding": {
+    "source_commit": "c59ad33d8694c9f5a33bcb0432ff6fb1b721f629",
+    "readiness_report_path": "research/governance/COLLECTOR_READINESS_REPORT_V3.json",
+    "readiness_report_sha256": "03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec",
+    "readiness": "PASS",
+    "formal_dataset_start_allowed": true,
+    "requirements_collector_sha256": "404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6"
+  },
+  "source_binding": [
+    {
+      "path": "EvidenceHunter_collector.py",
+      "bytes": 55578,
+      "commit_blob": "b674cc6854e5c9fce6b25f81a796e5b295f01ca8",
+      "sha256": "09AC8B1D30A802BBC62EE981867EEE34792826046BD1D5A7188FC1F7241FF7F2"
+    },
+    {
+      "path": "EvidenceHunter_orderbook.py",
+      "bytes": 19923,
+      "commit_blob": "741e394bf14e80ea6e79e0647a97488eae463cda",
+      "sha256": "7272A42F93258D8E83D6F47BB63976ACA7B1599A23C7AC70485C851F7D5B21E8"
+    },
+    {
+      "path": "EvidenceHunter_clock_observer.py",
+      "bytes": 9670,
+      "commit_blob": "d03fb6cb5bba18ccf1a84334b92a2430ae761003",
+      "sha256": "FA5829344402928382FD468021827B75E3D193DD5D8F0DEE30884E6662F45CB9"
+    },
+    {
+      "path": "EvidenceHunter_clock.py",
+      "bytes": 6661,
+      "commit_blob": "131c4ddf4f7059ad19dd9590d84fd813fc027ea3",
+      "sha256": "DF385CDC255D5F1E5B6A76012598BABD211A323C2C4038B1EB5B6DE8C436DEFB"
+    },
+    {
+      "path": "EvidenceHunter_collector_ws.py",
+      "bytes": 12038,
+      "commit_blob": "4373aabe695129503d1dd42bc63cbb9e5f65f862",
+      "sha256": "CCD85095EFF43E1C4B17A46CC4D3BCE46AAA66E95379EC57E90E115722B91EB0"
+    },
+    {
+      "path": "EvidenceHunter_collector_supervisor.py",
+      "bytes": 15447,
+      "commit_blob": "a3778071511610de003620c51327baf462ade7bc",
+      "sha256": "E74193CBD12BDC285A29C0E5C4ACD765B28130EA99D55D60BFA5B90D1A521180"
+    },
+    {
+      "path": "EvidenceHunter_gap_ledger.py",
+      "bytes": 6948,
+      "commit_blob": "54b020e5eb12de81f5b96acdf507c839c76295c4",
+      "sha256": "8BCC29BC943FAEBB17D89941DA171FF2AAB74ADC22ACC42BA8C341BA933C4A2C"
+    },
+    {
+      "path": "EvidenceHunter_resource_sampling.py",
+      "bytes": 12266,
+      "commit_blob": "a6844916baa9e87dd15720c2ce2e3f36599cc3f1",
+      "sha256": "B14EC13CAE7D702DC1BA8558560989D5C224F752E08958CCE112D2B4AE40A015"
+    },
+    {
+      "path": "EvidenceHunter_collector_readiness.py",
+      "bytes": 48723,
+      "commit_blob": "7827f982d2954801b1b09bec19d176f9b754fdeb",
+      "sha256": "2D18A5A2CBD62FBB8A0AA7207DB4AFE12338A1072DEF3E199436AE8657729082"
+    },
+    {
+      "path": "requirements-collector.txt",
+      "bytes": 2168,
+      "commit_blob": "edad0c619bc021daadd24c10e709c03033d320e0",
+      "sha256": "404DB958AA2B5243F7F423FB0C0227DBD8B232E0DF9F09E7A321777ED0C875F6"
+    },
+    {
+      "path": "EvidenceHunter_config.py",
+      "bytes": null,
+      "commit_blob": null,
+      "sha256": null,
+      "note": "Not part of COLLECTOR_READINESS_REBIND's own source_binding list (that changeset did not touch dataset/lifecycle code), but PREPARE_PREFLIGHT for THIS changeset must independently hash-verify this file at execution time because assert_dataset_writable()/dataset_lifecycle() in it are load-bearing for the FROZEN_DATASET_WRITE_FORBIDDEN guarantee this changeset relies on. Read in full by Claude on 2026-09-08 from the real machine; forbidden_path -- read-only reference, no modification."
+    }
+  ],
+  "existing_frozen_dataset_reference": {
+    "dataset_id": "BTCV12P3_20260828T000323Z_75696678",
+    "status": "FROZEN_CLOSED",
+    "protected_paths": [
+      "logs/v2/EvidenceHunter_shadow_records.jsonl",
+      "logs/v2/EvidenceHunter_shadow_outcomes.jsonl",
+      "logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+      "runtime/v2/dataset_session.json"
+    ],
+    "protection_semantics": "This changeset never writes to any of these four paths and never targets this dataset_id. dataset_lifecycle.json's assert_dataset_writable() already blocks it mechanically; this changeset additionally verifies it explicitly via PREPARE_PREFLIGHT PF7."
+  },
+  "gpt_required_edits_applied": [
+    {
+      "id": "E1_PRIMARY_BUILDER",
+      "correction": "primary_builder changed from Codex to Claude; execution_agent = PROJECT_OWNER via user-relayed real-machine commands; builder_may_self_certify_final_verified stays false. A role correction is required before any future Codex resumption of execution, not now.",
+      "applied_in": "CHANGE_ROLES_NEXT_DATASET_FORMAL_START_20260908.json"
+    },
+    {
+      "id": "E2_FAILURE_LIFECYCLE_TARGET",
+      "correction": "On ANY acceptance criterion FAIL, dataset_status must become START_FAILED (never revert to PREPARED), with collector_run_state=STOPPED_AFTER_FAILED_START and continuous_collection_authorized=false; matches the frozen lifecycle diagram PREPARED -> STARTING -> ACTIVE, with a separate failure branch STARTING -> START_FAILED.",
+      "applied_in": "lifecycle.transitions and startup_acceptance_window.on_any_acceptance_criterion_FAIL below"
+    },
+    {
+      "id": "E3_NO_RERUN_BUDGET",
+      "correction": "Deleted MAX_BOUNDED_FIX_AND_RERUN=1. Set MAX_STARTUP_ACCEPTANCE_RUNS=1 and MAX_BOUNDED_FIX_AND_RERUN=0. Exactly one attempt; on FAIL, STOP and open a separate bounded-fix changeset; the failed dataset_id is never reused for a retry within this changeset.",
+      "applied_in": "budget_overrides below"
+    },
+    {
+      "id": "E4_LIFECYCLE_KEY_NAME",
+      "correction": "dataset_lifecycle.json gains a new top-level key 'active_datasets' (parallel to the existing 'frozen_datasets', NOT nested inside it) for a new SUCCESSFUL dataset entry, created only after the 900s run PASSES -- never during PREPARED/STARTING, never at all on START_FAILED. The existing frozen_datasets entry must remain parsed-value deep-equal before/after.",
+      "applied_in": "lifecycle_registry_binding below"
+    },
+    {
+      "id": "E5_BASELINE_TAG_ID_MANIFEST_PATH_FROZEN",
+      "correction": "Froze BASELINE_TAG=BTCOF2C1; dataset_id format BTCOF2C1_<prepared_at_utc>_<8 lowercase hex>; canonical manifest path research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json (permanently preserved on START_FAILED; any future fix changeset creates a V2, never overwrites V1).",
+      "applied_in": "identity_and_manifest_binding below"
+    },
+    {
+      "id": "E6_RUNTIME_PATH_AND_BUDGET_SCOPE",
+      "correction": "Froze collector_runtime_root=active_acquisition_root='D:\\\\EvidenceHunter\\\\runtime_formal_<dataset_id>' (not 'formal_v3_...', since V3 names the Readiness report version, not the dataset generation), verified disjoint from runtime/v2, logs/v2 and every protected_paths entry. MAX_NEW_FILES=3 counts ONLY the three repo governance artifacts (CHANGE_ROLES, SCOPE, MANIFEST_V1); the collector-generated evidence subtree under active_acquisition_root is operational evidence excluded from repo-artifact MAX_NEW_FILES/MAX_NEW_DIRS accounting and must never be git staged; exactly one such runtime tree may exist.",
+      "applied_in": "path_architecture and budget_overrides below"
+    },
+    {
+      "id": "E7_MANIFEST_MINIMUM_FIELDS_EXPANDED",
+      "correction": "Expanded the manifest's minimum field set to 20 named fields (schema_version, dataset_id, prepared_at_utc, formal_start_time_utc, startup_acceptance_end_utc, startup_acceptance_status, dataset_status, lifecycle_history, collector_source_commit, collector_source_hashes, readiness_report_path, readiness_report_sha256, requirements_collector_sha256, collector_runtime_root, active_acquisition_root, expected_stream_set, stream_schema_bindings, markPriceUpdate_disposition, collector_run_state, continuous_collection_authorized). dataset_id/prepared_at_utc/source-readiness-schema bindings become immutable once written at PREPARED; the entire manifest freezes once the outcome is ACTIVE or START_FAILED.",
+      "applied_in": "manifest_minimum_fields below"
+    },
+    {
+      "id": "E8_ACCEPTANCE_CRITERIA_REFINED",
+      "correction": "A1: do not reopen G5/resource-sampling; confirm only, at actual start time, that the real OS-level worker's PID/creation time/image path/command line match what was launched, via the existing self-report+parent-verification handshake pattern. A2: aggTrade>0 REQUIRED; diff_depth>0 REQUIRED; clock_observer HEALTHY plus >=1 AVAILABLE parsed observation REQUIRED; forceOrder may have 0 payload but its lifecycle must be explicitly observable and must never go silently dead. A3: additionally require dropped_count==0, backlog_at_stop==0, evidence_sink_failure_count==0 for depth_snapshot, clock_observations and rest_telemetry. A4/A5/A6 approved unchanged.",
+      "applied_in": "acceptance_criteria below"
+    }
+  ],
+  "downstream_corrections_applied": [
+    {
+      "id": "CORR1_DATASET_ID_TIMESTAMP_SOURCE",
+      "frozen_text": "Dataset ID timestamp must derive from created_at_utc / prepared_at_utc (the PREPARED instant), not from formal_start_time_utc, which does not exist until STARTING.",
+      "applied_as": "dataset_id = 'BTCOF2C1_' + <prepared_at_utc as YYYYMMDDTHHMMSSZ> + '_' + <8 lowercase hex>. The timestamp segment is fixed at PREPARED and never recomputed at STARTING/ACTIVE/START_FAILED."
+    },
+    {
+      "id": "CORR2_LIFECYCLE_PROTECTION_EQUALITY",
+      "frozen_text": "dataset_lifecycle.json protection must be stated as 'existing dataset entries unchanged by parsed-value deep equality', not 'byte-identical' -- adding a sibling key legitimately changes bytes (comma/formatting).",
+      "applied_as": "PREPARE_PREFLIGHT step 8 snapshots the existing frozen_datasets['BTCV12P3_20260828T000323Z_75696678'] object (parsed JSON value, not raw bytes) before any edit; after adding the new active_datasets key, the same object is re-parsed and compared by deep value equality. Byte-level file diffs (comma placement, key order, whitespace) are expected and are not a violation."
+    },
+    {
+      "id": "CORR3_ACCEPTANCE_A4_TIMESTAMP",
+      "frozen_text": "Acceptance A4 must require the exchange timestamp to be PRESENT and deterministically convertible to UTC (Binance sends epoch milliseconds), not to be a timezone-aware UTC string.",
+      "applied_as": "See acceptance_criteria.A4 below -- approved unchanged from this frozen wording."
+    },
+    {
+      "id": "CORR4_ACCEPTANCE_A5_SEGMENTED_CONTINUITY",
+      "frozen_text": "Acceptance A5 must require continuity WITHIN each valid diff-depth continuity segment, with every break carrying gap/resync provenance -- not one unbroken chain across the whole file.",
+      "applied_as": "See acceptance_criteria.A5 below -- approved unchanged from this frozen wording."
+    },
+    {
+      "id": "CORR5_D3_PATH_SPLIT",
+      "frozen_text": "D3 resolution changes: split the physical paths (collector_runtime_root / active_acquisition_root as the writable acquisition area, formal Dataset identity carried by manifest + dataset_id, promotion to an immutable dataset artifact deferred to closure) instead of declaring the collector's --runtime-dir help text superseded.",
+      "applied_as": "collector_runtime_root == active_acquisition_root == 'D:\\\\EvidenceHunter\\\\runtime_formal_<dataset_id>' (GPT correction 6 freezes this exact naming, superseding any earlier 'formal_v3_<dataset_id>' wording -- V3 names the Readiness report version, not the dataset generation). The frozen, unmodified EvidenceHunter_collector.py --runtime-dir argument is pointed at this path as-is; formal identity is carried entirely by the manifest + dataset_id, never by collector code changes. Promotion of this working directory to an immutable closed artifact is deferred to a future closure changeset, not this one."
+    },
+    {
+      "id": "CORR6_D4_MARKPRICEUPDATE_WORDING",
+      "frozen_text": "D4 wording changes: markPriceUpdate is recorded as DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN, not as a contract deviation.",
+      "applied_as": "manifest_minimum_fields.markPriceUpdate_disposition is fixed to the literal string 'DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN'."
+    },
+    {
+      "id": "CORR7_D2_RUN_STATE_FIELDS",
+      "frozen_text": "D2 wording: alongside dataset_status=ACTIVE, record collector_run_state=STOPPED_AFTER_START_ACCEPTANCE and continuous_collection_authorized=false.",
+      "applied_as": "See startup_acceptance_window.on_all_criteria_PASS below -- applied verbatim."
+    }
+  ],
+  "identity_and_manifest_binding": {
+    "BASELINE_TAG": "BTCOF2C1",
+    "dataset_id_format": "BTCOF2C1_<prepared_at_utc as YYYYMMDDTHHMMSSZ>_<8 lowercase hex>",
+    "dataset_id_timestamp_source": "prepared_at_utc (the PREPARED instant) -- never formal_start_time_utc, which does not exist until STARTING (CORR1)",
+    "manifest_canonical_path": "research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json",
+    "manifest_versioning": "V1 is never overwritten, including on START_FAILED, where it is preserved as historical evidence; a future retry changeset would create V2."
+  },
+  "manifest_minimum_fields": {
+    "canonical_path": "research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json",
+    "versioning_rule": "This exact path is V1 and is never overwritten. If the 900-second run ends START_FAILED, this V1 manifest is permanently preserved as historical evidence of that attempt; any future bounded-fix changeset that tries again creates NEXT_DATASET_FORMAL_START_MANIFEST_V2.json, never overwrites V1.",
+    "immutability_rule": "dataset_id, prepared_at_utc, and the source/readiness/schema binding fields (collector_source_commit, collector_source_hashes, readiness_report_path, readiness_report_sha256, requirements_collector_sha256, stream_schema_bindings) become immutable the instant the manifest is first written at dataset_status=PREPARED. The ENTIRE manifest becomes frozen/immutable once the outcome reaches dataset_status=ACTIVE or dataset_status=START_FAILED.",
+    "fields": [
+      {
+        "name": "schema_version",
+        "value": "FORMAL_DATASET_MANIFEST_V1",
+        "fixed": true
+      },
+      {
+        "name": "dataset_id",
+        "value": "BTCOF2C1_<prepared_at_utc YYYYMMDDTHHMMSSZ>_<8 lowercase hex>",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "prepared_at_utc",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "formal_start_time_utc",
+        "written_at": "STARTING"
+      },
+      {
+        "name": "startup_acceptance_end_utc",
+        "written_at": "end of the 900-second window"
+      },
+      {
+        "name": "startup_acceptance_status",
+        "enum": [
+          "PENDING",
+          "PASS",
+          "FAIL"
+        ]
+      },
+      {
+        "name": "dataset_status",
+        "enum": [
+          "PREPARED",
+          "STARTING",
+          "ACTIVE",
+          "START_FAILED"
+        ]
+      },
+      {
+        "name": "lifecycle_history",
+        "type": "array",
+        "description": "Append-only list of {state, at_utc, reason} transition records, one per lifecycle change."
+      },
+      {
+        "name": "collector_source_commit",
+        "value": "c59ad33d8694c9f5a33bcb0432ff6fb1b721f629",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "collector_source_hashes",
+        "value": "the full source_binding list below",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "readiness_report_path",
+        "value": "research/governance/COLLECTOR_READINESS_REPORT_V3.json",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "readiness_report_sha256",
+        "value": "03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "requirements_collector_sha256",
+        "value": "404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "collector_runtime_root",
+        "value": "D:\\EvidenceHunter\\runtime_formal_<dataset_id>",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "active_acquisition_root",
+        "value": "same as collector_runtime_root (D3 path-split: identical path, distinct semantic role -- see path_architecture)",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "expected_stream_set",
+        "value": [
+          "aggTrade",
+          "diff_depth",
+          "forceOrder",
+          "depth_snapshot",
+          "clock_observations",
+          "rest_telemetry"
+        ],
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "stream_schema_bindings",
+        "description": "Per-stream schema/version identifiers read from the currently-bound source at manifest-creation time -- never guessed or copied from an unrelated file. Populated when the manifest is actually created (not by this SCOPE declaration).",
+        "immutable_from": "PREPARED"
+      },
+      {
+        "name": "markPriceUpdate_disposition",
+        "value": "DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN",
+        "fixed": true
+      },
+      {
+        "name": "collector_run_state",
+        "enum": [
+          "NOT_STARTED",
+          "RUNNING",
+          "STOPPED_AFTER_START_ACCEPTANCE",
+          "STOPPED_AFTER_FAILED_START"
+        ]
+      },
+      {
+        "name": "continuous_collection_authorized",
+        "value": false,
+        "fixed_for_this_changeset": true,
+        "note": "Never becomes true under this changeset regardless of outcome; only a future, separately-authorized DATASET_COLLECTION_OPERATIONS changeset can change this."
+      }
+    ]
+  },
+  "path_architecture": {
+    "principle_D3_applied": "Split physical paths: collector_runtime_root == active_acquisition_root is the writable acquisition working area used AS-IS via the collector's existing, unmodified --runtime-dir argument. Formal Dataset identity is carried entirely by the manifest + dataset_id, never by a change to collector code or CLI. Promotion of this working directory to an immutable closed dataset artifact is explicitly deferred to a future closure changeset -- this changeset does not perform that promotion.",
+    "frozen_path": "D:\\EvidenceHunter\\runtime_formal_<dataset_id>",
+    "naming_correction": "Earlier draft used 'formal_v3_<dataset_id>'; corrected per GPT E6 -- 'V3' names the Readiness report version (COLLECTOR_READINESS_REPORT_V3.json), not the Dataset generation, and reusing it here would conflate the two lineages.",
+    "disjointness_requirement": "Verified disjoint (by resolved path-prefix comparison, PREPARE_PREFLIGHT PF7) from runtime/v2, logs/v2, and every entry in dataset_lifecycle.json's frozen_datasets[*].protected_paths, specifically: logs/v2/EvidenceHunter_shadow_records.jsonl, logs/v2/EvidenceHunter_shadow_outcomes.jsonl, logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl, runtime/v2/dataset_session.json.",
+    "collector_cli_reuse": "EvidenceHunter_collector.py's existing, unmodified, REQUIRED --runtime-dir argument is pointed at this new path. Its own docstring already states this does NOT create a formal Dataset and --runtime-dir must be an explicit non-formal/scratch directory at the code level -- formality is a governance concept layered on top via the manifest, not a code-level flag.",
+    "explicit_prohibition_EvidenceHunter_dataset_py": "EvidenceHunter_dataset.py (status/prepare CLI) is NEVER invoked by this changeset. Its prepare --yes command archives-then-clears exactly logs/v2 and runtime/v2 -- the SAME four paths dataset_lifecycle.json protects for the existing frozen dataset BTCV12P3_20260828T000323Z_75696678. This is the genuine safety collision Claude found while researching this redraft; GPT confirmed it as 'a real safety point' and explicitly ruled that invoking the old prepare flow this round is forbidden. This changeset mints its own dataset_id and runtime root entirely outside EvidenceHunter_dataset.py's mechanism."
+  },
+  "lifecycle": {
+    "frozen_diagram": "PREPARED -> STARTING -> ACTIVE, with a separate failure branch STARTING -> START_FAILED. START_FAILED never reverts to PREPARED.",
+    "transitions": {
+      "PREPARED": "Manifest V1 first written; dataset_id/prepared_at_utc/source-readiness-schema bindings become immutable from this point. No collector process running yet. dataset_lifecycle.json NOT yet touched.",
+      "STARTING": "Collector launched via its existing, unmodified --runtime-dir CLI against active_acquisition_root, with the same identity-verification handshake pattern used in G4/G5/G6, for exactly one 900-second window. formal_start_time_utc recorded.",
+      "ACCEPTANCE_EVALUATION": "At the end of the window, A1-A6 are evaluated against the real evidence written to active_acquisition_root. Evaluation is read-only and manual/relayed (no new automated gate script is written -- MAX_NEW_FILES=3 covers only the three governance artifacts above).",
+      "ACTIVE_on_PASS": "dataset_status=ACTIVE, collector_run_state=STOPPED_AFTER_START_ACCEPTANCE, continuous_collection_authorized=false (CORR7/D2). dataset_lifecycle.json['active_datasets'][dataset_id] is created for the first time here (E4). Manifest becomes fully immutable.",
+      "START_FAILED_on_FAIL": "dataset_status=START_FAILED, collector_run_state=STOPPED_AFTER_FAILED_START, continuous_collection_authorized=false (E2). dataset_id is permanently retired -- never reused for a retry in this changeset. Manifest V1 and all runtime evidence under active_acquisition_root are preserved, never deleted. dataset_lifecycle.json is NOT touched on this branch. Manifest becomes fully immutable."
+    }
+  },
+  "lifecycle_registry_binding": {
+    "file": "dataset_lifecycle.json",
+    "existing_top_level_key": "frozen_datasets (schema_version=1) -- UNCHANGED, contains only BTCV12P3_20260828T000323Z_75696678",
+    "new_top_level_key": "active_datasets -- a NEW key, PARALLEL to frozen_datasets, NOT nested inside it (GPT correction E4)",
+    "when_written": "The new active_datasets[dataset_id] entry is created ONLY after the 900-second startup acceptance run reads PASS. It is NEVER written during PREPARED or STARTING, and NEVER written at all if the outcome is START_FAILED.",
+    "protection_semantics": "Parsed-value deep equality (CORR2): frozen_datasets['BTCV12P3_20260828T000323Z_75696678'] must be identical by parsed JSON value before and after this file is edited to add active_datasets. Byte-level differences from formatting/key ordering/the new sibling key are expected and are not a violation.",
+    "schema_version_note": "EvidenceHunter_config.py's dataset_lifecycle() currently fail-closes unless schema_version == 1 and frozen_datasets is a dict. Adding active_datasets as a sibling key must not break this loader; if the loader itself needs to change to read active_datasets, that change is OUT OF SCOPE for governance-drafting and must be proposed and approved separately before any code edit -- this SCOPE declaration authorizes no code changes at all."
+  },
+  "acceptance_criteria": {
+    "A1_WORKER_IDENTITY": {
+      "requirement": "At actual start time, confirm the real OS-level worker's PID, creation time, image path and command line match exactly what was launched, using the EXISTING self-report + parent-verification handshake pattern already frozen and used in COLLECTOR_RESOURCE_SAMPLING_FIX / COLLECTOR_READINESS_REBIND (worker self-reports pid/creation_filetime/image_path via a nonce handshake; the orchestrator independently re-derives and verifies the same fields via its own OS handle before trusting it).",
+      "explicitly_not": "This is NOT a new Readiness run and does NOT reopen G5. No resource-sampling gate is being re-evaluated; only start-time worker identity is confirmed for THIS specific formal-start launch.",
+      "gpt_wording": "verbatim per GPT correction E8/A1"
+    },
+    "A2_STREAM_HEALTH": {
+      "requirement": "aggTrade message_count > 0 REQUIRED. diff_depth message_count > 0 REQUIRED. clock_observer final_state == HEALTHY AND at least 1 observation with availability == AVAILABLE and a successfully parsed source/stratum/leap_indicator REQUIRED. forceOrder may legitimately have 0 payload (liquidations are a windowed-snapshot phenomenon), but its component lifecycle must be explicitly observable in supervisor_state (not silently absent) and must never reach a silently-dead/unobserved state.",
+      "gpt_wording": "verbatim per GPT correction E8/A2"
+    },
+    "A3_EVIDENCE_WRITER_INTEGRITY": {
+      "requirement": "For each of the three new evidence writers introduced by COLLECTOR_DAY1_COMPLETENESS_FIX -- depth_snapshot, clock_observations, rest_telemetry -- require dropped_count == 0, backlog_at_stop == 0, and evidence_sink_failure_count == 0.",
+      "gpt_wording": "verbatim per GPT correction E8/A3"
+    },
+    "A4_EXCHANGE_TIMESTAMP_CONVERTIBILITY": {
+      "requirement": "The exchange timestamp on every market-stream record must be PRESENT and deterministically convertible to UTC. Binance sends epoch milliseconds; the record is NOT required to already carry a timezone-aware UTC string.",
+      "status": "APPROVED_UNCHANGED",
+      "source": "downstream correction CORR3 (verbatim, frozen in SCOPE_DECLARATION_COLLECTOR_DAY1_COMPLETENESS_FIX_20260908.json.downstream_notes_not_scope)"
+    },
+    "A5_SEGMENTED_CONTINUITY": {
+      "requirement": "diff_depth continuity is required WITHIN each valid continuity segment (i.e. between resyncs), with every segment break carrying explicit gap/resync provenance in the gap ledger. One single unbroken update_id chain across the ENTIRE file/run is NOT required and is not the correct acceptance test -- a legitimate resync mid-run is expected to appear as a provenanced break, not as a failure.",
+      "status": "APPROVED_UNCHANGED",
+      "source": "downstream correction CORR4 (verbatim, frozen in SCOPE_DECLARATION_COLLECTOR_DAY1_COMPLETENESS_FIX_20260908.json.downstream_notes_not_scope)"
+    },
+    "A6_CLEAN_PROCESS_EXIT": {
+      "requirement": "At the end of the 900-second window, the collector worker process must be stopped through the same verified-handle mechanism used in G4/G5/G6 (GetExitCodeProcess on a verified actual-worker handle after a signaled wait), and must produce a process_exit_evidence record (schema COLLECTOR_PROCESS_EXIT_EVIDENCE_V1) showing the same verified worker_pid/creation_filetime as A1 and a captured exit_code. Startup acceptance is proven against the real, identity-verified worker process for its entire run, not inferred from an unverified process or a bare wall-clock timeout.",
+      "status": "APPROVED_UNCHANGED (Claude-proposed, beyond the literal 7 frozen downstream corrections, drawn from the G4/G5/G6 process-identity precedent; explicitly flagged as such when first drafted and left unchanged by GPT's review)",
+      "source": "Claude draft, consistent with COLLECTOR_READINESS_REPORT_V3.json gates.G4/G6 exit_evidence pattern"
+    }
+  },
+  "startup_acceptance_window": {
+    "duration_seconds": 900,
+    "attended": true,
+    "max_runs": 1,
+    "on_all_criteria_PASS": {
+      "dataset_status": "ACTIVE",
+      "collector_run_state": "STOPPED_AFTER_START_ACCEPTANCE",
+      "continuous_collection_authorized": false
+    },
+    "on_any_acceptance_criterion_FAIL": {
+      "dataset_status": "START_FAILED",
+      "collector_run_state": "STOPPED_AFTER_FAILED_START",
+      "continuous_collection_authorized": false,
+      "dataset_id_disposition": "permanently retired",
+      "evidence_disposition": "manifest + runtime evidence preserved, never deleted",
+      "next_step": "STOP. Open a separate, new, explicitly-authorized bounded-fix changeset. Do not retry within this changeset (MAX_BOUNDED_FIX_AND_RERUN=0)."
+    }
+  },
+  "prepare_preflight": {
+    "purpose": "A read-only, no-mutation, no-execution mechanical check gate that must ALL pass before any Dataset ID is committed to disk or any collector process is launched. Explicitly NOT a test and does NOT reopen Readiness (G1-G8 stay closed and unmodified).",
+    "checks": [
+      "PF1: research/governance/COLLECTOR_READINESS_REPORT_V3.json on disk still matches its bound sha256 (03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec) exactly, byte for byte.",
+      "PF2: the current on-disk source hashes of every file in source_binding (below) exactly match V3's own source_binding lineage (i.e. the post-Day1 source at commit c59ad33d8694c9f5a33bcb0432ff6fb1b721f629 is unchanged since REBIND closed).",
+      "PF3: requirements-collector.txt on disk still matches sha256 404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6 exactly (2168 bytes).",
+      "PF4: research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json does not already exist on disk.",
+      "PF5: the freshly generated dataset_id (BASELINE_TAG BTCOF2C1 + prepared_at_utc + 8 lowercase hex) is not already present anywhere in dataset_lifecycle.json (neither frozen_datasets nor any existing active_datasets entry).",
+      "PF6: the new runtime root D:\\EvidenceHunter\\runtime_formal_<dataset_id> does not already exist on disk.",
+      "PF7: resolved (fully expanded, case-normalized) Windows paths prove the new runtime root and EVERY entry in dataset_lifecycle.json's frozen_datasets[*].protected_paths are pairwise disjoint (intersection = empty set) -- checked by direct path-prefix comparison, not by string equality alone.",
+      "PF8: the existing frozen_datasets['BTCV12P3_20260828T000323Z_75696678'] object is read and its full parsed JSON value snapshotted now, for a later parsed-value deep-equality comparison after dataset_lifecycle.json is eventually edited (CORR2)."
+    ],
+    "repeatability": "PF1-PF8 are pure reads with no side effects and no code/dataset/lifecycle mutation, so they may be repeated freely without consuming any execution budget. Only a full PF1-PF8 PASS may proceed to Dataset ID commit; a genuine defect surfaced by any PF check (stale hash, colliding path, colliding dataset_id) must be reported to PROJECT_OWNER + GPT rather than silently worked around.",
+    "on_any_failure": "NO DATASET ID COMMIT. NO START. STOP. Report exactly which PF check failed and why; do not guess a fix and do not retry the 900-second run.",
+    "not_yet_authorized": "PREPARE_PREFLIGHT itself is NOT authorized to run under the current review state of this SCOPE declaration. It may only run after PROJECT_OWNER + GPT complete the 'final scope-binding review' of this file's and CHANGE_ROLES's hashes, as written below in review_status."
+  },
+  "budget_overrides": {
+    "MAX_NEW_FILES": 3,
+    "MAX_NEW_FILES_SCOPE_NOTE": "Counts ONLY the three repo governance artifacts: CHANGE_ROLES_NEXT_DATASET_FORMAL_START_20260908.json, SCOPE_DECLARATION_NEXT_DATASET_FORMAL_START_20260908.json, research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json. The collector-generated raw/quality/runtime evidence subtree under active_acquisition_root is operational evidence, explicitly EXCLUDED from this accounting, and must NEVER be `git add`ed. Exactly one such runtime tree may exist under this changeset.",
+    "MAX_NEW_DIRS": 0,
+    "MAX_NEW_DIRS_SCOPE_NOTE": "Applies to repository directories only, consistent with the clarification already frozen in COLLECTOR_RESOURCE_SAMPLING_FIX / COLLECTOR_DAY1_COMPLETENESS_FIX. runtime_formal_<dataset_id> is outside the git-tracked repo tree in the same sense OS %TEMP% roots were, and is not counted here -- though unlike a TEMP root it is meant to persist as the dataset's own working area, not be deleted.",
+    "MAX_PREPARE_PREFLIGHT_CHECK_PASSES": "unbounded (read-only, no side effects; see PREPARE_PREFLIGHT.repeatability)",
+    "MAX_STARTUP_ACCEPTANCE_RUNS": 1,
+    "STARTUP_ACCEPTANCE_DURATION_SECONDS": 900,
+    "MAX_BOUNDED_FIX_AND_RERUN": 0,
+    "MAX_BOUNDED_FIX_AND_RERUN_NOTE": "GPT correction E3: deleted entirely. Exactly one 900-second attempt. On FAIL: STOP, open a SEPARATE bounded-fix changeset; the failed dataset_id is permanently retired and never reused for a retry inside this changeset.",
+    "MAX_DATASET_LIFECYCLE_EDITS": 1,
+    "MAX_RECONCILIATION_RUNS": 1,
+    "MAX_FULL_TEST_RUNS": 0,
+    "MAX_FULL_REPO_SCANS": 0,
+    "CHANGELOG_MAX_ENTRIES": 1,
+    "MASTER_APPEND_BUDGET_BYTES": 2000
+  },
+  "allowed_paths_create": [
+    "research/governance/CHANGE_ROLES_NEXT_DATASET_FORMAL_START_20260908.json",
+    "research/governance/SCOPE_DECLARATION_NEXT_DATASET_FORMAL_START_20260908.json",
+    "research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json  -- NOT authorized to be created by the current write; requires the separate final scope-binding review plus PREPARE_PREFLIGHT PASS first",
+    "D:\\EvidenceHunter\\runtime_formal_<dataset_id>  -- collector-generated evidence tree, NOT a repo path, NOT git-tracked; NOT authorized to be created by the current write"
+  ],
+  "allowed_paths_modify": [
+    "dataset_lifecycle.json  -- ONLY to add the new active_datasets[dataset_id] entry on PASS; NOT authorized by the current write",
+    "PROJECT_CURRENT_STATE.json  -- closure/status bookkeeping only, at each lifecycle milestone"
+  ],
+  "proposal_edit_exception": "The two governance files created by THIS write may still be edited during the pending final scope-binding review; no source/test/lifecycle edits are authorized at this stage.",
+  "forbidden": [
+    "starting continuous or unattended collection under any outcome",
+    "reopening Readiness G1-G8 or producing any new readiness report",
+    "modifying EvidenceHunter_collector.py, EvidenceHunter_orderbook.py, EvidenceHunter_collector_ws.py, EvidenceHunter_collector_supervisor.py, EvidenceHunter_gap_ledger.py, EvidenceHunter_clock.py, EvidenceHunter_clock_observer.py, EvidenceHunter_resource_sampling.py, EvidenceHunter_collector_readiness.py, or EvidenceHunter_config.py",
+    "invoking EvidenceHunter_dataset.py in any form (status or prepare) -- see path_architecture.explicit_prohibition_EvidenceHunter_dataset_py",
+    "modifying logs/v2/ or runtime/v2/, or any of the existing frozen dataset's protected_paths",
+    "modifying COLLECTOR_READINESS_REPORT_V1.json, V2.json, or V3.json",
+    "starting Discovery, defining or testing any hypothesis",
+    "changing Trade Permission",
+    "any full-repository scan or unrelated cleanup",
+    "touching .gitignore (remains a separate, untouched NON_BLOCKING_BACKLOG item)",
+    "a second dataset_id or a second 900-second run inside this changeset under any circumstance"
+  ],
+  "forbidden_paths": [
+    "EvidenceHunter_collector.py",
+    "EvidenceHunter_orderbook.py",
+    "EvidenceHunter_collector_ws.py",
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_gap_ledger.py",
+    "EvidenceHunter_clock.py",
+    "EvidenceHunter_clock_observer.py",
+    "EvidenceHunter_resource_sampling.py",
+    "EvidenceHunter_collector_readiness.py",
+    "EvidenceHunter_config.py",
+    "EvidenceHunter_dataset.py",
+    "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V2.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V3.json",
+    "logs/v2/",
+    "runtime/v2/",
+    "research_design_next/",
+    "archive/",
+    ".venv/",
+    ".gitignore",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/AI_EXECUTION_CONTRACT_V1.json",
+    "tests/"
+  ],
+  "successor_changeset": "DATASET_COLLECTION_OPERATIONS -- any continuous/unattended collection authorization is a wholly separate, future, independently-authorized changeset; not opened, scoped, or implied by this one.",
+  "stop_rules": "This SCOPE declaration and its paired CHANGE_ROLES file are the only artifacts this write authorizes. PREPARE_PREFLIGHT, Dataset ID minting, dataset_lifecycle.json edits, the collector launch, and the 900-second acceptance run all remain STOP conditions until PROJECT_OWNER + GPT complete the final scope-binding review referenced in review_status.next_step."
+}
+
+
+

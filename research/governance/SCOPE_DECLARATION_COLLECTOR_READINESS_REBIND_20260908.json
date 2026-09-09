@@ -1,0 +1,180 @@
+﻿{
+  "changeset_id": "COLLECTOR_READINESS_REBIND",
+  "recorded_at": "2026-09-08",
+  "status": "APPROVED_WITH_BINDING_EXECUTION_RULES",
+  "execution_authorized": true,
+  "objective": "Rebind readiness to post-Day1 source and finalize immutable V3; no formal Dataset start",
+  "source_commit": "c59ad33d8694c9f5a33bcb0432ff6fb1b721f629",
+  "source_binding": [
+    {
+      "bytes": 55578,
+      "commit_blob": "b674cc6854e5c9fce6b25f81a796e5b295f01ca8",
+      "sha256": "09AC8B1D30A802BBC62EE981867EEE34792826046BD1D5A7188FC1F7241FF7F2",
+      "path": "EvidenceHunter_collector.py"
+    },
+    {
+      "bytes": 19923,
+      "commit_blob": "741e394bf14e80ea6e79e0647a97488eae463cda",
+      "sha256": "7272A42F93258D8E83D6F47BB63976ACA7B1599A23C7AC70485C851F7D5B21E8",
+      "path": "EvidenceHunter_orderbook.py"
+    },
+    {
+      "bytes": 9670,
+      "commit_blob": "d03fb6cb5bba18ccf1a84334b92a2430ae761003",
+      "sha256": "FA5829344402928382FD468021827B75E3D193DD5D8F0DEE30884E6662F45CB9",
+      "path": "EvidenceHunter_clock_observer.py"
+    },
+    {
+      "bytes": 6661,
+      "commit_blob": "131c4ddf4f7059ad19dd9590d84fd813fc027ea3",
+      "sha256": "DF385CDC255D5F1E5B6A76012598BABD211A323C2C4038B1EB5B6DE8C436DEFB",
+      "path": "EvidenceHunter_clock.py"
+    },
+    {
+      "bytes": 12038,
+      "commit_blob": "4373aabe695129503d1dd42bc63cbb9e5f65f862",
+      "sha256": "CCD85095EFF43E1C4B17A46CC4D3BCE46AAA66E95379EC57E90E115722B91EB0",
+      "path": "EvidenceHunter_collector_ws.py"
+    },
+    {
+      "bytes": 15447,
+      "commit_blob": "a3778071511610de003620c51327baf462ade7bc",
+      "sha256": "E74193CBD12BDC285A29C0E5C4ACD765B28130EA99D55D60BFA5B90D1A521180",
+      "path": "EvidenceHunter_collector_supervisor.py"
+    },
+    {
+      "bytes": 6948,
+      "commit_blob": "54b020e5eb12de81f5b96acdf507c839c76295c4",
+      "sha256": "8BCC29BC943FAEBB17D89941DA171FF2AAB74ADC22ACC42BA8C341BA933C4A2C",
+      "path": "EvidenceHunter_gap_ledger.py"
+    },
+    {
+      "bytes": 12266,
+      "commit_blob": "a6844916baa9e87dd15720c2ce2e3f36599cc3f1",
+      "sha256": "B14EC13CAE7D702DC1BA8558560989D5C224F752E08958CCE112D2B4AE40A015",
+      "path": "EvidenceHunter_resource_sampling.py"
+    },
+    {
+      "bytes": 48723,
+      "commit_blob": "7827f982d2954801b1b09bec19d176f9b754fdeb",
+      "sha256": "2D18A5A2CBD62FBB8A0AA7207DB4AFE12338A1072DEF3E199436AE8657729082",
+      "path": "EvidenceHunter_collector_readiness.py"
+    },
+    {
+      "bytes": 2168,
+      "commit_blob": "edad0c619bc021daadd24c10e709c03033d320e0",
+      "sha256": "404DB958AA2B5243F7F423FB0C0227DBD8B232E0DF9F09E7A321777ED0C875F6",
+      "path": "requirements-collector.txt"
+    },
+    {
+      "bytes": 23589,
+      "commit_blob": "89b7a3685b0278ecae68a1cbd9101cdccb7f428f",
+      "sha256": "E77DAA6CFD9C3933E76FCE3E6F8DD38AA5D9629B7D024A5144E30071276DC5FF",
+      "path": "tests/test_day1_completeness.py"
+    },
+    {
+      "bytes": 9641,
+      "commit_blob": "5ff77b047160b24f0b9fe3f26ab98d62aa42d469",
+      "sha256": "74021766299F68AB95F1F6D339433E2954661AF8ED3FE479B854D1E118EAC1CC",
+      "path": "tests/test_collector_supervisor.py"
+    },
+    {
+      "bytes": 2121,
+      "commit_blob": "73b9bb1986a35fdd22c5f92137ae85424257abdc",
+      "sha256": "9C873CF1C8473110AAD884C81F4E82568E56080ADD0CF0304ADF4587C7EA11E9",
+      "path": "tests/test_resource_sampling.py"
+    }
+  ],
+  "historical_reports": [
+    {
+      "sha256": "30668FC52E20965EE68F4B1DAE126B3DE3DF41B919AE0473A1ACC75AF624ADA0",
+      "preserve_immutable": true,
+      "path": "research/governance/COLLECTOR_READINESS_REPORT_V1.json"
+    },
+    {
+      "sha256": "FC366E13B6FDECF6EBA5F5A45349D1F6F0EA6530D6F765054D38BEC94618715C",
+      "preserve_immutable": true,
+      "path": "research/governance/COLLECTOR_READINESS_REPORT_V2.json"
+    }
+  ],
+  "preconditions": {
+    "formal_dataset_start_allowed": false,
+    "day1": "CLOSED_2026-09-08_PASS",
+    "collector_readiness": "NOT_REBOUND",
+    "formal_dataset_started": false
+  },
+  "allowed_paths_create": [
+    "research/governance/CHANGE_ROLES_COLLECTOR_READINESS_REBIND_20260908.json",
+    "research/governance/SCOPE_DECLARATION_COLLECTOR_READINESS_REBIND_20260908.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V3.json"
+  ],
+  "allowed_paths_modify": [
+    "PROJECT_CURRENT_STATE.json"
+  ],
+  "proposal_edit_exception": "These two new governance files may be edited during approval; no source/test edits authorized",
+  "forbidden": [
+    "V1/V2 modification",
+    "source/test/dependency edits",
+    "reopening Day1/V1/V2/cleanup",
+    "full repository scans",
+    "unrelated cleanup",
+    "hypothesis/Discovery",
+    "formal Dataset ID/root/start",
+    "Trade Permission change",
+    "Windows/network configuration change"
+  ],
+  "gate_dispositions": {
+    "G1": "RE_VERIFY_TARGETED",
+    "G2": "CARRY_FORWARD_CONDITIONAL",
+    "G3": "CARRY_FORWARD_WITH_RECORDED_COVERAGE_GAP",
+    "G4": "RE_VERIFY",
+    "G5": "RE_VERIFY_MANDATORY",
+    "G6": "RE_VERIFY_EXACTLY_ONE_REAL_PROCESS_RESTART",
+    "G7": "CARRY_FORWARD_CONDITIONAL",
+    "G8": "Implementation not reopened; mechanically recompute final startup guard from V3 readiness"
+  },
+  "proposed_budgets": {
+    "MAX_NEW_REPO_FILES": 3,
+    "MAX_NEW_REPO_DIRS": 0,
+    "MAX_TARGETED_TEST_RUNS": 1,
+    "MAX_FULL_TEST_RUNS": 0,
+    "MAX_LIVE_SOAK_RUNS": 1,
+    "LIVE_SOAK_DURATION_SECONDS": 3600,
+    "MAX_RESOURCE_SAMPLING_RUNS": 1,
+    "RESOURCE_SAMPLE_INTERVAL_SECONDS": 60,
+    "MAX_PROCESS_RESTART_TEST_RUNS": 1,
+    "RESTART_PROCESS_LAUNCHES": 2,
+    "RESTART_MAX_SECONDS_PER_PROCESS": 180,
+    "RESTART_GAP_SECONDS": 30,
+    "RESTART_TOTAL_WALL_CAP_SECONDS": 420,
+    "MAX_EXTRA_LIVE_SMOKE_RUNS": 0,
+    "MAX_RESOURCE_PROBE_RUNS": 0,
+    "MAX_RECONCILIATION_RUNS": 1,
+    "MAX_REPORT_EVALUATIONS": 1,
+    "MAX_FINAL_V3_WRITES": 1,
+    "MAX_FULL_REPO_SCANS": 0,
+    "MAX_OS_TEMP_ROOTS": 2
+  },
+  "budget_meaning": "G4 soak and G5 resource sampling are the SAME single run, not two. G6 is one pre/post process pair with exactly one verified worker kill. No automatic retries or budget transfer. Two fresh OS TEMP roots: soak+resource and restart pair; temporary harness/logs allowed only inside them. No evidence execution during this proposal stage.",
+  "G1_plan": "One invocation: .venv/Scripts/python.exe -m pytest -q tests/test_day1_completeness.py::test_clock_observer_thread_crash_becomes_visible_through_the_supervisor . Carry forward unchanged Supervisor hash-bound prior evidence; this new invocation specifically binds post-Day1 clock lifecycle evidence to rebind. Do not rerun the full 43-test Day1 suite or unchanged resource tests.",
+  "G2_G3_plan": "Confirm unchanged gap semantics and prior supporting hashes; record carry-forward disposition. Existing unmodified evaluator computes G2/G3 on new soak ledger/raw as a consistency check, not a reopening of implementation. Any discrepancy blocks adjudication; never overwrite a failing new finding with prior PASS. G3 whitelist excludes depth_snapshot/clock/rest telemetry: explicitly retain coverage gap, no validator extension this scope.",
+  "G4_G5_plan": "Use existing EvidenceHunter_resource_sampling.py with collect duration=3600 interval=60. Verify actual worker PID/creation/image handshake, exit evidence, RSS/private memory/CPU delta and internal workload. Apply unchanged validator, measure all six evidence stream bytes and writer line counts. Own fresh aggTrade/diff_depth live data required by G4; Day1 smoke2 zero payload cannot substitute. WS reachability remains an unresolved environment risk; if it blocks this run, FAIL/STOP without retry or environment changes.",
+  "G6_plan": "In fresh TEMP root launch collector for <=180s, record verified actual-worker identity and persisted checkpoint/state; terminate exactly that proven worker once (no assumed launcher/Job Object semantics), prove exit, preserve pre-state, wait30s, relaunch once against same restart runtime for <=180s. Read pre/post state, stdout/stderr, checkpoint, gap ledger, summary. Verify new lifecycle, no stale HEALTHY restoration or silent death, exact aggTrade backfill ID continuity and explicit diff_depth fresh-snapshot discontinuity provenance. forceOrder zero payload alone not failure. New clock lifecycle must remain observable. Missing preconditions/evidence or deadline: FAIL/STOP; no second restart pair.",
+  "G7_plan": "Carry forward V2 conditionally on requirements/environment binding; one read-only environment/manifest snapshot during approved evidence phase, no installs or changes.",
+  "report_plan": "One final reconciliation covers scope/source hashes, supplied G1/G6/G7 evidence, computed G2/G3 consistency, G4/G5, immutable prior report hashes and evidence inventory. Use unmodified run_readiness_evaluation API with changeset_id=COLLECTOR_READINESS_REBIND. Bind report artifact_version=V3, exact source commit/hashes and prior V1 FAIL/V2 PASS lineage; do not pretend tool legacy schema name is a new validator version. Keep draft in TEMP, adjudicate then create final V3 with exclusive create, never overwrite even FAIL. Record readiness and formal_dataset_start_allowed explicitly. Final V3 only after scope approval and evidence; any uncovered harness/schema requirement must be proposed, not silently patched.",
+  "day1_evidence_boundary": "Day1 smoke2 is NOT VALID G4/G5/G6/overall readiness evidence. Clock capture means query succeeded with parseable source/stratum/leap_indicator; honestly unsynchronized OS state is valid capture, not proof of timestamp accuracy.",
+  "retention": "Preserve both prior Day1 smokes and V1/V2 unchanged. All new evidence preserved for V3 provenance; no deletion authorized.",
+  "stop_rules": "Budget consumed once when execution starts. Failure does not authorize rerun, code edits or network changes. Submit exact findings. Formal Dataset remains not started even if future V3 PASS; Formal Start requires separate changeset.",
+  "binding_execution_rules": {
+    "approval_source": "PROJECT_OWNER + GPT relay attachment 23ffc269-1120-4a9f-acc9-9579ce9dbed7, 2026-09-08",
+    "order": "G1 targeted -> shared G4/G5 3600s -> one G6 restart -> one reconciliation -> one evaluation -> immutable V3",
+    "network": "Before soak restore historically working TUN ON or another explicitly approved working configuration; known zero-payload TUN OFF prohibited. Record HOST_NETWORK_CONFIGURATION and freeze TUN/VPN/DNS/W32Time during execution. This pre-run restoration is the explicit exception to no host-network change.",
+    "G4": "aggTrade >0 AND diff_depth >0 required; either zero or no valid live stream => FAIL. forceOrder zero alone allowed with observable lifecycle.",
+    "fail_fast": "Direct G1 or G4/G5 blocker: STOP; no reruns or later expensive runs. Unexecuted gates NOT_RUN_DUE_PRIOR_BLOCKER, never implied PASS.",
+    "G6": "Exactly one real worker stop/relaunch; pre<=180s, interruption30s, post<=180s, total<=420s. Prior checkpoint evidence only, fresh initialization and persisted snapshot, explicit discontinuity provenance, no restored fake HEALTHY/book, resumed acquisition.",
+    "carry_forward": "G2/G3/G7 source/manifest bindings only, no historical experiments. G3 coverage gap explicit.",
+    "source_freeze": "After first evidence invocation any source edit invalidates rebind: STOP, separate bounded fix required, never reuse prior evidence after patch.",
+    "V3": "Mechanical gates and G8, explicit readiness/formal_dataset_start_allowed/blockers; V1 historical FAIL and V2 pre-Day1 PASS preserved; V3 binds c59ad33d8694c9f5a33bcb0432ff6fb1b721f629 and immutable once finalized."
+  }
+}
+

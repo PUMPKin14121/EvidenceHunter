@@ -1,0 +1,12 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "COLLECTOR_READINESS_REBIND",
+  "project_owner": "PROJECT_OWNER",
+  "primary_builder": "Codex",
+  "builder_may_self_certify_final_verified": false,
+  "verification_mechanism": "PROJECT_OWNER + GPT via relay; approve scope/budgets before any readiness evidence; final result subject to adjudication",
+  "status": "SCOPE_BUDGET_APPROVED_EVIDENCE_AUTHORIZED_WITH_BINDING_RULES",
+  "canonical_artifact": "research/governance/SCOPE_DECLARATION_COLLECTOR_READINESS_REBIND_20260908.json",
+  "recorded_at": "2026-09-08"
+}
+

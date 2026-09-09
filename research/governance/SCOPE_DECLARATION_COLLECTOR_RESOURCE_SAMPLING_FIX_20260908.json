@@ -1,0 +1,65 @@
+﻿{
+  "changeset_id": "COLLECTOR_RESOURCE_SAMPLING_FIX",
+  "recorded_at": "2026-09-08",
+  "approved_by": "PROJECT_OWNER, with GPT participating as scope/governance approver (relayed in chat 2026-09-08)",
+  "allowed_paths_modify": [
+    "PROJECT_CURRENT_STATE.json"
+  ],
+  "allowed_paths_create": [
+    "EvidenceHunter_resource_sampling.py",
+    "tests/test_resource_sampling.py",
+    "research/governance/CHANGE_ROLES_COLLECTOR_RESOURCE_SAMPLING_FIX_20260908.json",
+    "research/governance/SCOPE_DECLARATION_COLLECTOR_RESOURCE_SAMPLING_FIX_20260908.json",
+    "research/governance/COLLECTOR_READINESS_REPORT_V2.json -- created after the single approved formal G4/G5 re-verification run, regardless of PASS or FAIL; immutable historical evidence once written, same as V1"
+  ],
+  "forbidden_paths": [
+    "EvidenceHunter_collector.py",
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_collector_readiness.py",
+    "tests/test_collector_readiness.py",
+    "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+    "EvidenceHunter_config.py",
+    "dataset_lifecycle.json",
+    "logs/v2/",
+    "research_design_next/",
+    "archive/",
+    ".venv/",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/AI_EXECUTION_CONTRACT_V1.json",
+    "tests/test_collector_ws_client.py",
+    "tests/test_collector_orderbook.py",
+    "tests/test_collector_gap_ledger.py",
+    "tests/test_collector_supervisor.py",
+    "tests/test_collector_integration.py"
+  ],
+  "budget_overrides": {
+    "MAX_NEW_FILES": 5,
+    "MAX_NEW_DIRS": 0,
+    "MAX_TARGETED_TEST_RUNS": 1,
+    "MAX_FULL_TEST_RUNS": 0,
+    "MAX_G4_G5_REVERIFICATION_RUNS": 1,
+    "MAX_LIVE_SOAK_RUNS": 1,
+    "MAX_PROCESS_RESTART_TEST_RUNS": 0,
+    "MAX_FULL_REPO_SCANS": 0,
+    "note": "MAX_G4_G5_REVERIFICATION_RUNS=1 and MAX_LIVE_SOAK_RUNS=1 refer to the SAME single 60-minute run, not two separate runs -- this changeset gets exactly one real live re-verification, consumed once. MAX_NEW_DIRS=0 applies to new repository directories; one bounded OS-temp runtime/evidence directory for that single approved re-verification run is permitted and is not counted as a new repo artifact (same convention as NEXT_DATASET_COLLECTOR_READINESS's soak_test_policy.output_location)."
+  },
+  "reuse_policy": "EvidenceHunter_resource_sampling.py and tests/test_resource_sampling.py are reused from the existing draft. Independent review (Claude, 2026-09-08) found the identity-verification design (worker self-reports OS-derived worker_pid/creation_filetime/image_path over a nonce handshake; the orchestrator independently re-verifies the same values via its own OpenProcess/QueryFullProcessImageNameW/GetProcessTimes calls against that exact PID before trusting it) directly addresses the launcher/child-PID defect, and confirmed the worker's runpy.run_path() invocation of EvidenceHunter_collector.py uses that script's real --runtime-dir/--duration-seconds CLI flags correctly, with zero modification to EvidenceHunter_collector.py itself. Only an approved cosmetic fix is in scope: the module docstring's '--probe' should read '--probe-run' to match the actual implemented CLI flag name; no functional rewrite.",
+  "readiness_reevaluation_policy": {
+    "target_gates_for_new_evidence": ["G4_60_MINUTE_SOAK", "G5_STORAGE_THROUGHPUT_MEASURED"],
+    "frozen_gates_carried_forward_as_prior_evidence": [
+      "G1_THREAD_CRASH_OBSERVABILITY", "G2_GAP_LEDGER_SEMANTICS", "G3_REPAIR_RESYNC_PROVENANCE",
+      "G6_PROCESS_RESTART_RECOVERY", "G7_ENVIRONMENT_DEPENDENCIES_FROZEN"
+    ],
+    "g8_disposition": "G8's implementation (evaluate_startup_gate() in EvidenceHunter_collector_readiness.py) is NOT reopened or modified. Its startup-guard verdict is mechanically recomputed by that same unmodified code against the full new gate_results (G1/G2/G3/G6/G7 carried forward unchanged plus the newly re-evaluated G4/G5). If either G4 or G5 still yields any BLOCKING finding, the startup guard correctly continues to block: V2.readiness=FAIL, V2.formal_dataset_start_allowed=false. If G4 and G5 both PASS, the startup guard's verdict becomes V2.readiness=PASS, V2.formal_dataset_start_allowed=true -- this authorizes ONLY a future, separate Dataset-start changeset to proceed; it does not itself create or start a Dataset, and this changeset does not open one.",
+    "validator_tool": "EvidenceHunter_collector_readiness.py is expected to require ZERO code changes for this re-evaluation -- the new harness's process_samples.json/process_exit_evidence.json/soak_summary.json schemas already match what the existing G4/G5 validators read. If a real run reveals an actual schema mismatch, that is reported back to PROJECT_OWNER/GPT before any validator edit is proposed, never silently patched.",
+    "report_output": "research/governance/COLLECTOR_READINESS_REPORT_V2.json is generated exactly once, after the single approved re-verification run, regardless of its PASS or FAIL outcome. It is immutable historical evidence once written, on the same footing as V1: never overwritten by any later report. A third attempt, if ever needed, would require a new changeset and a new report file (e.g. _V3)."
+  },
+  "prohibited_this_round": [
+    "reopening G1/G2/G3/G6/G7", "modifying gap-ledger/order-book/restart logic",
+    "modifying EvidenceHunter_collector.py, EvidenceHunter_collector_supervisor.py, or EvidenceHunter_collector_readiness.py",
+    "formal Dataset creation", "168h or any long-running unattended live collection start",
+    "Discovery execution", "hypothesis testing", "feature/threshold tuning", "Trade Permission change"
+  ]
+}
+
+

@@ -1,0 +1,2269 @@
+{
+  "execution_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001",
+  "generated_at_utc": "2026-09-06T16:48:31Z",
+  "greedy_non_overlap": {
+    "15m": {
+      "grid_summary": {
+        "0_0": {
+          "mean_effort_signed_future_return_bps": -0.23730153022903905,
+          "mean_raw_future_return_bps": -1.2738331561806724,
+          "median_effort_signed_future_return_bps": 1.6401525698500556,
+          "median_raw_future_return_bps": 0.796284112085753,
+          "n": 54,
+          "positive_effort_signed_rate": 0.5185185185185185
+        },
+        "0_1": {
+          "mean_effort_signed_future_return_bps": 6.874262310846014,
+          "mean_raw_future_return_bps": 0.8624331809732689,
+          "median_effort_signed_future_return_bps": 4.643548449743425,
+          "median_raw_future_return_bps": 0.13303043940010437,
+          "n": 26,
+          "positive_effort_signed_rate": 0.6923076923076923
+        },
+        "0_2": {
+          "mean_effort_signed_future_return_bps": -5.616373909593662,
+          "mean_raw_future_return_bps": 6.579664595411465,
+          "median_effort_signed_future_return_bps": -3.9298826711882855,
+          "median_raw_future_return_bps": 5.589525925646071,
+          "n": 25,
+          "positive_effort_signed_rate": 0.44
+        },
+        "0_3": {
+          "mean_effort_signed_future_return_bps": 2.1151362183682636,
+          "mean_raw_future_return_bps": 5.170869824088659,
+          "median_effort_signed_future_return_bps": 2.516045248152428,
+          "median_raw_future_return_bps": -2.3776643911208204,
+          "n": 18,
+          "positive_effort_signed_rate": 0.5
+        },
+        "0_4": {
+          "mean_effort_signed_future_return_bps": 5.591079741566286,
+          "mean_raw_future_return_bps": 4.148247819804631,
+          "median_effort_signed_future_return_bps": 5.419419974841867,
+          "median_raw_future_return_bps": 5.4572787808341445,
+          "n": 19,
+          "positive_effort_signed_rate": 0.5263157894736842
+        },
+        "1_0": {
+          "mean_effort_signed_future_return_bps": 3.982409600780872,
+          "mean_raw_future_return_bps": 2.7098525298045524,
+          "median_effort_signed_future_return_bps": 5.05996192363759,
+          "median_raw_future_return_bps": 1.1583697374704705,
+          "n": 31,
+          "positive_effort_signed_rate": 0.6774193548387096
+        },
+        "1_1": {
+          "mean_effort_signed_future_return_bps": -4.3292431117656,
+          "mean_raw_future_return_bps": -0.4696592942582903,
+          "median_effort_signed_future_return_bps": -2.0707817880318604,
+          "median_raw_future_return_bps": -0.36474915986033773,
+          "n": 22,
+          "positive_effort_signed_rate": 0.4090909090909091
+        },
+        "1_2": {
+          "mean_effort_signed_future_return_bps": 7.6094616632022785,
+          "mean_raw_future_return_bps": -3.589659013542573,
+          "median_effort_signed_future_return_bps": 3.8824502680149466,
+          "median_raw_future_return_bps": 0.31804531894048416,
+          "n": 19,
+          "positive_effort_signed_rate": 0.5789473684210527
+        },
+        "1_3": {
+          "mean_effort_signed_future_return_bps": 4.646249171396606,
+          "mean_raw_future_return_bps": 1.2583286779690273,
+          "median_effort_signed_future_return_bps": 2.3115152085042574,
+          "median_raw_future_return_bps": -2.986234991002897,
+          "n": 27,
+          "positive_effort_signed_rate": 0.5925925925925926
+        },
+        "1_4": {
+          "mean_effort_signed_future_return_bps": -8.65845229895335,
+          "mean_raw_future_return_bps": -3.529171158079508,
+          "median_effort_signed_future_return_bps": -4.975179903393739,
+          "median_raw_future_return_bps": -4.975179903393739,
+          "n": 14,
+          "positive_effort_signed_rate": 0.35714285714285715
+        },
+        "2_0": {
+          "mean_effort_signed_future_return_bps": 1.8245315257955133,
+          "mean_raw_future_return_bps": -0.1954740323323223,
+          "median_effort_signed_future_return_bps": 2.8139992106780825,
+          "median_raw_future_return_bps": 0.05054072255755708,
+          "n": 29,
+          "positive_effort_signed_rate": 0.6551724137931034
+        },
+        "2_1": {
+          "mean_effort_signed_future_return_bps": -3.681054609041726,
+          "mean_raw_future_return_bps": 1.2613335803022234,
+          "median_effort_signed_future_return_bps": -1.3776596417077485,
+          "median_raw_future_return_bps": 0.42244569178851177,
+          "n": 31,
+          "positive_effort_signed_rate": 0.3870967741935484
+        },
+        "2_2": {
+          "mean_effort_signed_future_return_bps": -7.5461500644312345,
+          "mean_raw_future_return_bps": 5.227901275732913,
+          "median_effort_signed_future_return_bps": -3.9962564633087587,
+          "median_raw_future_return_bps": 0.9849967100114327,
+          "n": 25,
+          "positive_effort_signed_rate": 0.4
+        },
+        "2_3": {
+          "mean_effort_signed_future_return_bps": -4.176017885286719,
+          "mean_raw_future_return_bps": 6.688729098765638,
+          "median_effort_signed_future_return_bps": 2.887316066446117,
+          "median_raw_future_return_bps": 7.44149145939799,
+          "n": 19,
+          "positive_effort_signed_rate": 0.5789473684210527
+        },
+        "2_4": {
+          "mean_effort_signed_future_return_bps": 1.0690386747597398,
+          "mean_raw_future_return_bps": 1.7520359605347204,
+          "median_effort_signed_future_return_bps": 2.2533412317078674,
+          "median_raw_future_return_bps": -1.4496836878613388,
+          "n": 27,
+          "positive_effort_signed_rate": 0.5555555555555556
+        },
+        "3_0": {
+          "mean_effort_signed_future_return_bps": -5.630112108105094,
+          "mean_raw_future_return_bps": -5.376047202396561,
+          "median_effort_signed_future_return_bps": -5.135406020128507,
+          "median_raw_future_return_bps": -2.4757978569788968,
+          "n": 11,
+          "positive_effort_signed_rate": 0.18181818181818182
+        },
+        "3_1": {
+          "mean_effort_signed_future_return_bps": 2.1514135810128914,
+          "mean_raw_future_return_bps": 2.03650371998501,
+          "median_effort_signed_future_return_bps": 0.038036336112239756,
+          "median_raw_future_return_bps": -0.7179201855301021,
+          "n": 19,
+          "positive_effort_signed_rate": 0.5263157894736842
+        },
+        "3_2": {
+          "mean_effort_signed_future_return_bps": -0.09541727024098404,
+          "mean_raw_future_return_bps": -4.043333329212078,
+          "median_effort_signed_future_return_bps": 1.2389494756774977,
+          "median_raw_future_return_bps": -1.2389494756774977,
+          "n": 31,
+          "positive_effort_signed_rate": 0.5161290322580645
+        },
+        "3_3": {
+          "mean_effort_signed_future_return_bps": 0.12463459449577143,
+          "mean_raw_future_return_bps": -0.6878461831808407,
+          "median_effort_signed_future_return_bps": 0.4406499785916316,
+          "median_raw_future_return_bps": -0.4406499785916316,
+          "n": 22,
+          "positive_effort_signed_rate": 0.5454545454545454
+        },
+        "3_4": {
+          "mean_effort_signed_future_return_bps": 5.706748326198788,
+          "mean_raw_future_return_bps": -0.8343996675464607,
+          "median_effort_signed_future_return_bps": 3.0165544886906277,
+          "median_raw_future_return_bps": -0.4363740907424548,
+          "n": 49,
+          "positive_effort_signed_rate": 0.5918367346938775
+        },
+        "4_0": {
+          "mean_effort_signed_future_return_bps": 7.675078173319865,
+          "mean_raw_future_return_bps": 7.4890776024693215,
+          "median_effort_signed_future_return_bps": 6.684768930547628,
+          "median_raw_future_return_bps": 6.684768930547628,
+          "n": 4,
+          "positive_effort_signed_rate": 1.0
+        },
+        "4_1": {
+          "mean_effort_signed_future_return_bps": 3.4870309052954735,
+          "mean_raw_future_return_bps": -2.357809395147238,
+          "median_effort_signed_future_return_bps": 2.5082576700661257,
+          "median_raw_future_return_bps": -1.826478731945548,
+          "n": 24,
+          "positive_effort_signed_rate": 0.7083333333333334
+        },
+        "4_2": {
+          "mean_effort_signed_future_return_bps": -1.6101650554438132,
+          "mean_raw_future_return_bps": -2.0012403049081047,
+          "median_effort_signed_future_return_bps": 0.4633801004829507,
+          "median_raw_future_return_bps": 1.276654187707088,
+          "n": 33,
+          "positive_effort_signed_rate": 0.5151515151515151
+        },
+        "4_3": {
+          "mean_effort_signed_future_return_bps": 3.4332705930801866,
+          "mean_raw_future_return_bps": -2.131458631516136,
+          "median_effort_signed_future_return_bps": 3.08625157176646,
+          "median_raw_future_return_bps": -1.105206052901009,
+          "n": 34,
+          "positive_effort_signed_rate": 0.6470588235294118
+        },
+        "4_4": {
+          "mean_effort_signed_future_return_bps": -0.8188478190481698,
+          "mean_raw_future_return_bps": -1.8267905756038099,
+          "median_effort_signed_future_return_bps": -0.7398421274464606,
+          "median_raw_future_return_bps": -1.2973656239522846,
+          "n": 38,
+          "positive_effort_signed_rate": 0.4473684210526316
+        }
+      },
+      "horizon_seconds": 900,
+      "selected_count": 651
+    },
+    "30m": {
+      "grid_summary": {
+        "0_0": {
+          "mean_effort_signed_future_return_bps": -5.176794506225093,
+          "mean_raw_future_return_bps": -3.7754198678817255,
+          "median_effort_signed_future_return_bps": -10.94761283328724,
+          "median_raw_future_return_bps": 6.572583519932362,
+          "n": 24,
+          "positive_effort_signed_rate": 0.375
+        },
+        "0_1": {
+          "mean_effort_signed_future_return_bps": -8.415229061431948,
+          "mean_raw_future_return_bps": -1.9108387809330138,
+          "median_effort_signed_future_return_bps": -9.240189453647982,
+          "median_raw_future_return_bps": 0.3581771569596278,
+          "n": 16,
+          "positive_effort_signed_rate": 0.25
+        },
+        "0_2": {
+          "mean_effort_signed_future_return_bps": -1.8670758797421,
+          "mean_raw_future_return_bps": 20.26910743986695,
+          "median_effort_signed_future_return_bps": -1.8279882519654156,
+          "median_raw_future_return_bps": 19.946581213816287,
+          "n": 8,
+          "positive_effort_signed_rate": 0.375
+        },
+        "0_3": {
+          "mean_effort_signed_future_return_bps": 13.352529868397982,
+          "mean_raw_future_return_bps": 6.937062338761079,
+          "median_effort_signed_future_return_bps": -4.482312230947562,
+          "median_raw_future_return_bps": 5.002709372078524,
+          "n": 7,
+          "positive_effort_signed_rate": 0.42857142857142855
+        },
+        "0_4": {
+          "mean_effort_signed_future_return_bps": 8.822687238831051,
+          "mean_raw_future_return_bps": 9.208262553739539,
+          "median_effort_signed_future_return_bps": 5.71667637485527,
+          "median_raw_future_return_bps": 4.895630143200976,
+          "n": 6,
+          "positive_effort_signed_rate": 0.6666666666666666
+        },
+        "1_0": {
+          "mean_effort_signed_future_return_bps": 2.836391131100379,
+          "mean_raw_future_return_bps": -0.6423261264930675,
+          "median_effort_signed_future_return_bps": -3.647029651200117,
+          "median_raw_future_return_bps": 5.204140242789774,
+          "n": 21,
+          "positive_effort_signed_rate": 0.47619047619047616
+        },
+        "1_1": {
+          "mean_effort_signed_future_return_bps": -3.3627375330284757,
+          "mean_raw_future_return_bps": 2.1470702452131563,
+          "median_effort_signed_future_return_bps": -1.971270108679768,
+          "median_raw_future_return_bps": -0.7707901646857708,
+          "n": 20,
+          "positive_effort_signed_rate": 0.5
+        },
+        "1_2": {
+          "mean_effort_signed_future_return_bps": 10.166245570926032,
+          "mean_raw_future_return_bps": -0.24510702124231143,
+          "median_effort_signed_future_return_bps": 6.626929966275163,
+          "median_raw_future_return_bps": -1.5133715381660342,
+          "n": 11,
+          "positive_effort_signed_rate": 0.5454545454545454
+        },
+        "1_3": {
+          "mean_effort_signed_future_return_bps": -14.264620877352613,
+          "mean_raw_future_return_bps": 0.46397950014750666,
+          "median_effort_signed_future_return_bps": -14.5520966191981,
+          "median_raw_future_return_bps": 0.9261607787127721,
+          "n": 16,
+          "positive_effort_signed_rate": 0.3125
+        },
+        "1_4": {
+          "mean_effort_signed_future_return_bps": 4.316594872121719,
+          "mean_raw_future_return_bps": -4.63876977477334,
+          "median_effort_signed_future_return_bps": 2.4171152229287007,
+          "median_raw_future_return_bps": -2.724646119547641,
+          "n": 9,
+          "positive_effort_signed_rate": 0.5555555555555556
+        },
+        "2_0": {
+          "mean_effort_signed_future_return_bps": 5.170541397484921,
+          "mean_raw_future_return_bps": -1.8905452302782886,
+          "median_effort_signed_future_return_bps": 5.847981641959313,
+          "median_raw_future_return_bps": -2.800702363378492,
+          "n": 16,
+          "positive_effort_signed_rate": 0.6875
+        },
+        "2_1": {
+          "mean_effort_signed_future_return_bps": 2.694571635447329,
+          "mean_raw_future_return_bps": 2.156543218317736,
+          "median_effort_signed_future_return_bps": 0.34628561378294637,
+          "median_raw_future_return_bps": 0.9980146511491208,
+          "n": 8,
+          "positive_effort_signed_rate": 0.5
+        },
+        "2_2": {
+          "mean_effort_signed_future_return_bps": 1.4054935135114568,
+          "mean_raw_future_return_bps": 3.031626220876088,
+          "median_effort_signed_future_return_bps": -1.6024074544303044,
+          "median_raw_future_return_bps": 0.44331118761246013,
+          "n": 18,
+          "positive_effort_signed_rate": 0.4444444444444444
+        },
+        "2_3": {
+          "mean_effort_signed_future_return_bps": 9.221619781911363,
+          "mean_raw_future_return_bps": 9.918013624873474,
+          "median_effort_signed_future_return_bps": 8.977197161163584,
+          "median_raw_future_return_bps": -2.8818257121499204,
+          "n": 16,
+          "positive_effort_signed_rate": 0.75
+        },
+        "2_4": {
+          "mean_effort_signed_future_return_bps": 10.916046052293705,
+          "mean_raw_future_return_bps": -12.897351192125157,
+          "median_effort_signed_future_return_bps": 2.581085661868684,
+          "median_raw_future_return_bps": -2.308861644412077,
+          "n": 12,
+          "positive_effort_signed_rate": 0.5833333333333334
+        },
+        "3_0": {
+          "mean_effort_signed_future_return_bps": 10.648892853573052,
+          "mean_raw_future_return_bps": -8.809909191388176,
+          "median_effort_signed_future_return_bps": 18.870733590014474,
+          "median_raw_future_return_bps": -18.870733590014474,
+          "n": 7,
+          "positive_effort_signed_rate": 0.7142857142857143
+        },
+        "3_1": {
+          "mean_effort_signed_future_return_bps": 2.8768948572890576,
+          "mean_raw_future_return_bps": -0.7253685756615255,
+          "median_effort_signed_future_return_bps": -1.639941064260769,
+          "median_raw_future_return_bps": -3.498155127924385,
+          "n": 10,
+          "positive_effort_signed_rate": 0.4
+        },
+        "3_2": {
+          "mean_effort_signed_future_return_bps": 9.805846327100522,
+          "mean_raw_future_return_bps": 7.913116036797465,
+          "median_effort_signed_future_return_bps": -1.6824537690631,
+          "median_raw_future_return_bps": 6.535386433710919,
+          "n": 10,
+          "positive_effort_signed_rate": 0.5
+        },
+        "3_3": {
+          "mean_effort_signed_future_return_bps": 3.974850713174719,
+          "mean_raw_future_return_bps": 0.4921926538318484,
+          "median_effort_signed_future_return_bps": -1.0560169326240436,
+          "median_raw_future_return_bps": -4.492504773323779,
+          "n": 18,
+          "positive_effort_signed_rate": 0.5
+        },
+        "3_4": {
+          "mean_effort_signed_future_return_bps": 10.311288976755078,
+          "mean_raw_future_return_bps": -4.692957628886367,
+          "median_effort_signed_future_return_bps": 8.604651844610252,
+          "median_raw_future_return_bps": 5.571564060028904,
+          "n": 11,
+          "positive_effort_signed_rate": 0.6363636363636364
+        },
+        "4_0": {
+          "mean_effort_signed_future_return_bps": 15.572054201444079,
+          "mean_raw_future_return_bps": 7.094468192232424,
+          "median_effort_signed_future_return_bps": 12.716379013817484,
+          "median_raw_future_return_bps": -0.850479297141715,
+          "n": 3,
+          "positive_effort_signed_rate": 0.6666666666666666
+        },
+        "4_1": {
+          "mean_effort_signed_future_return_bps": 0.5247457834289093,
+          "mean_raw_future_return_bps": -4.958020862222165,
+          "median_effort_signed_future_return_bps": -4.722684565855472,
+          "median_raw_future_return_bps": -5.999645683407716,
+          "n": 14,
+          "positive_effort_signed_rate": 0.42857142857142855
+        },
+        "4_2": {
+          "mean_effort_signed_future_return_bps": -6.423887050793965,
+          "mean_raw_future_return_bps": -6.326187164429513,
+          "median_effort_signed_future_return_bps": -5.993491682137859,
+          "median_raw_future_return_bps": -5.993491682137859,
+          "n": 15,
+          "positive_effort_signed_rate": 0.26666666666666666
+        },
+        "4_3": {
+          "mean_effort_signed_future_return_bps": -4.355389379336871,
+          "mean_raw_future_return_bps": 0.8827108491883078,
+          "median_effort_signed_future_return_bps": -4.602384943442626,
+          "median_raw_future_return_bps": 4.078688198110514,
+          "n": 16,
+          "positive_effort_signed_rate": 0.375
+        },
+        "4_4": {
+          "mean_effort_signed_future_return_bps": -5.4045029224393115,
+          "mean_raw_future_return_bps": -2.7794814132701493,
+          "median_effort_signed_future_return_bps": -8.051964097378512,
+          "median_raw_future_return_bps": -3.8429130552629953,
+          "n": 20,
+          "positive_effort_signed_rate": 0.35
+        }
+      },
+      "horizon_seconds": 1800,
+      "selected_count": 332
+    },
+    "5m": {
+      "grid_summary": {
+        "0_0": {
+          "mean_effort_signed_future_return_bps": 2.1643231211095664,
+          "mean_raw_future_return_bps": 0.5937852859169923,
+          "median_effort_signed_future_return_bps": 1.6003777795457608,
+          "median_raw_future_return_bps": -0.018624642268018743,
+          "n": 122,
+          "positive_effort_signed_rate": 0.5819672131147541
+        },
+        "0_1": {
+          "mean_effort_signed_future_return_bps": -1.4115673078902389,
+          "mean_raw_future_return_bps": -1.1557849901486539,
+          "median_effort_signed_future_return_bps": -0.78551510193227,
+          "median_raw_future_return_bps": -0.6583546171419404,
+          "n": 69,
+          "positive_effort_signed_rate": 0.42028985507246375
+        },
+        "0_2": {
+          "mean_effort_signed_future_return_bps": -0.9398584146882131,
+          "mean_raw_future_return_bps": 1.5921785604680372,
+          "median_effort_signed_future_return_bps": -1.5719319978522501,
+          "median_raw_future_return_bps": 0.27578979303631335,
+          "n": 73,
+          "positive_effort_signed_rate": 0.4246575342465753
+        },
+        "0_3": {
+          "mean_effort_signed_future_return_bps": -1.832867084331188,
+          "mean_raw_future_return_bps": 0.7432405724379457,
+          "median_effort_signed_future_return_bps": 0.41142475111579413,
+          "median_raw_future_return_bps": -0.41142475111579413,
+          "n": 47,
+          "positive_effort_signed_rate": 0.5319148936170213
+        },
+        "0_4": {
+          "mean_effort_signed_future_return_bps": 3.062133636296178,
+          "mean_raw_future_return_bps": -1.344210110922384,
+          "median_effort_signed_future_return_bps": 1.5810946646961568,
+          "median_raw_future_return_bps": -0.6488231647714856,
+          "n": 47,
+          "positive_effort_signed_rate": 0.5319148936170213
+        },
+        "1_0": {
+          "mean_effort_signed_future_return_bps": -0.6993551598338507,
+          "mean_raw_future_return_bps": 0.16532112338224392,
+          "median_effort_signed_future_return_bps": -0.9398758862702373,
+          "median_raw_future_return_bps": -0.33336399461968186,
+          "n": 121,
+          "positive_effort_signed_rate": 0.47107438016528924
+        },
+        "1_1": {
+          "mean_effort_signed_future_return_bps": -0.251733266093997,
+          "mean_raw_future_return_bps": 0.02897203371978493,
+          "median_effort_signed_future_return_bps": -0.5928037173393282,
+          "median_raw_future_return_bps": -0.013404451157868938,
+          "n": 78,
+          "positive_effort_signed_rate": 0.46153846153846156
+        },
+        "1_2": {
+          "mean_effort_signed_future_return_bps": 0.47350736498691687,
+          "mean_raw_future_return_bps": -0.6467353161617057,
+          "median_effort_signed_future_return_bps": 0.7435763976888377,
+          "median_raw_future_return_bps": -1.1433614711217035,
+          "n": 69,
+          "positive_effort_signed_rate": 0.5072463768115942
+        },
+        "1_3": {
+          "mean_effort_signed_future_return_bps": -2.176099080247681,
+          "mean_raw_future_return_bps": 2.3813709481945966,
+          "median_effort_signed_future_return_bps": -0.754980150137255,
+          "median_raw_future_return_bps": -0.038906847279279864,
+          "n": 55,
+          "positive_effort_signed_rate": 0.4727272727272727
+        },
+        "1_4": {
+          "mean_effort_signed_future_return_bps": -3.767636070796921,
+          "mean_raw_future_return_bps": -4.654189010328783,
+          "median_effort_signed_future_return_bps": -6.407606668179237,
+          "median_raw_future_return_bps": -7.700034685090267,
+          "n": 53,
+          "positive_effort_signed_rate": 0.39622641509433965
+        },
+        "2_0": {
+          "mean_effort_signed_future_return_bps": -1.5346550488108022,
+          "mean_raw_future_return_bps": -2.488027724113837,
+          "median_effort_signed_future_return_bps": -1.1272506735634014,
+          "median_raw_future_return_bps": -2.602242173187219,
+          "n": 77,
+          "positive_effort_signed_rate": 0.42857142857142855
+        },
+        "2_1": {
+          "mean_effort_signed_future_return_bps": -0.28511122538263095,
+          "mean_raw_future_return_bps": 0.8896848367918206,
+          "median_effort_signed_future_return_bps": -0.1919406673071537,
+          "median_raw_future_return_bps": 0.47144598225188217,
+          "n": 79,
+          "positive_effort_signed_rate": 0.4810126582278481
+        },
+        "2_2": {
+          "mean_effort_signed_future_return_bps": -3.5950669917627316,
+          "mean_raw_future_return_bps": 1.0744162767236929,
+          "median_effort_signed_future_return_bps": -2.9579150372120764,
+          "median_raw_future_return_bps": 0.21953910993272296,
+          "n": 61,
+          "positive_effort_signed_rate": 0.4262295081967213
+        },
+        "2_3": {
+          "mean_effort_signed_future_return_bps": 0.21459441710289306,
+          "mean_raw_future_return_bps": -0.2026286649740775,
+          "median_effort_signed_future_return_bps": 0.3742480731118545,
+          "median_raw_future_return_bps": -0.49628825267027543,
+          "n": 80,
+          "positive_effort_signed_rate": 0.5375
+        },
+        "2_4": {
+          "mean_effort_signed_future_return_bps": -1.8978563876061092,
+          "mean_raw_future_return_bps": -1.031746398984321,
+          "median_effort_signed_future_return_bps": -1.4215557078049745,
+          "median_raw_future_return_bps": -0.5833878091785742,
+          "n": 64,
+          "positive_effort_signed_rate": 0.4375
+        },
+        "3_0": {
+          "mean_effort_signed_future_return_bps": 1.5179152595188574,
+          "mean_raw_future_return_bps": -2.9835786690989345,
+          "median_effort_signed_future_return_bps": 0.7805882776220664,
+          "median_raw_future_return_bps": -1.7615373374796848,
+          "n": 32,
+          "positive_effort_signed_rate": 0.53125
+        },
+        "3_1": {
+          "mean_effort_signed_future_return_bps": 0.991853610003503,
+          "mean_raw_future_return_bps": 0.7030700000787129,
+          "median_effort_signed_future_return_bps": 0.07694863170191941,
+          "median_raw_future_return_bps": 0.12811146661702266,
+          "n": 76,
+          "positive_effort_signed_rate": 0.5131578947368421
+        },
+        "3_2": {
+          "mean_effort_signed_future_return_bps": 1.694959550589664,
+          "mean_raw_future_return_bps": 0.488978909784997,
+          "median_effort_signed_future_return_bps": 1.6066838096183576,
+          "median_raw_future_return_bps": 0.9286083126520495,
+          "n": 64,
+          "positive_effort_signed_rate": 0.625
+        },
+        "3_3": {
+          "mean_effort_signed_future_return_bps": 0.07853151533499655,
+          "mean_raw_future_return_bps": -1.074199877681285,
+          "median_effort_signed_future_return_bps": 0.038642763112539676,
+          "median_raw_future_return_bps": -2.7244377635835777,
+          "n": 94,
+          "positive_effort_signed_rate": 0.5
+        },
+        "3_4": {
+          "mean_effort_signed_future_return_bps": -0.3305764417581052,
+          "mean_raw_future_return_bps": 3.618305403201712,
+          "median_effort_signed_future_return_bps": -1.2919155527025796,
+          "median_raw_future_return_bps": 2.664357720364091,
+          "n": 88,
+          "positive_effort_signed_rate": 0.4659090909090909
+        },
+        "4_0": {
+          "mean_effort_signed_future_return_bps": -4.764278014859904,
+          "mean_raw_future_return_bps": -0.4209373262250111,
+          "median_effort_signed_future_return_bps": -3.9854104239000216,
+          "median_raw_future_return_bps": 1.730870202519691,
+          "n": 15,
+          "positive_effort_signed_rate": 0.4
+        },
+        "4_1": {
+          "mean_effort_signed_future_return_bps": -1.1671222729457127,
+          "mean_raw_future_return_bps": 0.07568218618834328,
+          "median_effort_signed_future_return_bps": -0.025607801160405844,
+          "median_raw_future_return_bps": 0.8162588565425326,
+          "n": 71,
+          "positive_effort_signed_rate": 0.4647887323943662
+        },
+        "4_2": {
+          "mean_effort_signed_future_return_bps": -0.2160332869931829,
+          "mean_raw_future_return_bps": -1.1477124577074909,
+          "median_effort_signed_future_return_bps": -0.34645772210221426,
+          "median_raw_future_return_bps": -0.7154701203441616,
+          "n": 90,
+          "positive_effort_signed_rate": 0.4444444444444444
+        },
+        "4_3": {
+          "mean_effort_signed_future_return_bps": -0.4955909327374736,
+          "mean_raw_future_return_bps": 0.04548714824530503,
+          "median_effort_signed_future_return_bps": -0.33520100460185037,
+          "median_raw_future_return_bps": -0.2433577737253537,
+          "n": 87,
+          "positive_effort_signed_rate": 0.4942528735632184
+        },
+        "4_4": {
+          "mean_effort_signed_future_return_bps": -0.6195277317866079,
+          "mean_raw_future_return_bps": 0.40409719585659,
+          "median_effort_signed_future_return_bps": -2.269639136035896,
+          "median_raw_future_return_bps": 0.29354735413484456,
+          "n": 100,
+          "positive_effort_signed_rate": 0.42
+        }
+      },
+      "horizon_seconds": 300,
+      "selected_count": 1812
+    }
+  },
+  "grid_summary_full_sample": {
+    "15m": {
+      "0_0": {
+        "mean_effort_signed_future_return_bps": 0.7989065195142695,
+        "mean_raw_future_return_bps": 0.5181839818776472,
+        "median_effort_signed_future_return_bps": 0.13913492229836136,
+        "median_raw_future_return_bps": 0.8772518286017008,
+        "n": 773,
+        "positive_effort_signed_rate": 0.5045278137128072
+      },
+      "0_1": {
+        "mean_effort_signed_future_return_bps": 0.022019489085852148,
+        "mean_raw_future_return_bps": 0.4987838928710803,
+        "median_effort_signed_future_return_bps": -0.7809260826578219,
+        "median_raw_future_return_bps": 0.613180777398262,
+        "n": 416,
+        "positive_effort_signed_rate": 0.47836538461538464
+      },
+      "0_2": {
+        "mean_effort_signed_future_return_bps": -0.5007709997647881,
+        "mean_raw_future_return_bps": -0.7037611659938608,
+        "median_effort_signed_future_return_bps": -0.125527529443839,
+        "median_raw_future_return_bps": -1.2782488261615261,
+        "n": 357,
+        "positive_effort_signed_rate": 0.49299719887955185
+      },
+      "0_3": {
+        "mean_effort_signed_future_return_bps": 0.3753964329293141,
+        "mean_raw_future_return_bps": -1.2058539640122874,
+        "median_effort_signed_future_return_bps": -0.7716029540781489,
+        "median_raw_future_return_bps": -1.4279273016315408,
+        "n": 259,
+        "positive_effort_signed_rate": 0.4671814671814672
+      },
+      "0_4": {
+        "mean_effort_signed_future_return_bps": 1.7118247444226034,
+        "mean_raw_future_return_bps": 1.5650430978920231,
+        "median_effort_signed_future_return_bps": 0.6227616168124923,
+        "median_raw_future_return_bps": 0.9414145269839156,
+        "n": 212,
+        "positive_effort_signed_rate": 0.5094339622641509
+      },
+      "1_0": {
+        "mean_effort_signed_future_return_bps": -0.8694463368939025,
+        "mean_raw_future_return_bps": 1.2504914724775713,
+        "median_effort_signed_future_return_bps": 0.9149761629307458,
+        "median_raw_future_return_bps": -0.012905648738572341,
+        "n": 565,
+        "positive_effort_signed_rate": 0.5256637168141592
+      },
+      "1_1": {
+        "mean_effort_signed_future_return_bps": -0.6166513370874412,
+        "mean_raw_future_return_bps": -0.08298477122554021,
+        "median_effort_signed_future_return_bps": -0.2566600063538686,
+        "median_raw_future_return_bps": 0.012765319180851158,
+        "n": 423,
+        "positive_effort_signed_rate": 0.475177304964539
+      },
+      "1_2": {
+        "mean_effort_signed_future_return_bps": 1.6321852855250996,
+        "mean_raw_future_return_bps": -1.1229495872709523,
+        "median_effort_signed_future_return_bps": 0.9536702398445582,
+        "median_raw_future_return_bps": -0.68158399515226,
+        "n": 382,
+        "positive_effort_signed_rate": 0.5340314136125655
+      },
+      "1_3": {
+        "mean_effort_signed_future_return_bps": -2.801034735282627,
+        "mean_raw_future_return_bps": -0.3273515350229794,
+        "median_effort_signed_future_return_bps": -2.0582138787372664,
+        "median_raw_future_return_bps": -0.07442074030764192,
+        "n": 328,
+        "positive_effort_signed_rate": 0.4451219512195122
+      },
+      "1_4": {
+        "mean_effort_signed_future_return_bps": -1.8351322890053072,
+        "mean_raw_future_return_bps": 2.9238134381562575,
+        "median_effort_signed_future_return_bps": -1.2555715289529603,
+        "median_raw_future_return_bps": 2.302479049243254,
+        "n": 318,
+        "positive_effort_signed_rate": 0.49056603773584906
+      },
+      "2_0": {
+        "mean_effort_signed_future_return_bps": -2.316188803220591,
+        "mean_raw_future_return_bps": -0.5600654261643497,
+        "median_effort_signed_future_return_bps": -1.3582448393028639,
+        "median_raw_future_return_bps": 0.9687400509909475,
+        "n": 397,
+        "positive_effort_signed_rate": 0.45843828715365237
+      },
+      "2_1": {
+        "mean_effort_signed_future_return_bps": 0.11541939570178109,
+        "mean_raw_future_return_bps": 0.04600616864306819,
+        "median_effort_signed_future_return_bps": 0.4006889339223544,
+        "median_raw_future_return_bps": 0.20325396480967967,
+        "n": 414,
+        "positive_effort_signed_rate": 0.5217391304347826
+      },
+      "2_2": {
+        "mean_effort_signed_future_return_bps": -0.7760324493433806,
+        "mean_raw_future_return_bps": -0.3068936180918537,
+        "median_effort_signed_future_return_bps": -1.4241258489445867,
+        "median_raw_future_return_bps": 0.47406572225618027,
+        "n": 381,
+        "positive_effort_signed_rate": 0.45931758530183725
+      },
+      "2_3": {
+        "mean_effort_signed_future_return_bps": -1.0462229514593089,
+        "mean_raw_future_return_bps": 0.23913255666049443,
+        "median_effort_signed_future_return_bps": 0.4841641935720444,
+        "median_raw_future_return_bps": 0.9084776935431151,
+        "n": 402,
+        "positive_effort_signed_rate": 0.5174129353233831
+      },
+      "2_4": {
+        "mean_effort_signed_future_return_bps": -2.063223532654586,
+        "mean_raw_future_return_bps": 0.8358697731258518,
+        "median_effort_signed_future_return_bps": -2.6279499207844057,
+        "median_raw_future_return_bps": -0.7733054947213115,
+        "n": 423,
+        "positive_effort_signed_rate": 0.42789598108747046
+      },
+      "3_0": {
+        "mean_effort_signed_future_return_bps": -0.5201403268471908,
+        "mean_raw_future_return_bps": -1.5648410157644304,
+        "median_effort_signed_future_return_bps": -1.2603869404591992,
+        "median_raw_future_return_bps": -1.5233706204545958,
+        "n": 203,
+        "positive_effort_signed_rate": 0.4482758620689655
+      },
+      "3_1": {
+        "mean_effort_signed_future_return_bps": -0.060746213524266186,
+        "mean_raw_future_return_bps": 0.6457640139536294,
+        "median_effort_signed_future_return_bps": -0.02572661611571086,
+        "median_raw_future_return_bps": -0.02572661611571086,
+        "n": 387,
+        "positive_effort_signed_rate": 0.49870801033591733
+      },
+      "3_2": {
+        "mean_effort_signed_future_return_bps": 0.6356682509279623,
+        "mean_raw_future_return_bps": 1.7093051378251156,
+        "median_effort_signed_future_return_bps": 0.7366229903377767,
+        "median_raw_future_return_bps": 1.5231469227504366,
+        "n": 413,
+        "positive_effort_signed_rate": 0.5254237288135594
+      },
+      "3_3": {
+        "mean_effort_signed_future_return_bps": -0.025050093189093684,
+        "mean_raw_future_return_bps": -1.6993189128293045,
+        "median_effort_signed_future_return_bps": -0.5985362908543184,
+        "median_raw_future_return_bps": -2.294531916844125,
+        "n": 488,
+        "positive_effort_signed_rate": 0.48770491803278687
+      },
+      "3_4": {
+        "mean_effort_signed_future_return_bps": -0.7204297812034096,
+        "mean_raw_future_return_bps": -0.3263856017713691,
+        "median_effort_signed_future_return_bps": -0.20765952145647576,
+        "median_raw_future_return_bps": 0.20502464140458745,
+        "n": 525,
+        "positive_effort_signed_rate": 0.4876190476190476
+      },
+      "4_0": {
+        "mean_effort_signed_future_return_bps": -2.89864196894715,
+        "mean_raw_future_return_bps": -0.4031133495222977,
+        "median_effort_signed_future_return_bps": -0.6134898756921325,
+        "median_raw_future_return_bps": -0.2817114225204264,
+        "n": 79,
+        "positive_effort_signed_rate": 0.46835443037974683
+      },
+      "4_1": {
+        "mean_effort_signed_future_return_bps": 0.2995546400698093,
+        "mean_raw_future_return_bps": 0.6261404863494909,
+        "median_effort_signed_future_return_bps": 0.677102237011496,
+        "median_raw_future_return_bps": -0.12842725534165653,
+        "n": 376,
+        "positive_effort_signed_rate": 0.550531914893617
+      },
+      "4_2": {
+        "mean_effort_signed_future_return_bps": 0.03937875118509468,
+        "mean_raw_future_return_bps": -0.13178279123346806,
+        "median_effort_signed_future_return_bps": -0.16085863638670939,
+        "median_raw_future_return_bps": -0.019231685593646797,
+        "n": 484,
+        "positive_effort_signed_rate": 0.4896694214876033
+      },
+      "4_3": {
+        "mean_effort_signed_future_return_bps": 0.11537581035117514,
+        "mean_raw_future_return_bps": -0.725130041608204,
+        "median_effort_signed_future_return_bps": 0.025768613313279034,
+        "median_raw_future_return_bps": -0.2761168928489061,
+        "n": 539,
+        "positive_effort_signed_rate": 0.5027829313543599
+      },
+      "4_4": {
+        "mean_effort_signed_future_return_bps": 0.38615397127176193,
+        "mean_raw_future_return_bps": 0.6295011015230155,
+        "median_effort_signed_future_return_bps": 0.8272132482911344,
+        "median_raw_future_return_bps": 0.5052137411433211,
+        "n": 539,
+        "positive_effort_signed_rate": 0.5139146567717996
+      }
+    },
+    "30m": {
+      "0_0": {
+        "mean_effort_signed_future_return_bps": 0.3375636211772535,
+        "mean_raw_future_return_bps": 2.0152737789809896,
+        "median_effort_signed_future_return_bps": -0.17768504311260805,
+        "median_raw_future_return_bps": 3.0107344489475745,
+        "n": 773,
+        "positive_effort_signed_rate": 0.49805950840879687
+      },
+      "0_1": {
+        "mean_effort_signed_future_return_bps": 0.8567337903188551,
+        "mean_raw_future_return_bps": 0.6961312757004893,
+        "median_effort_signed_future_return_bps": 0.6011740356424506,
+        "median_raw_future_return_bps": 1.4020891421845958,
+        "n": 416,
+        "positive_effort_signed_rate": 0.5120192307692307
+      },
+      "0_2": {
+        "mean_effort_signed_future_return_bps": -0.730456448134898,
+        "mean_raw_future_return_bps": -2.450197115043112,
+        "median_effort_signed_future_return_bps": -1.8219130643595747,
+        "median_raw_future_return_bps": -2.2845006770851572,
+        "n": 357,
+        "positive_effort_signed_rate": 0.46218487394957986
+      },
+      "0_3": {
+        "mean_effort_signed_future_return_bps": -0.2542650615871877,
+        "mean_raw_future_return_bps": -0.15030992003457513,
+        "median_effort_signed_future_return_bps": 0.5664103232361237,
+        "median_raw_future_return_bps": 0.5044035073916125,
+        "n": 259,
+        "positive_effort_signed_rate": 0.5173745173745173
+      },
+      "0_4": {
+        "mean_effort_signed_future_return_bps": 2.325912268205264,
+        "mean_raw_future_return_bps": 3.4890776427790327,
+        "median_effort_signed_future_return_bps": 0.43807135010745213,
+        "median_raw_future_return_bps": 0.15464243511195044,
+        "n": 212,
+        "positive_effort_signed_rate": 0.5094339622641509
+      },
+      "1_0": {
+        "mean_effort_signed_future_return_bps": -2.5982596980506742,
+        "mean_raw_future_return_bps": 1.3972751111731894,
+        "median_effort_signed_future_return_bps": -0.9246452643558679,
+        "median_raw_future_return_bps": 1.8381821330307695,
+        "n": 565,
+        "positive_effort_signed_rate": 0.4814159292035398
+      },
+      "1_1": {
+        "mean_effort_signed_future_return_bps": -0.6418214873233633,
+        "mean_raw_future_return_bps": -1.0166881435237751,
+        "median_effort_signed_future_return_bps": -0.17625515704156816,
+        "median_raw_future_return_bps": 0.1664356838130197,
+        "n": 423,
+        "positive_effort_signed_rate": 0.4940898345153664
+      },
+      "1_2": {
+        "mean_effort_signed_future_return_bps": 0.818899068900711,
+        "mean_raw_future_return_bps": -1.892452347803202,
+        "median_effort_signed_future_return_bps": -1.3054184305273682,
+        "median_raw_future_return_bps": 0.32198630698593733,
+        "n": 382,
+        "positive_effort_signed_rate": 0.4738219895287958
+      },
+      "1_3": {
+        "mean_effort_signed_future_return_bps": -3.531536909171455,
+        "mean_raw_future_return_bps": 1.4885459085568518,
+        "median_effort_signed_future_return_bps": -1.2209729199129593,
+        "median_raw_future_return_bps": 0.4812646583404953,
+        "n": 328,
+        "positive_effort_signed_rate": 0.4634146341463415
+      },
+      "1_4": {
+        "mean_effort_signed_future_return_bps": -0.8573266509162752,
+        "mean_raw_future_return_bps": 5.023738681692085,
+        "median_effort_signed_future_return_bps": 0.020992761281605432,
+        "median_raw_future_return_bps": 2.8236366827418364,
+        "n": 318,
+        "positive_effort_signed_rate": 0.5
+      },
+      "2_0": {
+        "mean_effort_signed_future_return_bps": -1.7180055972440338,
+        "mean_raw_future_return_bps": -0.29173883732664146,
+        "median_effort_signed_future_return_bps": -1.5249206013651846,
+        "median_raw_future_return_bps": 1.0471292186399637,
+        "n": 397,
+        "positive_effort_signed_rate": 0.4634760705289673
+      },
+      "2_1": {
+        "mean_effort_signed_future_return_bps": -0.8716237456365511,
+        "mean_raw_future_return_bps": 1.4101312081960884,
+        "median_effort_signed_future_return_bps": 0.12905067786568838,
+        "median_raw_future_return_bps": 0.2901838964010677,
+        "n": 414,
+        "positive_effort_signed_rate": 0.5024154589371981
+      },
+      "2_2": {
+        "mean_effort_signed_future_return_bps": 0.10823163482757338,
+        "mean_raw_future_return_bps": -0.8796127380380281,
+        "median_effort_signed_future_return_bps": -0.2715625515419242,
+        "median_raw_future_return_bps": -0.8947573615737061,
+        "n": 381,
+        "positive_effort_signed_rate": 0.49606299212598426
+      },
+      "2_3": {
+        "mean_effort_signed_future_return_bps": -1.9098484558242619,
+        "mean_raw_future_return_bps": 0.47061640166957475,
+        "median_effort_signed_future_return_bps": -2.142786485926293,
+        "median_raw_future_return_bps": 0.21479090131601528,
+        "n": 402,
+        "positive_effort_signed_rate": 0.46766169154228854
+      },
+      "2_4": {
+        "mean_effort_signed_future_return_bps": -1.0661400534090129,
+        "mean_raw_future_return_bps": 0.3144290496981061,
+        "median_effort_signed_future_return_bps": -3.2881950272354876,
+        "median_raw_future_return_bps": 1.2916719145216244,
+        "n": 423,
+        "positive_effort_signed_rate": 0.46335697399527187
+      },
+      "3_0": {
+        "mean_effort_signed_future_return_bps": -1.267290660508204,
+        "mean_raw_future_return_bps": -0.41756384055373735,
+        "median_effort_signed_future_return_bps": -3.0944748526748023,
+        "median_raw_future_return_bps": 0.9579980872554505,
+        "n": 203,
+        "positive_effort_signed_rate": 0.4482758620689655
+      },
+      "3_1": {
+        "mean_effort_signed_future_return_bps": -0.598675469948109,
+        "mean_raw_future_return_bps": -0.17663196789653957,
+        "median_effort_signed_future_return_bps": 0.4766189426015423,
+        "median_raw_future_return_bps": -0.5306299679035879,
+        "n": 387,
+        "positive_effort_signed_rate": 0.5064599483204134
+      },
+      "3_2": {
+        "mean_effort_signed_future_return_bps": 1.4984719812690293,
+        "mean_raw_future_return_bps": 1.40896598490972,
+        "median_effort_signed_future_return_bps": 1.4810321662176644,
+        "median_raw_future_return_bps": 3.1659949339363505,
+        "n": 413,
+        "positive_effort_signed_rate": 0.5278450363196125
+      },
+      "3_3": {
+        "mean_effort_signed_future_return_bps": -0.47901972097215284,
+        "mean_raw_future_return_bps": -2.4095172299078134,
+        "median_effort_signed_future_return_bps": 0.03232774956444202,
+        "median_raw_future_return_bps": -1.4984398078387349,
+        "n": 488,
+        "positive_effort_signed_rate": 0.5040983606557377
+      },
+      "3_4": {
+        "mean_effort_signed_future_return_bps": 0.42148208529510356,
+        "mean_raw_future_return_bps": 0.06745134938280038,
+        "median_effort_signed_future_return_bps": 0.11375838099108836,
+        "median_raw_future_return_bps": 1.3060240377210346,
+        "n": 525,
+        "positive_effort_signed_rate": 0.5009523809523809
+      },
+      "4_0": {
+        "mean_effort_signed_future_return_bps": -2.3865245036890816,
+        "mean_raw_future_return_bps": 0.25280860086106316,
+        "median_effort_signed_future_return_bps": 0.9448364372204833,
+        "median_raw_future_return_bps": -2.963565486016247,
+        "n": 79,
+        "positive_effort_signed_rate": 0.5063291139240507
+      },
+      "4_1": {
+        "mean_effort_signed_future_return_bps": -0.408546797152028,
+        "mean_raw_future_return_bps": 0.5671269393507796,
+        "median_effort_signed_future_return_bps": 0.0640167325918091,
+        "median_raw_future_return_bps": 0.5923697704879896,
+        "n": 376,
+        "positive_effort_signed_rate": 0.5026595744680851
+      },
+      "4_2": {
+        "mean_effort_signed_future_return_bps": 0.23054971624865137,
+        "mean_raw_future_return_bps": -0.38263798711430325,
+        "median_effort_signed_future_return_bps": -0.01293333971883934,
+        "median_raw_future_return_bps": -1.5656204590720308,
+        "n": 484,
+        "positive_effort_signed_rate": 0.5
+      },
+      "4_3": {
+        "mean_effort_signed_future_return_bps": -0.042100039422904176,
+        "mean_raw_future_return_bps": -0.4648537428625988,
+        "median_effort_signed_future_return_bps": -0.4523649965914171,
+        "median_raw_future_return_bps": 0.3336524419807479,
+        "n": 539,
+        "positive_effort_signed_rate": 0.4897959183673469
+      },
+      "4_4": {
+        "mean_effort_signed_future_return_bps": -0.2547438874645373,
+        "mean_raw_future_return_bps": -1.121069608583551,
+        "median_effort_signed_future_return_bps": 0.22066341230004669,
+        "median_raw_future_return_bps": 0.22066341230004669,
+        "n": 539,
+        "positive_effort_signed_rate": 0.5009276437847866
+      }
+    },
+    "5m": {
+      "0_0": {
+        "mean_effort_signed_future_return_bps": 0.7843390537161079,
+        "mean_raw_future_return_bps": 0.6090614530376915,
+        "median_effort_signed_future_return_bps": 0.7998725286769344,
+        "median_raw_future_return_bps": -0.05157084803018527,
+        "n": 773,
+        "positive_effort_signed_rate": 0.5420439844760673
+      },
+      "0_1": {
+        "mean_effort_signed_future_return_bps": 0.1366277281469153,
+        "mean_raw_future_return_bps": 0.32035111551918843,
+        "median_effort_signed_future_return_bps": -0.37903603605882497,
+        "median_raw_future_return_bps": 0.19359635461884442,
+        "n": 416,
+        "positive_effort_signed_rate": 0.47836538461538464
+      },
+      "0_2": {
+        "mean_effort_signed_future_return_bps": -0.41490210362696384,
+        "mean_raw_future_return_bps": 0.3819203527712352,
+        "median_effort_signed_future_return_bps": -0.746916394647383,
+        "median_raw_future_return_bps": -0.3710368625562055,
+        "n": 357,
+        "positive_effort_signed_rate": 0.46218487394957986
+      },
+      "0_3": {
+        "mean_effort_signed_future_return_bps": -0.7616479654516337,
+        "mean_raw_future_return_bps": -0.11647363938830228,
+        "median_effort_signed_future_return_bps": -0.42464675508727107,
+        "median_raw_future_return_bps": -0.13631668597118068,
+        "n": 259,
+        "positive_effort_signed_rate": 0.47876447876447875
+      },
+      "0_4": {
+        "mean_effort_signed_future_return_bps": 2.793507011903025,
+        "mean_raw_future_return_bps": -0.3272457205134092,
+        "median_effort_signed_future_return_bps": 3.238351961254849,
+        "median_raw_future_return_bps": -0.012939941847844997,
+        "n": 212,
+        "positive_effort_signed_rate": 0.5754716981132075
+      },
+      "1_0": {
+        "mean_effort_signed_future_return_bps": -0.1289957177031788,
+        "mean_raw_future_return_bps": -0.10653808794464269,
+        "median_effort_signed_future_return_bps": 0.8503445188806685,
+        "median_raw_future_return_bps": -0.11337947038029746,
+        "n": 565,
+        "positive_effort_signed_rate": 0.5327433628318584
+      },
+      "1_1": {
+        "mean_effort_signed_future_return_bps": -0.8097838140341557,
+        "mean_raw_future_return_bps": -0.24066001671242726,
+        "median_effort_signed_future_return_bps": -0.20253190194471873,
+        "median_raw_future_return_bps": -0.0640408631943167,
+        "n": 423,
+        "positive_effort_signed_rate": 0.475177304964539
+      },
+      "1_2": {
+        "mean_effort_signed_future_return_bps": 0.688420302116345,
+        "mean_raw_future_return_bps": -0.44082981577012575,
+        "median_effort_signed_future_return_bps": 0.4782233830294966,
+        "median_raw_future_return_bps": -0.34097929979864017,
+        "n": 382,
+        "positive_effort_signed_rate": 0.5209424083769634
+      },
+      "1_3": {
+        "mean_effort_signed_future_return_bps": -2.050394572371702,
+        "mean_raw_future_return_bps": -0.12773140392678065,
+        "median_effort_signed_future_return_bps": -0.7650624382526026,
+        "median_raw_future_return_bps": -0.5015239093064839,
+        "n": 328,
+        "positive_effort_signed_rate": 0.47560975609756095
+      },
+      "1_4": {
+        "mean_effort_signed_future_return_bps": -1.356753927956353,
+        "mean_raw_future_return_bps": 0.3968032765956708,
+        "median_effort_signed_future_return_bps": -1.4298131736707593,
+        "median_raw_future_return_bps": -0.2681981254125846,
+        "n": 318,
+        "positive_effort_signed_rate": 0.46855345911949686
+      },
+      "2_0": {
+        "mean_effort_signed_future_return_bps": -1.6695356837584547,
+        "mean_raw_future_return_bps": -0.5705264646092353,
+        "median_effort_signed_future_return_bps": -1.190501336880577,
+        "median_raw_future_return_bps": -1.1327761400203826,
+        "n": 397,
+        "positive_effort_signed_rate": 0.43828715365239296
+      },
+      "2_1": {
+        "mean_effort_signed_future_return_bps": 0.1850284703616681,
+        "mean_raw_future_return_bps": 0.8147710869734555,
+        "median_effort_signed_future_return_bps": 0.371626448855189,
+        "median_raw_future_return_bps": 0.2691113366418468,
+        "n": 414,
+        "positive_effort_signed_rate": 0.5265700483091788
+      },
+      "2_2": {
+        "mean_effort_signed_future_return_bps": -0.8176719500263828,
+        "mean_raw_future_return_bps": 0.21898588460937135,
+        "median_effort_signed_future_return_bps": -0.29178467561528515,
+        "median_raw_future_return_bps": -0.26811825037783826,
+        "n": 381,
+        "positive_effort_signed_rate": 0.49343832020997375
+      },
+      "2_3": {
+        "mean_effort_signed_future_return_bps": -0.38280360655291523,
+        "mean_raw_future_return_bps": 0.5652535705399248,
+        "median_effort_signed_future_return_bps": -0.4646781888301627,
+        "median_raw_future_return_bps": 0.08312038233016106,
+        "n": 402,
+        "positive_effort_signed_rate": 0.4701492537313433
+      },
+      "2_4": {
+        "mean_effort_signed_future_return_bps": -0.21384213915778585,
+        "mean_raw_future_return_bps": 0.17521663575567725,
+        "median_effort_signed_future_return_bps": -0.34935786087757265,
+        "median_raw_future_return_bps": -0.43703147661986097,
+        "n": 423,
+        "positive_effort_signed_rate": 0.4846335697399527
+      },
+      "3_0": {
+        "mean_effort_signed_future_return_bps": -0.4405724679258551,
+        "mean_raw_future_return_bps": -1.6160682488411984,
+        "median_effort_signed_future_return_bps": -0.2951599542592263,
+        "median_raw_future_return_bps": -1.3028517143261324,
+        "n": 203,
+        "positive_effort_signed_rate": 0.4876847290640394
+      },
+      "3_1": {
+        "mean_effort_signed_future_return_bps": 0.27041069762392395,
+        "mean_raw_future_return_bps": 0.31215012867040126,
+        "median_effort_signed_future_return_bps": 0.11615158814803976,
+        "median_raw_future_return_bps": 0.012792655992037563,
+        "n": 387,
+        "positive_effort_signed_rate": 0.5142118863049095
+      },
+      "3_2": {
+        "mean_effort_signed_future_return_bps": 1.0728601688458022,
+        "mean_raw_future_return_bps": 0.12192582847649618,
+        "median_effort_signed_future_return_bps": 0.890130893709984,
+        "median_raw_future_return_bps": 0.29745373141829706,
+        "n": 413,
+        "positive_effort_signed_rate": 0.559322033898305
+      },
+      "3_3": {
+        "mean_effort_signed_future_return_bps": -0.21771993710852666,
+        "mean_raw_future_return_bps": -1.4351990557193668,
+        "median_effort_signed_future_return_bps": -0.6692777331568804,
+        "median_raw_future_return_bps": -1.7329223084447385,
+        "n": 488,
+        "positive_effort_signed_rate": 0.4774590163934426
+      },
+      "3_4": {
+        "mean_effort_signed_future_return_bps": 0.02211679982588778,
+        "mean_raw_future_return_bps": 0.7881184425754579,
+        "median_effort_signed_future_return_bps": 0.07765201028151922,
+        "median_raw_future_return_bps": 0.07765201028151922,
+        "n": 525,
+        "positive_effort_signed_rate": 0.5009523809523809
+      },
+      "4_0": {
+        "mean_effort_signed_future_return_bps": -0.812383895438964,
+        "mean_raw_future_return_bps": -1.086295783132673,
+        "median_effort_signed_future_return_bps": 0.37174935637040885,
+        "median_raw_future_return_bps": 0.19207560096291365,
+        "n": 79,
+        "positive_effort_signed_rate": 0.5189873417721519
+      },
+      "4_1": {
+        "mean_effort_signed_future_return_bps": -0.02030659047722402,
+        "mean_raw_future_return_bps": 0.10178882458636009,
+        "median_effort_signed_future_return_bps": 0.03169753497433652,
+        "median_raw_future_return_bps": -0.019231545934693468,
+        "n": 376,
+        "positive_effort_signed_rate": 0.5079787234042553
+      },
+      "4_2": {
+        "mean_effort_signed_future_return_bps": 0.15062976100408923,
+        "mean_raw_future_return_bps": -0.3701845409450188,
+        "median_effort_signed_future_return_bps": -0.1481610105787151,
+        "median_raw_future_return_bps": -0.5949739538632361,
+        "n": 484,
+        "positive_effort_signed_rate": 0.48140495867768596
+      },
+      "4_3": {
+        "mean_effort_signed_future_return_bps": -0.2204902635709428,
+        "mean_raw_future_return_bps": -0.022963288065156247,
+        "median_effort_signed_future_return_bps": -0.11686179340079958,
+        "median_raw_future_return_bps": 0.06354907609297918,
+        "n": 539,
+        "positive_effort_signed_rate": 0.48608534322820035
+      },
+      "4_4": {
+        "mean_effort_signed_future_return_bps": 0.0802521072435489,
+        "mean_raw_future_return_bps": 0.7530536344201328,
+        "median_effort_signed_future_return_bps": 0.21964973620293957,
+        "median_raw_future_return_bps": 0.2567403982438971,
+        "n": 539,
+        "positive_effort_signed_rate": 0.5064935064935064
+      }
+    }
+  },
+  "moving_block_bootstrap": {
+    "cells": {
+      "0_0": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.314637833932509,
+            "ci_low": -0.8629904546290595,
+            "point_estimate_mean_of_replicates": 0.75644856071121
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.5140119105296166,
+            "ci_low": -1.7012911897272205,
+            "point_estimate_mean_of_replicates": 0.4404015212917745
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.3146075251409757,
+            "ci_low": -1.9269324657309308,
+            "point_estimate_mean_of_replicates": 0.21936173091913494
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 5.0447186346304,
+            "ci_low": -1.3382319012246153,
+            "point_estimate_mean_of_replicates": 1.9196201665747212
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.6383845227775446,
+            "ci_low": -0.06988333004899043,
+            "point_estimate_mean_of_replicates": 0.7613302003228376
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.5574973258687834,
+            "ci_low": -0.3576174177015416,
+            "point_estimate_mean_of_replicates": 0.5787408792810795
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "0_1": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.4550215988745343,
+            "ci_low": -1.4129902131580958,
+            "point_estimate_mean_of_replicates": 0.046371475210445524
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.271192742502401,
+            "ci_low": -1.2458680634937693,
+            "point_estimate_mean_of_replicates": 0.5107354126120677
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.502285352158438,
+            "ci_low": -1.3066347367953282,
+            "point_estimate_mean_of_replicates": 0.9013554473978788
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.943646638941352,
+            "ci_low": -2.4346114087482937,
+            "point_estimate_mean_of_replicates": 0.7286316597274116
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.9796715986407422,
+            "ci_low": -0.6814219828725478,
+            "point_estimate_mean_of_replicates": 0.14729319362566756
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.2903482026383446,
+            "ci_low": -0.5425013715669764,
+            "point_estimate_mean_of_replicates": 0.3460455364164095
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "0_2": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.7561604066760137,
+            "ci_low": -2.852230832778918,
+            "point_estimate_mean_of_replicates": -0.5611073474418103
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.7743553101588998,
+            "ci_low": -3.017147733010163,
+            "point_estimate_mean_of_replicates": -0.7055610161321484
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.224567991380302,
+            "ci_low": -4.1767190415492585,
+            "point_estimate_mean_of_replicates": -0.8022514014465073
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.2268306993385376,
+            "ci_low": -6.077102676733435,
+            "point_estimate_mean_of_replicates": -2.491947823262553
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.8755846172843637,
+            "ci_low": -1.661118700585167,
+            "point_estimate_mean_of_replicates": -0.4522869684131925
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.771548979864931,
+            "ci_low": -0.9258138465925232,
+            "point_estimate_mean_of_replicates": 0.35704996529769617
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "0_3": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.1073463297213837,
+            "ci_low": -2.561377223246287,
+            "point_estimate_mean_of_replicates": 0.37508852106187585
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.9325610571273562,
+            "ci_low": -4.508043431863415,
+            "point_estimate_mean_of_replicates": -1.2595445067937596
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.887229427780949,
+            "ci_low": -4.595324483859859,
+            "point_estimate_mean_of_replicates": -0.34757808700821846
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 4.858435134691444,
+            "ci_low": -5.527044614661553,
+            "point_estimate_mean_of_replicates": -0.2629204580748031
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.6688803235154882,
+            "ci_low": -2.3465952657470392,
+            "point_estimate_mean_of_replicates": -0.8008886087261877
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.6598150090594688,
+            "ci_low": -1.9860805393037417,
+            "point_estimate_mean_of_replicates": -0.1988569268256721
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "0_4": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 5.292766743406026,
+            "ci_low": -1.7588213469108207,
+            "point_estimate_mean_of_replicates": 1.656596124418931
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 5.731460611837533,
+            "ci_low": -2.914610076771286,
+            "point_estimate_mean_of_replicates": 1.4578421135911879
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 8.568340821132802,
+            "ci_low": -3.498513322613249,
+            "point_estimate_mean_of_replicates": 2.318575416495548
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 11.682973186932715,
+            "ci_low": -4.750369142944845,
+            "point_estimate_mean_of_replicates": 3.387640660401499
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 5.143641219940404,
+            "ci_low": 0.5249582922047159,
+            "point_estimate_mean_of_replicates": 2.7446132683671585
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.0045528539344413,
+            "ci_low": -2.89837712397495,
+            "point_estimate_mean_of_replicates": -0.39601969810006027
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "1_0": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.0004525057044393,
+            "ci_low": -3.109737152970361,
+            "point_estimate_mean_of_replicates": -0.9808047265170441
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.7296974260735767,
+            "ci_low": -1.4896978889431933,
+            "point_estimate_mean_of_replicates": 1.195009246680253
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.36806458429985134,
+            "ci_low": -6.182072300238151,
+            "point_estimate_mean_of_replicates": -2.721652883827161
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 5.567728833764485,
+            "ci_low": -2.7613471542601786,
+            "point_estimate_mean_of_replicates": 1.3233536817480556
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.8244089509451863,
+            "ci_low": -1.1784053957611347,
+            "point_estimate_mean_of_replicates": -0.15028297404593505
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.9943813591306365,
+            "ci_low": -1.2469798907778749,
+            "point_estimate_mean_of_replicates": -0.1256999189079184
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "1_1": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.979908765859996,
+            "ci_low": -2.2728664854652108,
+            "point_estimate_mean_of_replicates": -0.6307005206069181
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.5759018178824016,
+            "ci_low": -1.8926617241404604,
+            "point_estimate_mean_of_replicates": -0.08967547690301927
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.3206934296765924,
+            "ci_low": -2.6857357682823,
+            "point_estimate_mean_of_replicates": -0.6596703702615649
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.5260118985367785,
+            "ci_low": -3.522217414741647,
+            "point_estimate_mean_of_replicates": -1.0099294723490235
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.006877909664628279,
+            "ci_low": -1.659713790003389,
+            "point_estimate_mean_of_replicates": -0.8103463332910914
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.6082395548587023,
+            "ci_low": -1.082770034824655,
+            "point_estimate_mean_of_replicates": -0.2329927890336975
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "1_2": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.467810894808368,
+            "ci_low": -0.2340733922572795,
+            "point_estimate_mean_of_replicates": 1.6129062229001696
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.8671913126058768,
+            "ci_low": -3.252654910036392,
+            "point_estimate_mean_of_replicates": -1.168402146498038
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.4155888915673525,
+            "ci_low": -1.692802667155983,
+            "point_estimate_mean_of_replicates": 0.8014234269927305
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.20653236851407,
+            "ci_low": -5.097751736035835,
+            "point_estimate_mean_of_replicates": -1.9277567757495695
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.575906802283436,
+            "ci_low": -0.34498675021785885,
+            "point_estimate_mean_of_replicates": 0.6589836560641977
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.5729245711470565,
+            "ci_low": -1.4231866501662236,
+            "point_estimate_mean_of_replicates": -0.42639549580451586
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "1_3": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": -0.6658882480306371,
+            "ci_low": -4.851607856958713,
+            "point_estimate_mean_of_replicates": -2.804628970715274
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.368421133178485,
+            "ci_low": -2.8267926714448204,
+            "point_estimate_mean_of_replicates": -0.30279072727236067
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": -0.5486226105775444,
+            "ci_low": -6.481665708290347,
+            "point_estimate_mean_of_replicates": -3.5262004547237056
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 5.319274159923957,
+            "ci_low": -2.256102346283728,
+            "point_estimate_mean_of_replicates": 1.5467733549471359
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": -0.8409419505487772,
+            "ci_low": -3.374991150510535,
+            "point_estimate_mean_of_replicates": -2.0484787067731363
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.4420530666600755,
+            "ci_low": -1.8615101473723954,
+            "point_estimate_mean_of_replicates": -0.13369269439057727
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "1_4": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.1114395284534866,
+            "ci_low": -4.8342965786627285,
+            "point_estimate_mean_of_replicates": -1.7733805574813626
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 6.911182176630179,
+            "ci_low": -1.264571044188589,
+            "point_estimate_mean_of_replicates": 2.884976736133251
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.8155199394881856,
+            "ci_low": -4.335217267029874,
+            "point_estimate_mean_of_replicates": -0.7663955726127464
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 11.609871139008444,
+            "ci_low": -1.5577456016128175,
+            "point_estimate_mean_of_replicates": 4.992449845956775
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.28538619644002156,
+            "ci_low": -2.918584753128089,
+            "point_estimate_mean_of_replicates": -1.3434732941487837
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.1948398772230684,
+            "ci_low": -1.626876067888484,
+            "point_estimate_mean_of_replicates": 0.35591798478256037
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "2_0": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": -0.23980056563428168,
+            "ci_low": -4.201954809370335,
+            "point_estimate_mean_of_replicates": -2.2600952452689667
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.8764108264878903,
+            "ci_low": -3.168060745035072,
+            "point_estimate_mean_of_replicates": -0.6146072714470487
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.5842423052709829,
+            "ci_low": -4.617703166172114,
+            "point_estimate_mean_of_replicates": -1.6007730624172491
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.3709991406441318,
+            "ci_low": -4.177273746219681,
+            "point_estimate_mean_of_replicates": -0.3776187095932798
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": -0.5416938397588531,
+            "ci_low": -2.8268582648719094,
+            "point_estimate_mean_of_replicates": -1.6552420249994062
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.7103260321172965,
+            "ci_low": -1.8425999702081526,
+            "point_estimate_mean_of_replicates": -0.5986809160792034
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "2_1": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.4842836042995082,
+            "ci_low": -1.3489168589375788,
+            "point_estimate_mean_of_replicates": 0.07616283238314886
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.650434817045727,
+            "ci_low": -1.5734858730178183,
+            "point_estimate_mean_of_replicates": 0.029430474522005822
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.9292250585403176,
+            "ci_low": -2.7566799306189975,
+            "point_estimate_mean_of_replicates": -0.9007945353541859
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.751695172303133,
+            "ci_low": -0.9673203461690956,
+            "point_estimate_mean_of_replicates": 1.3928739266639611
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.8881443874233153,
+            "ci_low": -0.636109921322462,
+            "point_estimate_mean_of_replicates": 0.1463782957659353
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.7174229798095635,
+            "ci_low": -0.04780034638674536,
+            "point_estimate_mean_of_replicates": 0.8304920853161033
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "2_2": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.0524934183791748,
+            "ci_low": -2.626483789321132,
+            "point_estimate_mean_of_replicates": -0.8161957636172886
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.642761468971354,
+            "ci_low": -2.484612680407338,
+            "point_estimate_mean_of_replicates": -0.37458139086376396
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.0191883822991645,
+            "ci_low": -2.6451213735976675,
+            "point_estimate_mean_of_replicates": 0.07160293055201285
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.2837199814027405,
+            "ci_low": -4.2295841537703565,
+            "point_estimate_mean_of_replicates": -0.9484433018421933
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.17229015857242186,
+            "ci_low": -1.8533325134430945,
+            "point_estimate_mean_of_replicates": -0.8399045195692652
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.1428669311756694,
+            "ci_low": -0.9451112828739596,
+            "point_estimate_mean_of_replicates": 0.15353725973686502
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "2_3": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.7642159334068896,
+            "ci_low": -2.959239728871748,
+            "point_estimate_mean_of_replicates": -1.0679446946104936
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.6061865925991516,
+            "ci_low": -2.135612556792062,
+            "point_estimate_mean_of_replicates": 0.22764047026082107
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.0483977070010289,
+            "ci_low": -4.848736182225608,
+            "point_estimate_mean_of_replicates": -1.9356305685722677
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 4.0892380128732,
+            "ci_low": -3.4016935930308967,
+            "point_estimate_mean_of_replicates": 0.4336456125903348
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.6797643160754717,
+            "ci_low": -1.4658564704555597,
+            "point_estimate_mean_of_replicates": -0.3980170430313115
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.8317758861097932,
+            "ci_low": -0.6726676381259251,
+            "point_estimate_mean_of_replicates": 0.5644377230212234
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "2_4": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.7829615555606694,
+            "ci_low": -4.848867586101603,
+            "point_estimate_mean_of_replicates": -2.0802586110091297
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 4.330861748673336,
+            "ci_low": -2.9105090179365214,
+            "point_estimate_mean_of_replicates": 0.7845046265996162
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.1957097366450724,
+            "ci_low": -5.180000512747582,
+            "point_estimate_mean_of_replicates": -1.0686183217223915
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 6.018142787833179,
+            "ci_low": -5.9368972559638635,
+            "point_estimate_mean_of_replicates": 0.23207688564566104
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.4389800144989298,
+            "ci_low": -1.7321560208359676,
+            "point_estimate_mean_of_replicates": -0.2201710429553255
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.0087600163267982,
+            "ci_low": -1.6992613621569723,
+            "point_estimate_mean_of_replicates": 0.14197974737758587
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "3_0": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.6348334157589044,
+            "ci_low": -2.595472104404163,
+            "point_estimate_mean_of_replicates": -0.47679156170993997
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.8823326436629643,
+            "ci_low": -3.8916026946041495,
+            "point_estimate_mean_of_replicates": -1.4954235577069637
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.1319328938767015,
+            "ci_low": -4.339253213131867,
+            "point_estimate_mean_of_replicates": -1.1885395711594768
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.567913108072752,
+            "ci_low": -4.145886354635442,
+            "point_estimate_mean_of_replicates": -0.3754888313799997
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.0817498482422065,
+            "ci_low": -1.7422948179656939,
+            "point_estimate_mean_of_replicates": -0.36629291698386346
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": -0.08989218595342269,
+            "ci_low": -3.0129729653235104,
+            "point_estimate_mean_of_replicates": -1.5430805206569347
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "3_1": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.217523055177666,
+            "ci_low": -1.5099204672872006,
+            "point_estimate_mean_of_replicates": -0.12947261705911783
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.135296486368756,
+            "ci_low": -0.8999615102201658,
+            "point_estimate_mean_of_replicates": 0.5887705628880923
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.1372178643561952,
+            "ci_low": -2.5928638124053474,
+            "point_estimate_mean_of_replicates": -0.6523505308127688
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.0410798992326096,
+            "ci_low": -2.5846489514548416,
+            "point_estimate_mean_of_replicates": -0.23905216569663226
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.9919371102714837,
+            "ci_low": -0.5346560713949855,
+            "point_estimate_mean_of_replicates": 0.23208413093862743
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.1100134000805209,
+            "ci_low": -0.5537555995043586,
+            "point_estimate_mean_of_replicates": 0.2711861372598214
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "3_2": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.2166653674755072,
+            "ci_low": -0.85132153526959,
+            "point_estimate_mean_of_replicates": 0.659228022713332
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.392224674610311,
+            "ci_low": -0.1514538944873432,
+            "point_estimate_mean_of_replicates": 1.5905695230032753
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.7915522329447415,
+            "ci_low": -0.6151405667855215,
+            "point_estimate_mean_of_replicates": 1.5772098617758834
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 4.290112023639756,
+            "ci_low": -1.4714101115755758,
+            "point_estimate_mean_of_replicates": 1.293474055866694
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.9227264146685557,
+            "ci_low": 0.21629397008347384,
+            "point_estimate_mean_of_replicates": 1.0529506097209695
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.078925630646058,
+            "ci_low": -0.8766487759591791,
+            "point_estimate_mean_of_replicates": 0.06815020960672039
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "3_3": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.5065166642385324,
+            "ci_low": -1.5126045619935622,
+            "point_estimate_mean_of_replicates": -0.017206274306235534
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.1238613558319249,
+            "ci_low": -3.6429598982081592,
+            "point_estimate_mean_of_replicates": -1.7315204389001824
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.9358377812100827,
+            "ci_low": -2.7742473206365883,
+            "point_estimate_mean_of_replicates": -0.46223205867321127
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.9236556713001921,
+            "ci_low": -5.823853529272132,
+            "point_estimate_mean_of_replicates": -2.449939161909174
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.6918656426841447,
+            "ci_low": -1.1422083765701168,
+            "point_estimate_mean_of_replicates": -0.22745961810641957
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": -0.472340138993852,
+            "ci_low": -2.4163390177771773,
+            "point_estimate_mean_of_replicates": -1.4454914543669584
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "3_4": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.7410646909205645,
+            "ci_low": -2.9895639790103297,
+            "point_estimate_mean_of_replicates": -0.6989039405834977
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.7062361662273573,
+            "ci_low": -3.4400220437618048,
+            "point_estimate_mean_of_replicates": -0.29456432038434766
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.6295901555068513,
+            "ci_low": -2.50912410234664,
+            "point_estimate_mean_of_replicates": 0.3973774428513092
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 4.903450425939144,
+            "ci_low": -5.218927325846125,
+            "point_estimate_mean_of_replicates": 0.030718099639880297
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.4057456807409292,
+            "ci_low": -1.2781752401427058,
+            "point_estimate_mean_of_replicates": 0.02873029176368368
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.1682193350911625,
+            "ci_low": -0.6339995564449694,
+            "point_estimate_mean_of_replicates": 0.7790405903816492
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "4_0": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.060772022963324,
+            "ci_low": -6.8036260886688025,
+            "point_estimate_mean_of_replicates": -2.900117261962375
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.833358348259978,
+            "ci_low": -4.569284167142764,
+            "point_estimate_mean_of_replicates": -0.38902972525820495
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 3.250285547245876,
+            "ci_low": -8.271945017806209,
+            "point_estimate_mean_of_replicates": -2.403095035469852
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 6.74560082452245,
+            "ci_low": -6.067885502073804,
+            "point_estimate_mean_of_replicates": 0.18925634997629023
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.3782444734720471,
+            "ci_low": -3.0637960888364946,
+            "point_estimate_mean_of_replicates": -0.8464506037283887
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.1472711198402046,
+            "ci_low": -3.5940669860509447,
+            "point_estimate_mean_of_replicates": -1.0823689059367516
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "4_1": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.6019309126421042,
+            "ci_low": -0.8674206511965934,
+            "point_estimate_mean_of_replicates": 0.321706720470641
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.431371191795302,
+            "ci_low": -1.1387158596723015,
+            "point_estimate_mean_of_replicates": 0.5937002312536674
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.3773044897028026,
+            "ci_low": -2.11058224805482,
+            "point_estimate_mean_of_replicates": -0.37586079059435795
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 3.120566108081441,
+            "ci_low": -1.9696198231271567,
+            "point_estimate_mean_of_replicates": 0.5261169719275602
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.6749003535436505,
+            "ci_low": -0.6733666949426764,
+            "point_estimate_mean_of_replicates": -0.011681590431471347
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.8289420100772725,
+            "ci_low": -0.6186349795070106,
+            "point_estimate_mean_of_replicates": 0.10347078366059026
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "4_2": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.2389122629691813,
+            "ci_low": -1.134244573238625,
+            "point_estimate_mean_of_replicates": 0.04518840449125769
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.4920954958915444,
+            "ci_low": -1.693421856467389,
+            "point_estimate_mean_of_replicates": -0.1036998063711318
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.0014545649584323,
+            "ci_low": -1.5191325680271042,
+            "point_estimate_mean_of_replicates": 0.2497502427130016
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.9835725755458369,
+            "ci_low": -2.7002316898721936,
+            "point_estimate_mean_of_replicates": -0.3436295837207021
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.8079018709285846,
+            "ci_low": -0.5092861857187457,
+            "point_estimate_mean_of_replicates": 0.1539714203181661
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.3439222288222504,
+            "ci_low": -1.0848602960693179,
+            "point_estimate_mean_of_replicates": -0.3617572035620862
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "4_3": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.427626262468736,
+            "ci_low": -1.1831754055244785,
+            "point_estimate_mean_of_replicates": 0.08133776371630722
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.9504654028187371,
+            "ci_low": -2.4594749703584364,
+            "point_estimate_mean_of_replicates": -0.7571587318597601
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.688982536457685,
+            "ci_low": -1.847048904526112,
+            "point_estimate_mean_of_replicates": -0.06234073959045278
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.9188510499700613,
+            "ci_low": -3.054871754663814,
+            "point_estimate_mean_of_replicates": -0.5298893432019726
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 0.44802108474424135,
+            "ci_low": -0.8906485018589954,
+            "point_estimate_mean_of_replicates": -0.24357960264465073
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 0.7367683868097197,
+            "ci_low": -0.8304344643871312,
+            "point_estimate_mean_of_replicates": -0.05043683095266167
+          },
+          "valid_replicates": 2000
+        }
+      },
+      "4_4": {
+        "15m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.1398586893567795,
+            "ci_low": -1.326715900720481,
+            "point_estimate_mean_of_replicates": 0.41474007322596923
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.847597081788754,
+            "ci_low": -1.824936070694529,
+            "point_estimate_mean_of_replicates": 0.6042777330239062
+          },
+          "valid_replicates": 2000
+        },
+        "30m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 2.328236819161784,
+            "ci_low": -2.735617963516372,
+            "point_estimate_mean_of_replicates": -0.20222725974113426
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 2.3534918875897555,
+            "ci_low": -4.868474467557974,
+            "point_estimate_mean_of_replicates": -1.1060093672287568
+          },
+          "valid_replicates": 2000
+        },
+        "5m": {
+          "mean_effort_signed_future_return_bps": {
+            "ci_high": 1.157618763950323,
+            "ci_low": -1.020187279245782,
+            "point_estimate_mean_of_replicates": 0.08653588801306462
+          },
+          "mean_raw_future_return_bps": {
+            "ci_high": 1.8686582769507367,
+            "ci_low": -0.4658242422114976,
+            "point_estimate_mean_of_replicates": 0.7481563771549906
+          },
+          "valid_replicates": 2000
+        }
+      }
+    },
+    "params": {
+      "block_length_rows": 30,
+      "confidence_level": 0.95,
+      "interval_type": "percentile",
+      "random_seed": 20260906,
+      "replicates": 2000,
+      "source_sample": "full_chronological_eligible_sample"
+    }
+  }
+}

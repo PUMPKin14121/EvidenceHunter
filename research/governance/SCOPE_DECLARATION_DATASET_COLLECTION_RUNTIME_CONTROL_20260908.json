@@ -1,0 +1,89 @@
+﻿{
+  "change_id": "DATASET_COLLECTION_RUNTIME_CONTROL",
+  "revision": "v3_WITH_I1_I2_I3",
+  "status": "IMPLEMENTATION_AUTHORIZED_TESTS_AUTHORIZED_LIVE_NOT_AUTHORIZED",
+  "new_files": [
+    "research/governance/CHANGE_ROLES_DATASET_COLLECTION_RUNTIME_CONTROL_20260908.json",
+    "research/governance/SCOPE_DECLARATION_DATASET_COLLECTION_RUNTIME_CONTROL_20260908.json",
+    "EvidenceHunter_collector_runtime_control.py",
+    "tests/test_collector_runtime_control.py"
+  ],
+  "existing_source_whitelist": [
+    "EvidenceHunter_collector.py",
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_resource_sampling.py"
+  ],
+  "existing_test_whitelist": [
+    "tests/test_resource_sampling.py"
+  ],
+  "governance_state_exception": "PROJECT_CURRENT_STATE.json current changeset only",
+  "invariants": {
+    "I2": "Explicit dataset validation, normalized root, lease, owner then RUNNING session persisted/read back before build_components/writers; failure closes lease and writes no raw",
+    "I1": "CreateMutexW(NULL,FALSE,name); use_last_error=True; clear then immediately capture LastError; CloseHandle only, never ReleaseMutex",
+    "I3": "Canonical UUID session/request IDs validated before path construction"
+  },
+  "budgets": {
+    "MAX_EXISTING_TEST_FILES_MODIFIED": 1,
+    "MAX_EXISTING_SOURCE_FILES_MODIFIED": 3,
+    "MAX_LIVE_SMOKE_SECONDS": 120,
+    "MAX_TARGETED_PYTEST_INVOCATIONS": 2,
+    "MAX_NEW_REPO_FILES": 4,
+    "MAX_LIVE_SMOKE_RUNS": 1,
+    "FORMAL_DATASET_RUNS": 0,
+    "live_smoke_authorized": false,
+    "second_invocation": "only after directly-caused bounded fix",
+    "MAX_FULL_PYTEST_INVOCATIONS": 2
+  },
+  "dataset_identity": "Required explicit --dataset-id; nonempty; no path/environment/owner inference; --collect forwards; probes unchanged",
+  "mutex": "Global named object lease keyed by SHA256(JSON([dataset_id, canonical runtime root])); NULL/error/existing fail closed before writers; retain through finalization",
+  "stop": "Canonical UUID per-session per-request files; request/ACK correlation; stale ignored; helper explicit target; idempotent; polling <=1s; ACK is not CLEAN",
+  "history": "operations/sessions/<session_id>/session.json plus final_checkpoint.json/final_summary.json with SHA256; current owner evidence mutable, completed history preserved",
+  "clean_gate": [
+    "applicable request ACK",
+    "relevant threads confirmed stopped",
+    "writer threads stopped",
+    "backlog_at_stop=0",
+    "no unresolved finalization writer/sink failure preventing preservation",
+    "checkpoint and summary persisted/readable",
+    "session copies/hash verified",
+    "final session atomically persisted"
+  ],
+  "historical_quality": "Historical gap/accounted drops/recovered incidents retained, do not automatically prevent CLEAN; no new scoring",
+  "session_end_cleanliness": [
+    "CLEAN",
+    "UNCLEAN",
+    "UNKNOWN"
+  ],
+  "machine_observed_end_cause": [
+    "NATURAL_DURATION_COMPLETE",
+    "GRACEFUL_STOP_CONFIRMED",
+    "PROCESS_CRASH_CONFIRMED",
+    "NETWORK_FAILURE_CONFIRMED",
+    "UNCLEAN_NO_CLEAN_MARKER",
+    "UNKNOWN"
+  ],
+  "sampling_limit": "Only explicit dataset_id accept/forward/regression; preserve WindowsProcess, verify_identity, nonce, resources, OS TEMP restriction",
+  "supervisor_limit": "time.sleep(backoff) -> stop_event.wait(backoff)",
+  "tests": "T1-T16 plus explicit dataset binding and forwarding, historical quality does not taint CLEAN, I1-I3 regressions",
+  "targeted_suites": [
+    "tests/test_collector_runtime_control.py",
+    "tests/test_resource_sampling.py",
+    "tests/test_collector_supervisor.py",
+    "tests/test_collector_integration.py",
+    "tests/test_day1_completeness.py"
+  ],
+  "forbidden": [
+    "live smoke until separate authorization",
+    "formal Dataset run",
+    "continuous collection",
+    "Manifest/lifecycle mutation",
+    "six-stream schema/research/gap algorithm changes",
+    "GUI",
+    "reconciliation checker",
+    "Trade Permission/Discovery",
+    "commit/closure",
+    "CHANGELOG/MASTER changes"
+  ],
+  "successor": "DATASET_COLLECTION_RESUME_RECONCILIATION"
+}
+

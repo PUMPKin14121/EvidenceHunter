@@ -1,0 +1,445 @@
+﻿{
+  "artifact_id": "OF2_PRESTART_DESIGN_V1",
+  "changeset": "OF2_NEXT_DATASET_PRESTART_DESIGN_20260907",
+  "status": "DESIGN_APPROVED_PRESTART_ONLY",
+  "created_date": "2026-09-07",
+  "design_author": "Claude (cloud session)",
+  "independent_reviewer": "GPT",
+  "project_owner_decision_recorded": "2026-09-07, PROJECT OWNER / GPT FINAL DECISIONS -- OF2 PRESTART CLOSEOUT",
+  "TRADE_PERMISSION": false,
+  "collector_implementation_status": "NOT_STARTED",
+  "dataset_collection_status": "NOT_STARTED",
+  "scope_note": "This artifact is a prestart design record only. It authorizes no collector code, no collector start, no new dataset start, no Discovery execution.",
+
+  "session_context_v1": {
+    "session_definition_version": "SESSION_CONTEXT_V1",
+    "canonical_timestamp_basis": "Explicit UTC timezone-aware exchange event/trade timestamp taken from the raw message itself; no wall-clock fallback; no future-outcome input.",
+    "research_day": {
+      "boundary": "00:00 UTC",
+      "interval_convention": "half-open [00:00:00, 24:00:00) UTC"
+    },
+    "day_of_week": {
+      "convention": "ISO-8601 weekday numbering (Monday=1 ... Sunday=7)",
+      "derived_from": "research_day_utc"
+    },
+    "weekend_fields": {
+      "is_weekend_utc": "true if ISO weekday in {6,7} for the strict UTC calendar day",
+      "is_weekend_research_day": "identical to is_weekend_utc under the current 00:00 UTC research-day boundary; kept separate only so a future redefinition of research_day_boundary does not collide with the strict-UTC version"
+    },
+    "timezone_conversion": {
+      "library": "Python stdlib zoneinfo (IANA tzdata), not pytz-style precompiled offset tables",
+      "conversion_direction": "UTC (unambiguous instant) -> local aware datetime only; never local wall-clock -> UTC, so the classic DST ambiguous/imaginary local-time problem does not arise in this design",
+      "dst_active_field": "boolean; true if the converted local datetime's dst() offset is non-zero at that instant",
+      "timezone_database_version_provenance": "captured at runtime from the active tzdata package version; FAIL CLOSED (raise, no silent default) if the version cannot be determined"
+    },
+    "reference_windows": {
+      "note": "All three are independent, non-exclusive boolean reference labels; a record may be true for more than one simultaneously. Interval convention is half-open [start, end) for every window without exception.",
+      "US_EQUITY_CORE": {
+        "basis": "NYSE Core Trading Session (official)",
+        "timezone": "America/New_York",
+        "interval": "[09:30, 16:00)",
+        "field": "is_us_equity_core",
+        "actual_exchange_open_status": "NOT_INFERRED_FROM_CLOCK_WINDOW -- true only means the clock falls in this window, not that NYSE was actually open that calendar day"
+      },
+      "ASIA_REFERENCE": {
+        "basis": "Tokyo Stock Exchange cash trading hours",
+        "timezone": "Asia/Tokyo",
+        "intervals": ["[09:00, 11:30)", "[12:30, 15:30)"],
+        "field": "is_asia_reference",
+        "label": "PROJECT RESEARCH REFERENCE, NOT AN OFFICIAL CRYPTO MARKET SESSION"
+      },
+      "EUROPE_REFERENCE": {
+        "basis": "London Stock Exchange trading hours",
+        "timezone": "Europe/London",
+        "interval": "[08:00, 16:30)",
+        "field": "is_europe_reference",
+        "label": "PROJECT RESEARCH REFERENCE, NOT AN OFFICIAL CRYPTO MARKET SESSION"
+      }
+    },
+    "holiday_and_early_close": {
+      "v1_decision": "CLOCK_REFERENCE_ONLY",
+      "meaning": "is_us_equity_core / is_asia_reference / is_europe_reference are pure clock-window booleans; they do not know whether the underlying exchange was actually open, closed for a holiday, or closed early that calendar day",
+      "future_extension": "DERIVE_LATER_FROM_EXTERNAL_REFERENCE -- an actual trading-day/holiday/early-close status can be joined in later from a separately versioned, officially sourced calendar artifact, without needing to have been collected at Day 1",
+      "collector_implementation_blocker": false
+    },
+    "deprecated_fields_from_prior_plan_draft": {
+      "session_primary_label": "dropped -- replaced entirely by independent non-exclusive boolean tags",
+      "session_tags": "dropped -- redundant array encoding of facts the boolean fields already carry",
+      "session_overlap_tags": "dropped -- same reason"
+    },
+    "architecture_note": "Session Context V1 is a pure deterministic function of (canonical_timestamp_utc, these frozen window/timezone constants). It requires no live state and is fully reproducible after the fact (deterministic replay). It belongs to the Feature layer (EvidenceHunter_features.py), not the Collector layer -- consistent with OF2_IMPLEMENTATION_PLAN.json's existing_module_to_extend.",
+    "frozen_field_list_v1": ["canonical_timestamp_utc", "session_definition_version", "research_day_utc", "day_of_week_utc", "minute_of_day_utc", "minute_of_week_utc", "is_weekend_utc", "is_weekend_research_day", "is_us_equity_core", "is_asia_reference", "is_europe_reference", "timezone_database_version"],
+    "acceptance_tests": [
+      "UTC midnight boundary",
+      "UTC weekend boundary",
+      "NY winter/summer DST offsets",
+      "DST transition instant and repeated local times (resolved deterministically because conversion is always UTC -> local)",
+      "US_EQUITY_CORE exact boundary: 09:30:00.000000 ET included, 16:00:00.000000 ET excluded",
+      "session start included / end excluded for every window",
+      "Asia/Europe reference window overlap: both tags true simultaneously during their overlap",
+      "naive/malformed timestamp rejected",
+      "missing timezone database fails closed",
+      "deterministic replay",
+      "no existing frozen dataset mutation"
+    ]
+  },
+
+  "next_dataset_raw_data_sufficiency_review_v1": {
+    "principle": "COLLECTOR COLLECTS FACTS. RESEARCH ENGINE DERIVES FEATURES.",
+    "must_collect_from_day_1": [
+      {
+        "item": "raw WebSocket message payload (verbatim wire bytes/JSON, pre-parsing)",
+        "why_needed": "insurance against future parser bugs; only the raw payload lets a parsing mistake be fixed retroactively",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance USDS-M Futures WS raw frame",
+        "timestamp_provenance": "local receipt instant",
+        "reconnect_gap_implications": "also serves as raw evidence for gap/anomaly investigation",
+        "storage_burden": "small -- duplicates fields already stored in parsed form",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "all -- underlies every other derived field",
+        "notes": "applies equally to REST/archive backfill responses, not only live WS"
+      },
+      {
+        "item": "diff-depth raw events (btcusdt@depth)",
+        "why_needed": "sole input for full order-book reconstruction",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance official WS depth stream",
+        "timestamp_provenance": "exchange event time (E) + local receipt time",
+        "reconnect_gap_implications": "any gap requires REST snapshot resync per Binance's documented procedure",
+        "storage_burden": "medium-high, high frequency, long retention",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "microstructure, liquidity, order-book dynamics",
+        "notes": "no official historical L2/diff-depth archive exists from Binance"
+      },
+      {
+        "item": "U / u / pu continuity fields",
+        "why_needed": "only evidence of order-book continuity / gap detection",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "same depth stream messages",
+        "timestamp_provenance": "same as depth events",
+        "reconnect_gap_implications": "pu != previous u triggers mandatory resync",
+        "storage_burden": "negligible incremental cost over depth events",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing for all order-book research",
+        "notes": null
+      },
+      {
+        "item": "REST initial order-book snapshot + lastUpdateId (every initialization/resync, not just the first)",
+        "why_needed": "anchors the diff-depth stream to an absolute book state",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance official depth REST endpoint",
+        "timestamp_provenance": "REST response receipt time",
+        "reconnect_gap_implications": "each resync produces a new snapshot; all must be retained",
+        "storage_burden": "small, infrequent",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "order-book reconstruction integrity",
+        "notes": null
+      },
+      {
+        "item": "aggTrade local WS receipt (arrival timing/order, not exchange content)",
+        "why_needed": "local arrival characteristics cannot be reconstructed from any historical archive",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance official WS aggTrade stream, local side",
+        "timestamp_provenance": "local receipt instant",
+        "reconnect_gap_implications": "gap in local receipt history is permanent for this dimension even though exchange-side content is backfillable",
+        "storage_burden": "small",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "latency/staleness analysis, trade-to-book reaction timing",
+        "notes": "see aggtrade exchange-side content under CAN_BACKFILL_LATER"
+      },
+      {
+        "item": "local wall-clock receive timestamp",
+        "why_needed": "latency/freshness analysis",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local system clock",
+        "timestamp_provenance": "n/a (this is the timestamp)",
+        "reconnect_gap_implications": "none directly",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "all latency-sensitive research",
+        "notes": null
+      },
+      {
+        "item": "local monotonic receive timestamp",
+        "why_needed": "interval measurement immune to wall-clock step corrections (NTP adjustments)",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local monotonic clock (e.g. time.monotonic_ns)",
+        "timestamp_provenance": "n/a (this is the timestamp)",
+        "reconnect_gap_implications": "none directly",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "precise local interval measurement",
+        "notes": null
+      },
+      {
+        "item": "local NTP sync status / system clock offset (periodic sampling)",
+        "why_needed": "determines how much the wall-clock receive timestamp can be trusted for a given period",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local NTP client query",
+        "timestamp_provenance": "sampling instant",
+        "reconnect_gap_implications": "none directly",
+        "storage_burden": "negligible, periodic sampling only",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "validity qualification for all latency research",
+        "notes": "added independently during this design review, not in the original candidate list"
+      },
+      {
+        "item": "WebSocket connect/disconnect/reconnect events",
+        "why_needed": "defines exactly when collection had gaps",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local collector process",
+        "timestamp_provenance": "local event instant",
+        "reconnect_gap_implications": "primary input to gap ledger",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing",
+        "notes": null
+      },
+      {
+        "item": "order-book resync events",
+        "why_needed": "same family as WS lifecycle events",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local collector process",
+        "timestamp_provenance": "local event instant",
+        "reconnect_gap_implications": "primary input to gap ledger",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing",
+        "notes": null
+      },
+      {
+        "item": "sequence-gap history",
+        "why_needed": "same family",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local collector process",
+        "timestamp_provenance": "local event instant",
+        "reconnect_gap_implications": "primary input to gap ledger",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing",
+        "notes": null
+      },
+      {
+        "item": "dropped-message / queue / buffer-health telemetry",
+        "why_needed": "local software backpressure/drop history cannot be reconstructed after the fact",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local collector process",
+        "timestamp_provenance": "local event instant",
+        "reconnect_gap_implications": "primary input to gap ledger",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing",
+        "notes": null
+      },
+      {
+        "item": "REST call HTTP status / rate-limit events",
+        "why_needed": "context for interpreting snapshot/backfill data quality",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "local collector process",
+        "timestamp_provenance": "local event instant",
+        "reconnect_gap_implications": "explains snapshot fetch failures",
+        "storage_burden": "negligible",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "data-quality auditing",
+        "notes": null
+      },
+      {
+        "item": "forceOrder stream (btcusdt@forceOrder, forced liquidations)",
+        "why_needed": "liquidation cascades are a common microstructure research object; no official historical archive exists",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance official WS forceOrder stream",
+        "timestamp_provenance": "exchange event time + local receipt time",
+        "reconnect_gap_implications": "gaps here follow the same WS lifecycle logging as other streams",
+        "storage_burden": "low -- low message rate relative to depth/aggTrade",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "liquidation/cascade research (optional future use)",
+        "disposition": "APPROVED_FOR_V1_COLLECTION",
+        "implementation_precondition": "VERIFY_CURRENT_OFFICIAL_BINANCE_SCHEMA = true before implementation; if the stream has changed or is unavailable, DEFER_WITHOUT_BLOCKING_CORE_DATASET -- no compatibility hack to be built for it"
+      },
+      {
+        "item": "markPriceUpdate stream (mark price / index price / funding rate, tick resolution)",
+        "why_needed": "tick-level mark/index price and live funding-rate context has no official historical archive at this resolution",
+        "irrecoverable_if_missing": true,
+        "authoritative_source": "Binance official WS markPriceUpdate stream",
+        "timestamp_provenance": "exchange event time + local receipt time",
+        "reconnect_gap_implications": "gaps here follow the same WS lifecycle logging as other streams",
+        "storage_burden": "low-medium",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "funding/basis microstructure research (optional future use)",
+        "disposition": "APPROVED_FOR_V1_COLLECTION",
+        "implementation_precondition": "VERIFY_CURRENT_OFFICIAL_BINANCE_SCHEMA = true before implementation; if the stream has changed or is unavailable, DEFER_WITHOUT_BLOCKING_CORE_DATASET -- no compatibility hack to be built for it"
+      }
+    ],
+    "can_backfill_later": [
+      {
+        "item": "aggTrade exchange-side content (price/qty/trade id/buyer-maker flag/exchange timestamp)",
+        "why_needed": "core trade-flow ground truth",
+        "irrecoverable_if_missing": false,
+        "authoritative_source": "Binance official public historical archive (data.binance.vision), already used by this project's existing EvidenceHunter_archive.py / EvidenceHunter_archive_materialize.py",
+        "timestamp_provenance": "exchange event/trade time",
+        "reconnect_gap_implications": "content itself is recoverable; only local receipt characteristics are not (see MUST_COLLECT item above)",
+        "storage_burden": "n/a -- already handled by existing archive mechanism",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "trade-flow research",
+        "notes": null
+      },
+      {
+        "item": "open interest history (5-minute granularity)",
+        "why_needed": "positioning context",
+        "irrecoverable_if_missing": false,
+        "authoritative_source": "Binance official openInterestHist REST endpoint",
+        "timestamp_provenance": "REST response",
+        "reconnect_gap_implications": "none -- backfillable",
+        "storage_burden": "low",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "positioning/OI research",
+        "notes": "not urgent for Day 1"
+      },
+      {
+        "item": "settled funding rate values",
+        "why_needed": "funding cost context",
+        "irrecoverable_if_missing": false,
+        "authoritative_source": "Binance official fundingRate REST historical endpoint",
+        "timestamp_provenance": "REST response",
+        "reconnect_gap_implications": "none -- backfillable",
+        "storage_burden": "low",
+        "deterministic_derivation_possible": false,
+        "research_families_enabled": "funding cost research",
+        "notes": "distinct from the live tick-level markPriceUpdate stream, which is MUST_COLLECT"
+      }
+    ],
+    "derive_later_from_raw": [
+      {
+        "item": "all Session Context V1 fields (research_day_utc, is_us_equity_core, is_asia_reference, is_europe_reference, etc.)",
+        "why_needed": "pure deterministic function of canonical_timestamp_utc and frozen constants",
+        "irrecoverable_if_missing": false,
+        "authoritative_source": "computed from canonical_timestamp_utc",
+        "timestamp_provenance": "n/a -- derived",
+        "reconnect_gap_implications": "none",
+        "storage_burden": "n/a",
+        "deterministic_derivation_possible": true,
+        "research_families_enabled": "all -- calendar/session-conditioned research",
+        "notes": "belongs to the Feature layer, not the Collector layer"
+      },
+      {
+        "item": "top-of-book best bid/ask (bookTicker-equivalent)",
+        "why_needed": "cross-check / cheaper top-of-book series",
+        "irrecoverable_if_missing": false,
+        "authoritative_source": "level 0 of the reconstructed order book (from depth diff + snapshot)",
+        "timestamp_provenance": "n/a -- derived",
+        "reconnect_gap_implications": "inherits depth stream's gap semantics",
+        "storage_burden": "n/a -- no separate subscription needed",
+        "deterministic_derivation_possible": true,
+        "research_families_enabled": "top-of-book research",
+        "notes": "no need to separately subscribe to btcusdt@bookTicker"
+      }
+    ],
+    "do_not_collect": [
+      {
+        "item": "any field encoding future outcome (e.g. forward return, whether price moved favorably after this record)",
+        "why_excluded": "future-information leakage; must preserve the existing architectural separation between the shadow collector and the outcome/analysis stage",
+        "disposition": "DO_NOT_COLLECT"
+      },
+      {
+        "item": "absorption score, replenishment score, liquidity regime, attack-response interaction, session edge, and similar research-hypothesis Features",
+        "why_excluded": "these are interpretive research constructs; baking them into collector output would irreversibly lock in one research stage's assumptions as if they were raw fact",
+        "disposition": "DO_NOT_COLLECT"
+      },
+      {
+        "item": "any smoothed/averaged timestamp",
+        "why_excluded": "only raw exchange and raw local timestamps may be stored; no processed timestamp substitutes",
+        "disposition": "DO_NOT_COLLECT"
+      }
+    ]
+  },
+
+  "collector_resilience_and_gap_recovery_v1": {
+    "frozen_principles": [
+      {
+        "id": 1,
+        "title": "PROCESS_ALIVE != COMPONENT_HEALTHY",
+        "content": "Each collector component (aggTrade, depth, writer, websocket connection) independently tracks: connection_state, last_local_receive_monotonic, last_exchange_event_time, last_sequence_or_trade_id, last_successful_persist_time, queue_depth. The Supervisor judges health only from actual forward progress on these, never from process-alive status alone."
+      },
+      {
+        "id": 2,
+        "title": "Per-component automatic recovery",
+        "content": "State machine: HEALTHY -> STALE -> RECONNECTING -> RESYNCING (if required) -> HEALTHY. Default is to restart only the failing component, never the whole collector for a single stream's failure. Reconnection uses bounded exponential backoff. WebSocket connections are not permanent by Binance design (24h max lifetime, ping/pong keepalive), so automatic reconnection is a normal operating path, not an exception patch."
+      },
+      {
+        "id": 3,
+        "title": "Depth recovery procedure",
+        "content": "On pu != previous u, or on connection interruption: invalidate current local-book continuity -> obtain a new REST snapshot -> buffer new WS events -> rebuild per Binance's official U/u/pu initialization procedure -> begin a new continuity segment. Depth diffs lost during the gap are never treated as recovered by the new snapshot; the gap is permanently marked L2_DIFF_UNRECOVERABLE_GAP. This is Binance's own documented local order-book maintenance procedure, not a project-invented workaround."
+      },
+      {
+        "id": 4,
+        "title": "aggTrade gap repair",
+        "content": "Gaps are detected via trade-ID continuity. Gaps within Binance's REST query window are auto-repaired via /fapi/v1/aggTrades?fromId=..., deduplicated, continuity-verified, and persisted with repair provenance. Gaps beyond the REST window are marked PENDING_ARCHIVE_BACKFILL and repaired later via this project's existing official archive backfill mechanism once available."
+      },
+      {
+        "id": 5,
+        "title": "Repair must never erase history",
+        "content": "All backfilled data is tagged acquisition_mode = LIVE | REST_BACKFILL | ARCHIVE_BACKFILL, plus original_gap_id, repaired_at, source_provenance. Backfilled data is never presented as if received live. Local wall-clock/monotonic receive timestamps are never fabricated for backfilled records -- left absent/explicitly not-applicable instead. The same raw-payload-retention principle used for live data (see sufficiency review) applies equally to REST/archive backfill responses: the raw response is retained verbatim, not only the parsed fields."
+      },
+      {
+        "id": 6,
+        "title": "Append-only Gap Ledger",
+        "content": "Each gap record includes: gap_id, component, gap_start, gap_end, detection_time, reason, last_good_identifier, first_good_identifier_after, reconnect_attempts, recoverability, repair_status, repair_source, resync_status. gap_start/gap_end (when the gap actually occurred) and detection_time (when the system noticed) are kept as separate fields, since the two are frequently not the same instant and the difference is itself evidence of watchdog sensitivity.",
+        "format_decision": "append-only JSONL",
+        "location": "<DATASET_ROOT>/quality/gap_ledger.jsonl -- not ephemeral runtime data; must be preserved together with the dataset at freeze/archive time"
+      },
+      {
+        "id": 7,
+        "title": "User-facing health alert (V1 scope)",
+        "content": "Persistent component staleness, repeated restart failure, or an unrecoverable gap must produce: an append-only incident record, plus a Windows/local notification. Remote/mobile/cloud alerting is DEFERRED_NOT_BLOCKING for V1."
+      },
+      {
+        "id": 8,
+        "title": "Two independent manual recovery entrypoints",
+        "content": "RESTART_COMPONENT (resume live collection) and REPAIR_DETECTED_GAPS (scan the Gap Ledger, repair only what is legitimately repairable) are two distinct actions, never merged into one."
+      },
+      {
+        "id": 9,
+        "title": "Machine-level failure fallback",
+        "content": "An OS-level restart mechanism should exist outside the Supervisor itself; Windows Task Scheduler's RestartOnFailure is a candidate. This is an implementation-time detail, not decided in this design pass."
+      },
+      {
+        "id": 10,
+        "title": "Hard acceptance principle",
+        "content": "The next Dataset must demonstrate not just that the collector can collect data, but that: failure is detected automatically, collection resumes automatically, recoverable gaps are repaired with provenance, unrecoverable gaps remain explicitly visible, and silent data loss is not permitted."
+      }
+    ],
+    "calibration_deferred_to_implementation": {
+      "reclassified_as": "IMPLEMENTATION_CALIBRATION_REQUIRED, NOT_PRESTART_DESIGN_BLOCKER",
+      "items": [
+        "exact STALE thresholds per component (seconds of no forward progress before a component is judged stale)",
+        "exact backoff parameters (initial interval, cap, max retry count)"
+      ],
+      "resolution_method": "must be frozen only after real stream cadence + fault-injection tests in the Collector Implementation changeset; not guessed as numbers now"
+    },
+    "supervisor_state_persistence_note": "The Supervisor's own state must be persisted to disk, not held only in memory -- otherwise a Supervisor restart would itself lose track of 'last known good state,' which would violate frozen principle 1. This is a blocker to resolve before implementation, not decided in this design pass."
+  },
+
+  "of2_prestart_decision_packet": {
+    "decisions_frozen": [
+      "SESSION_CONTEXT_V1 full definition (canonical timestamp basis, UTC day/weekday/weekend, America/New_York + DST handling, US_EQUITY_CORE, Asia/Europe reference windows with exact intervals, independent multi-label overlap semantics, half-open interval convention everywhere, timezone database provenance with fail-closed behavior, session_primary_label/session_tags/session_overlap_tags deprecated)",
+      "Holiday/early-close V1 decision: CLOCK_REFERENCE_ONLY, not a collector implementation blocker",
+      "forceOrder and markPriceUpdate streams: APPROVED_FOR_V1_COLLECTION, subject to VERIFY_CURRENT_OFFICIAL_BINANCE_SCHEMA at implementation time, DEFER_WITHOUT_BLOCKING_CORE_DATASET if unavailable/changed, no compatibility hacks",
+      "Raw data sufficiency classification (MUST_COLLECT_FROM_DAY_1 / CAN_BACKFILL_LATER / DERIVE_LATER_FROM_RAW / DO_NOT_COLLECT) for all reviewed candidate items",
+      "Collector Resilience and Gap Recovery V1: all 10 frozen principles",
+      "Gap Ledger format: append-only JSONL at <DATASET_ROOT>/quality/gap_ledger.jsonl, preserved with the dataset at freeze/archive time",
+      "V1 notification scope: append-only incident record + Windows/local notification only; remote/mobile/cloud alerting deferred",
+      "STALE thresholds and backoff parameters are explicitly NOT frozen here; reclassified as implementation-time calibration"
+    ],
+    "unresolved_owner_decisions": [],
+    "blockers_before_implementation": [
+      "STALE thresholds and backoff parameters must be calibrated against real stream cadence and fault-injection tests",
+      "forceOrder and markPriceUpdate current official Binance message schemas must be verified before implementation",
+      "Gap Ledger JSONL record schema needs a concrete field-by-field structure (this design freezes the required fields, not the exact JSON layout)",
+      "Depth resync procedure should be validated against historical replay or a test environment before connecting to the real live stream",
+      "Supervisor state persistence mechanism must be designed so a Supervisor restart does not lose last-known-good state",
+      "Raw WebSocket/REST/archive payload storage format (line-delimited JSON vs. a more compact encoding) needs a concrete decision before implementation"
+    ],
+    "recommended_next_changeset": "NEXT_DATASET_COLLECTOR_IMPLEMENTATION -- may begin once the above blockers are addressed in that changeset's own design/acceptance steps; this changeset authorizes no code and no data collection."
+  }
+}
+

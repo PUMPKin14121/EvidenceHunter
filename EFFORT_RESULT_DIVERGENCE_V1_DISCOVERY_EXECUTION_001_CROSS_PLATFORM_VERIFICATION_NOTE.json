@@ -1,0 +1,32 @@
+{
+  "note_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001_CROSS_PLATFORM_VERIFICATION_NOTE",
+  "applies_to_execution_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001",
+  "purpose": "Documents an independent cross-check performed as part of validating the first formal Discovery execution: run_formal_discovery_execution_real_machine.py was run twice against byte-identical frozen inputs (Contract, Dataset, Method Supplement, and all 8 archive-day zips -- all four identity hashes matched exactly across both runs) -- once in Claude's cloud sandbox (Linux) as a pre-execution engineering validation pass, and once on the user's own Windows machine as the authoritative, git-tracked run. This note records what the cross-check found and why it does not affect the validity of the official result.",
+  "environments_compared": {
+    "sandbox": "Linux (cloud sandbox), Python 3.11",
+    "real_machine": "Windows (desktop-esh348d), project .venv Python"
+  },
+  "identity_hashes_matched_exactly": {
+    "contract_sha256": true,
+    "method_supplement_sha256": true,
+    "dataset_sha256": true,
+    "archive_manifest_sha256": true
+  },
+  "findings": {
+    "raw_rows_jsonl_line_endings": {
+      "description": "The Windows run's RAW_ROWS.jsonl uses CRLF line endings (Python's default text-mode newline translation on Windows); the Linux sandbox run uses LF. This is a benign platform artifact of Python's open(..., 'w') newline handling, not a content difference -- every line parses to the identical JSON object once line-ending characters are stripped, except for the floating-point differences noted below.",
+      "affects_content": false
+    },
+    "floating_point_ulp_differences": {
+      "description": "13 of 10083 raw rows (0.13%) differ between the two environments in exactly one field each (future_5m/15m/30m_raw_bps and/or its effort_signed counterpart, or in one case return_60s_bps/directional_response), by exactly 1 ULP (unit in the last place) of IEEE 754 double precision -- confirmed by direct bit-pattern comparison. This is the well-known, expected consequence of math.log() (used in return_60s_bps and raw_future_return_bps) not being required by IEEE 754 to be correctly-rounded, unlike +,-,*,/,sqrt -- different libm implementations (Linux glibc vs Windows UCRT) can legitimately return results differing by 1 ULP on specific inputs. It is not a logic error, not a data difference, and not fixable by any code change in this project (it is a platform math-library characteristic).",
+      "affected_rows_count": 13,
+      "affected_rows_fraction": 0.00129,
+      "max_relative_magnitude": "~1e-15 (machine epsilon scale)",
+      "propagation_to_grid_summary": "3 of the 75 (25 cells x 3 horizons) grid_summary_full_sample cells show a corresponding ULP-scale difference in their mean statistics (13th-16th significant digit); every cell's n (record count) is IDENTICAL across both runs -- confirmed by direct comparison.",
+      "propagation_to_bin_assignments": "ZERO effort_magnitude_quintile or directional_response_quintile bin labels differ between the two runs -- confirmed by direct comparison of every one of the 10083 rows. The 1-ULP perturbations did not happen to cross any quintile boundary in this dataset.",
+      "propagation_to_counts": "eligible_records, computed_count, ineligible_reason_counts, and computation_failures are all IDENTICAL between the two runs (10083/10083/{}/{})."
+    }
+  },
+  "conclusion": "The two independent runs are NOT byte-identical, but the only divergence is machine-epsilon-scale floating-point noise from a cross-platform math-library difference in a transcendental function (log), which changed zero categorical outcomes (bin assignments, record counts, eligibility, computation failures) at any level of aggregation checked. The Windows (real machine) run's three artifacts, tied to git commit 97ad9321efa53b450fb9b96c0cbcc5f49c3ca9ac, are treated as the official first formal Discovery execution result. The Linux sandbox run's artifacts were validation-only and are not committed to the repository.",
+  "generated_by": "Claude (cloud session), as part of independent verification before reporting the first formal Discovery execution as complete"
+}

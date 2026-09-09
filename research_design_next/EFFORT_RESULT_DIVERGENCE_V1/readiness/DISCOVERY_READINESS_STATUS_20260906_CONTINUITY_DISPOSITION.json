@@ -1,0 +1,39 @@
+{
+  "status_id": "DISCOVERY_READINESS_STATUS_20260906_CONTINUITY_DISPOSITION",
+  "status_type": "READ_ONLY_PRE_FLIGHT_READINESS_RECORD",
+  "supersedes_for_gating_purposes_only": "This status changes ONLY the gating disposition of ARCHIVE_TRADE_ID_CONTINUITY as recorded in DISCOVERY_READINESS_STATUS_20260906_POST_MATERIALIZATION_READY.json and the '2-BH'/'13BQ' living-document entries. It does NOT change, retract, or reclassify the underlying factual audit results in AGGTRADES_CONTINUITY_AUDIT_20260906.json -- those factual classifications (aggregate_trade_id=CONTINUITY_CONFIRMED, first/last_trade_id=OBSERVED_ID_GAPS_UNEXPLAINED) are unchanged and remain in force. All prior status files remain on disk unmodified (append-only / no-silent-overwrite).",
+  "generated_at_utc": "2026-09-06T11:10:00Z",
+  "requested_by": "GPT CONTINUITY REVIEW FINAL DISPOSITION, relayed by PROJECT_OWNER",
+  "disposition_reasoning": [
+    "The Frozen Contract's data_lineage explicitly specifies 'Binance public USD-M Futures aggTrades archive' as the historical/future price source -- i.e. Binance's own aggregated-trade data product, not a raw individual-trade feed.",
+    "All 8 required days' aggregate_trade_id (the row-level identifier for published aggTrade records) are fully continuous, with zero gaps at any of the 7 cross-day boundaries -- no archive-level aggTrade row is missing.",
+    "Binance's own Futures API documentation states aggTrades aggregates and returns market trades only; insurance-fund and ADL trades are excluded from aggTrades by design. This means a gap in the underlying first_trade_id/last_trade_id range does not, by itself, establish that archive data was lost -- though it likewise does not prove the observed 107,349 gaps ARE fully accounted for by this mechanism either.",
+    "The binance-public-data GitHub repository has a prior issue (#378) showing the same pattern observed here -- aggregate_trade_id continuous, small first/last_trade_id gaps -- without official resolution, establishing this pattern as a known (if unexplained) characteristic of Binance's own aggTrades data, not unique to this project's copy.",
+    "A separate, categorically different type of report exists on the same repository (issue #350) describing actual aggTrades missing-entries incidents, which manifest as gaps in agg_trade_id itself (archive-row-level loss). This project's 8-day audit shows no such signal.",
+    "The Frozen Discovery Contract's eligibility block does not pre-register 'first_trade_id/last_trade_id fully contiguous' as a criterion. Introducing it now as a hard blocking gate after the fact would be adding a new post-hoc acceptance criterion not present in the frozen pre-registration, which conflicts with the project's own preregistration/frozen-semantics discipline."
+  ],
+  "disposition": {
+    "ARCHIVE_AUTHENTICITY": "PASS",
+    "ARCHIVE_FILE_INTEGRITY": "PASS",
+    "ARCHIVE_ORDERING": "PASS",
+    "ARCHIVE_AGGTRADE_ROW_CONTINUITY": "PASS",
+    "UNDERLYING_RAW_TRADE_ID_GAPS": "OBSERVED_ID_GAPS_UNEXPLAINED",
+    "SOURCE_DATA_MISSING_CONFIRMED": false,
+    "SOURCE_LEVEL_RESIDUAL_RISK": "ACCEPTED_AND_DOCUMENTED",
+    "blocks_discovery_runner_implementation": false,
+    "blocks_formal_discovery_execution": false,
+    "note_on_change_from_prior_status": "The immediately prior status (POST_MATERIALIZATION_READY + the '2-BH' entry) recorded ARCHIVE_TRADE_ID_CONTINUITY=UNRESOLVED as a hard block on formal Discovery execution. That hard-block disposition is superseded by this file per GPT's explicit review. The residual unknown itself is not resolved and is not claimed to be resolved -- only its gating consequence changes, from 'blocks execution' to 'accepted and documented residual risk'."
+  },
+  "remaining_gate_to_formal_discovery_execution": "Discovery Runner implementation -> tests -> GPT independent review -> runner freeze. This is now the only remaining gate; ARCHIVE_TRADE_ID_CONTINUITY is no longer a separate blocking condition.",
+  "constraints_reaffirmed_unchanged": [
+    "Frozen Contract not modified.",
+    "Frozen Dataset not modified.",
+    "aggTrades archive files not backfilled/repaired/re-downloaded to try to close the observed gaps.",
+    "No records excluded from eligibility on the basis of the f/l gaps (the Contract's own eligibility fields, already fully computed, are unaffected by this disposition change).",
+    "No research results (Effort/Response binning, 5x5 grid, horizon comparison, subgroup analysis, Edge/EV) viewed or computed as part of this disposition change."
+  ],
+  "discovery_ready": true,
+  "discovery_execution_authorized": false,
+  "trade_permission": false,
+  "no_research_results_included": true
+}

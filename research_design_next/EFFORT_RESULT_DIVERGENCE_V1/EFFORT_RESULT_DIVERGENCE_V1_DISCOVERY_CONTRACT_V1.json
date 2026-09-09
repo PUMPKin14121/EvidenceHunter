@@ -1,0 +1,156 @@
+﻿{
+  "contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+  "hypothesis_id": "EFFORT_RESULT_DIVERGENCE_V1",
+  "stage": "DISCOVERY_DESIGN_ONLY",
+  "status": "PAPER_DESIGN_FROZEN_PENDING_168H_DATASET_CLOSURE",
+  "dataset_scope": {
+    "dataset_id": "BTCV12P3_20260828T000323Z_75696678",
+    "role": "HYPOTHESIS_GENERATION_AND_PRELIMINARY_EVIDENCE_ONLY",
+    "final_oos": false,
+    "production_collector_changes_allowed_before_dataset_closure": false
+  },
+  "research_question": "Does unusually weak or opposite contemporaneous price response relative to aggressive directional trade-flow effort contain repeatable information about subsequent BTCUSDT USD-M Futures price behavior?",
+  "data_lineage": {
+    "effort_source": "stored shadow record features.orderflow from EvidenceHunter V1.2.3",
+    "effort_transport": "REST_POLLING",
+    "effort_quality": "APPROXIMATE",
+    "effort_original_window_seconds": 60,
+    "effort_time_basis": "exchange trade timestamps",
+    "historical_path_source": "Binance public USD-M Futures aggTrades archive",
+    "future_target_source": "Binance public USD-M Futures aggTrades archive",
+    "do_not_use_old_future_outcome_as_primary_target": true
+  },
+  "confirmed_effort_fields": {
+    "buy_usdt": "features.orderflow.aggressive_buy_usdt",
+    "sell_usdt": "features.orderflow.aggressive_sell_usdt",
+    "signed_effort": "features.orderflow.taker_imbalance",
+    "signed_effort_formula": "(buy_usdt - sell_usdt) / (buy_usdt + sell_usdt)",
+    "effort_magnitude": "abs(signed_effort)",
+    "total_effort_usdt": "buy_usdt + sell_usdt"
+  },
+  "timing_contract": {
+    "decision_time": "features.timestamp",
+    "decision_time_clock": "BINANCE_EXCHANGE_CLOCK_CORRECTED",
+    "why_decision_time_is_safe": "features.timestamp is written when build_features creates the feature snapshot, after upstream state/orderflow has been read.",
+    "stored_orderflow_age_semantics": "orderflow_age_seconds equals exchange_now_at_state_build minus orderflow_snapshot.timestamp.",
+    "exact_historical_orderflow_snapshot_timestamp_per_shadow_record_available": false,
+    "reason_exact_snapshot_timestamp_missing": "orderflow_snapshot.json is overwritten; the shadow record stores orderflow_age_seconds but not the exact per-record orderflow snapshot timestamp or first/last trade IDs/times.",
+    "estimated_effort_window_end": "features.timestamp - orderflow_age_seconds",
+    "estimated_effort_window_start": "estimated_effort_window_end - 60 seconds",
+    "alignment_precision": "APPROXIMATE",
+    "alignment_caveat": "orderflow_age_seconds was measured when STATE was built, while features.timestamp is written later. Therefore features.timestamp - orderflow_age_seconds is slightly later than the true historical orderflow snapshot timestamp by the state-to-feature build lag. It must not be described as exact."
+  },
+  "contemporaneous_result": {
+    "status": "DISCOVERY_RECONSTRUCTION_WITH_APPROXIMATE_ENDPOINT",
+    "price_source": "Binance USD-M Futures aggTrades archive",
+    "p_start": "first aggTrade price at/after estimated_effort_window_start",
+    "p_end": "last aggTrade price at/before estimated_effort_window_end",
+    "return_60s_bps": "10000 * ln(p_end / p_start)",
+    "directional_response": "sign(signed_effort) * return_60s_bps",
+    "interpretation": {
+      "positive": "price response confirms effort direction",
+      "near_zero": "weak response to effort",
+      "negative": "price response opposes effort direction"
+    },
+    "ratio_response_over_effort_primary": false
+  },
+  "future_targets": {
+    "origin": "decision_time = features.timestamp",
+    "horizons_seconds": [
+      300,
+      900,
+      1800
+    ],
+    "raw_future_return_bps": "10000 * ln(price_at_or_after_target / price_at_or_after_decision_time)",
+    "effort_signed_future_return": "sign(signed_effort) * raw_future_return_bps",
+    "interpretation_positive": "future continuation in effort direction",
+    "interpretation_negative": "future reversal against effort direction",
+    "old_shadow_future_outcome": "DIAGNOSTIC_ONLY_NOT_PRIMARY_FOR_THIS_HYPOTHESIS"
+  },
+  "eligibility": {
+    "require_same_dataset_id": true,
+    "require_data_quality_freshness_pass": true,
+    "require_data_quality_completeness_pass": true,
+    "require_data_quality_continuity_pass": true,
+    "require_data_quality_validity_pass": true,
+    "require_trade_gap_false": true,
+    "require_orderflow_ready": true,
+    "require_total_effort_usdt_gt_zero": true,
+    "require_valid_feature_timestamp": true,
+    "require_archive_coverage_for_contemporaneous_window_and_target": true,
+    "market_regime_primary_gate": false,
+    "depth_primary_gate": false
+  },
+  "discovery_protocol": {
+    "continuous_primary_view": [
+      "signed_effort",
+      "effort_magnitude",
+      "directional_response",
+      "future raw returns at 5m/15m/30m",
+      "future effort-signed returns at 5m/15m/30m"
+    ],
+    "fixed_binning": {
+      "effort_magnitude_bins": "quintiles",
+      "directional_response_bins": "quintiles",
+      "two_dimensional_grid": "5x5",
+      "purpose": "describe the response surface without choosing a single best threshold"
+    },
+    "threshold_rule": "No threshold discovered on this dataset may be promoted as confirmed. Any candidate threshold must be frozen under a new confirmation hypothesis_id.",
+    "horizon_rule": "5m, 15m and 30m are all Discovery diagnostics. The best-looking horizon may not be retroactively declared the future Confirmation primary.",
+    "dependence_controls": [
+      "raw chronological descriptive sample",
+      "chronological greedy non-overlap sample separately for each 5m/15m/30m horizon",
+      "moving-block bootstrap or another pre-specified serial-dependence-aware interval estimator"
+    ],
+    "no_primary_subgroup_selection_by": [
+      "market_regime",
+      "depth100",
+      "depth1000",
+      "position_side",
+      "trade_plan",
+      "funding",
+      "day/session"
+    ],
+    "context_fields_may_be_reported_as": "diagnostic descriptive context only"
+  },
+  "leakage_contract": {
+    "future_outcome_as_feature": false,
+    "future_price_in_effort_or_response": false,
+    "future_target_starts_before_decision_time": false,
+    "old_price_exchange_event_time_as_target_origin": false,
+    "decision_time_origin": "features.timestamp",
+    "same_dataset_discovery_and_final_oos": false
+  },
+  "economic_status": {
+    "trade_signal": false,
+    "economic_edge_claim_allowed": false,
+    "cost_contract_required_before_future_confirmation": true
+  },
+  "confirmation_separation": {
+    "current_168h_dataset": "DISCOVERY_ONLY",
+    "candidate_rule_creation": "only after 168h dataset closure + backfill + audit + Discovery",
+    "new_hypothesis_id_required": true,
+    "new_freeze_required": true,
+    "confirmation_data_must_begin_after_freeze": true,
+    "recommended_next_schema_fields": [
+      "effort_window_seconds",
+      "effort_snapshot_exchange_time_ms",
+      "effort_first_trade_id",
+      "effort_last_trade_id",
+      "effort_first_exchange_time_ms",
+      "effort_last_exchange_time_ms",
+      "feature_known_time_ms"
+    ],
+    "recommended_confirmation_timing_precision": "EXACT"
+  },
+  "forbidden_actions": [
+    "Do not modify the current production collector during the 168h dataset.",
+    "Do not modify the current schema/feature/outcome definitions mid-dataset.",
+    "Do not call the reconstructed historical effort-window endpoint exact.",
+    "Do not choose a best threshold or best horizon and call it OOS on the same dataset.",
+    "Do not use depth/regime filters to rescue a weak overall Discovery result.",
+    "Do not admit a trading signal from Discovery alone."
+  ],
+  "next_operational_gate": "Wait for Wall-Clock Span >=168h AND Effective Observed Coverage >=168h, freeze the dataset, mature the final 30m horizon, prefetch all required archive days, complete backfill, require audit_order.py PASS, then run this Discovery protocol."
+}
+

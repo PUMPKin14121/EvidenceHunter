@@ -1,0 +1,69 @@
+﻿{
+  "status_id": "DISCOVERY_READINESS_STATUS_20260904",
+  "status_type": "READ_ONLY_PRE_FLIGHT_READINESS_RECORD",
+  "generated_at_utc": "2026-09-04T10:15:15.656Z",
+  "contract_reference": {
+    "contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+    "contract_path": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1.json",
+    "contract_sha256": "15ddd4b2a7d9fb8a88711ee73940a140e3ff6b409da54a643aadd9c329de453c",
+    "contract_modified_by_this_status_file": false
+  },
+  "dataset_identity": {
+    "dataset_id": "BTCV12P3_20260828T000323Z_75696678",
+    "dataset_file": "logs/v2/EvidenceHunter_shadow_records.jsonl",
+    "dataset_sha256": "571c497ab0e251e1e88b15bc9b6a2ca832a863b9c9d3ac69fb9ea175053de75d",
+    "dataset_file_size_bytes": 69989681,
+    "code_commit_git_head": "21e7e2d9813f8d7dcc796a446bc0e31b33413b76",
+    "code_commit_reverified_in_this_audit": false,
+    "code_commit_note": "carried over from prior Freeze record (2-AW section); not re-run via git rev-parse in this audit due to no shell access this turn"
+  },
+  "archive_coverage": {
+    "interpretation_basis": "PROJECT_OWNER decision 2026-09-04: the Contract's require_archive_coverage_for_contemporaneous_window_and_target gate is about verified Binance-archive provenance for the data used, not about live re-downloadability of the source file at analysis time. A SHA256-verified local copy, checksummed at download time against a checksum fetched from the same official source, satisfies coverage regardless of the remote object's later re-fetchability.",
+    "required_days": [
+      "2026-08-28", "2026-08-29", "2026-08-30", "2026-08-31",
+      "2026-09-01", "2026-09-02", "2026-09-03", "2026-09-04"
+    ],
+    "days": {
+      "2026-08-28": {"local_verified": false, "remote_status_last_checked_utc": "2026-09-04T10:05Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_REMOTE"},
+      "2026-08-29": {"local_verified": false, "remote_status_last_checked_utc": "2026-09-04T10:05Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_REMOTE"},
+      "2026-08-30": {"local_verified": false, "remote_status_last_checked_utc": "2026-09-04T10:05Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_REMOTE"},
+      "2026-08-31": {"local_verified": true, "remote_status_last_checked_utc": "2026-09-04T06:14Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_LOCAL_AND_REMOTE"},
+      "2026-09-01": {"local_verified": true, "remote_status_last_checked_utc": "2026-09-04T06:14Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_LOCAL_AND_REMOTE"},
+      "2026-09-02": {"local_verified": true, "remote_status_last_checked_utc": "2026-09-04T10:05Z", "remote_result": "200_BINARY_OK", "coverage_status": "COVERED_LOCAL_AND_REMOTE"},
+      "2026-09-03": {"local_verified": true, "local_verification_method": "independent SHA256 recompute by this session on both AGG (37f4135ac25f6cce4d82d38f577ccc9803619b7516d574a61afaa9db856254ca) and KLINE (f6b1620e5c52f30d2f498e1681775f152296d2ce52dca5c2ae35d402ab9716db) zip files, byte-identical to local CHECKSUM/VERIFIED records; KLINE content further sanity-checked as a genuine complete 1440-row 2026-09-03T00:00:00Z-23:59:59.999Z 1-minute series", "downloaded_and_verified_at_utc": "2026-09-04T08:08:16Z", "remote_status_last_checked_utc": "2026-09-04T10:11Z", "remote_result": "REMOTE_REDOWNLOAD_STATUS_UNCERTAIN", "remote_result_detail": "repeated cache-busted GET on the exact URL used by ensure_kline_archive_day/ensure_archive_day returned HTTP 404 for the .zip object; the .zip.CHECKSUM sidecar at the same path returned a non-404 response whose body this session's tooling could not render as text", "coverage_status": "LOCAL_VERIFIED_ARCHIVE_AVAILABLE_COVERED", "does_not_invalidate_local_asset": true},
+      "2026-09-04": {"local_verified": false, "remote_status_last_checked_utc": "2026-09-04T10:03Z", "remote_result": "404", "coverage_status": "NOT_COVERED", "note": "UTC day not yet complete; 404 is expected under Binance's completed-day publication model"}
+    }
+  },
+  "eligibility": {
+    "audit_scope": "all 10083 shadow_records.jsonl rows matching dataset_id, checked against every Contract eligibility field except the two counted separately below",
+    "non_archive_eligibility_failures": 0,
+    "non_archive_fields_checked": [
+      "dataset_id match", "data_quality_dimensions.freshness.pass",
+      "data_quality_dimensions.completeness.pass",
+      "data_quality_dimensions.continuity.pass",
+      "data_quality_dimensions.continuity.trade_gap == false",
+      "data_quality_dimensions.validity.pass",
+      "features.orderflow.ready", "features.orderflow.aggressive_buy_usdt + aggressive_sell_usdt > 0",
+      "features.timestamp present and parseable"
+    ],
+    "total_records": 10083,
+    "eligible_records": 9968,
+    "ineligible_records": 115,
+    "eligibility_rate_percent": 98.8595,
+    "ineligible_reason_counts": {"ARCHIVE_COVERAGE_MISSING": 115},
+    "earliest_eligible_time_utc": "2026-08-28T00:06:59.608Z",
+    "latest_eligible_time_utc": "2026-09-03T23:29:04.783Z",
+    "missing_archive_days": ["2026-09-04"]
+  },
+  "discovery_ready": false,
+  "blocking_item": "2026-09-04 ARCHIVE_COVERAGE_MISSING",
+  "known_unknowns": [
+    "Whether the 2026-09-03 archive object's current 404 from this session's calling network reflects a genuine remote rollback by Binance, or a network-path/CDN-edge/IP-range difference between this session's cloud environment and PROJECT_OWNER's own machine; not resolved, not required to be resolved given the local-verified-coverage interpretation adopted above.",
+    "This session's WebFetch-based archive checks throughout this project reflect only the result seen from this session's own outbound network path, not a universal statement about availability from any network location.",
+    "git HEAD not re-verified via a live git rev-parse in this specific audit; carried over from the last confirmed value in the Freeze record."
+  ],
+  "no_research_results_included": true,
+  "forbidden_content_confirmation": "This file contains no Effort x Response binning, no Future Return statistics, no 5x5 heatmap, no horizon comparison, and no subgroup findings.",
+  "next_gate": "Re-run full PRE-FLIGHT (git rev-parse HEAD, Contract SHA256, Dataset SHA256, full archive integrity check, full per-record eligibility audit) once 2026-09-04 archive is published, requiring MISSING_ARCHIVE_REQUIREMENTS = [] and DISCOVERY_READY = TRUE before any further step; even then, execution requires a Discovery Runner + tests implementation reviewed and authorized by GPT before first real run."
+}
+

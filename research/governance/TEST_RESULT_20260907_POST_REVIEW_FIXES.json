@@ -1,0 +1,18 @@
+﻿{
+  "command": ".venv\\Scripts\\python.exe -B -m pytest tests -q -p no:cacheprovider",
+  "exit_code": 0,
+  "passed": 79,
+  "failed": 0,
+  "skipped": 0,
+  "elapsed_seconds": 0.93,
+  "registry_sha256_at_time_of_run": "21a66547348ef2ef35d8b208e9020cd0db3610193653fa1f94174557aa8c8d5a",
+  "raw_output": "TEST_OUTPUT_20260907_POST_REVIEW_FIXES.txt",
+  "raw_output_sha256": "ac0f153511948ea7139b7ae39727fd56a17cfa36206f4cfdc6afeabb43f12234",
+  "context": "Rerun after applying the two REQUIRED_CHANGES from Claude's 2026-09-07 REVIEW_HANDOFF_PACKET for LIFECYCLE_AND_GOVERNANCE_20260907: (1) added test_diag_reads_canonical_outcome_instead_of_old to tests/test_lifecycle_guards.py, verifying EvidenceHunter_shadow_outcome_diag.py resolves the canonical corrected Outcome V2 path rather than the legacy OUTCOMES_FILE_V2; (2) added a comment + existence-guard to test_retired_recorder_rejects_before_runtime_write for its hardcoded cross-repo relative path assumption (v11r1 as a sibling directory), so a missing sibling now SKIPs explicitly instead of erroring. Delta from the prior 78-passed run recorded in TEST_RESULT_20260907.json: +1 test, 79 total, 0 failed, 0 skipped on this machine (the v11r1 sibling exists here so the guarded test runs and passes rather than skipping).",
+  "prior_result_reference": "TEST_RESULT_20260907.json (78 passed, superseded count only -- kept unmodified as historical evidence, not overwritten)",
+  "executed_by": "PROJECT_OWNER (Zeren) on the real machine; raw console output relayed verbatim to Claude on 2026-09-07",
+  "two_fixes_authored_and_applied_by": "Claude (cloud session), applied directly via the device bridge under PROJECT_OWNER's explicit authorization since Codex was unavailable at the time; both fixes were first independently exercised in an isolated sandbox (real project modules copied in, no network calls) before being written to the real machine, then re-confirmed by this real pytest run.",
+  "independent_review_status": "PASS_WITH_REQUIRED_ACTIONS -- all required actions complete except the final git commit",
+  "generated_date": "2026-09-07"
+}
+

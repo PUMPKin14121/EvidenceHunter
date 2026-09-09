@@ -1,0 +1,208 @@
+﻿{
+  "schema_version": "FORMAL_DATASET_MANIFEST_V1",
+  "dataset_id": "BTCOF2C1_20260908T083048Z_fc9937db",
+  "prepared_at_utc": "2026-09-08T08:30:48.240239+00:00",
+  "formal_start_time_utc": "2026-09-08T11:38:46.444364+00:00",
+  "startup_acceptance_end_utc": "2026-09-08T11:53:52.205268+00:00",
+  "startup_acceptance_status": "PASS",
+  "dataset_status": "ACTIVE",
+  "lifecycle_history": [
+    {
+      "state": "PREPARED",
+      "at_utc": "2026-09-08T08:30:48.240239+00:00",
+      "reason": "PREPARE_PREFLIGHT PF1-PF8 all PASS (see prepare_preflight_evidence); Dataset ID minted; Manifest V1 created under NEXT_DATASET_FORMAL_START. No collector launched. dataset_lifecycle.json NOT modified at this state."
+    },
+    {
+      "state": "STARTING",
+      "at_utc": "2026-09-08T11:38:46.444364+00:00",
+      "reason": "Formal Start initiated; planned execution mechanism: frozen-venv inline orchestrator + nonce-bound worker self-report + retained Windows process handle + independent CIM verification + same verified worker entering collector via runpy. Worker verification and collector entry remain pending."
+    },
+    {
+      "state": "ACTIVE",
+      "at_utc": "2026-09-08T11:53:52.205268+00:00",
+      "reason": "A1-A6 PASS: frozen-venv inline orchestrator + nonce-bound worker self-report + retained Windows process handle + independent CIM verification + same-worker runpy. Worker 40644 exit 0; aggTrade 7905, diff_depth 3569, clock AVAILABLE 15, depth snapshots 2, REST 2; drops/backlogs/sink failures 0; all timestamps convertible; startup gap GAP_diff_depth_5569fdeb5fd8 explicitly repaired via DIFF_DEPTH_RESYNC; adjacent depth breaks 0; secret/derived-field scan no findings; six-stream byte sum 17753931 reconciled. Evidence: D:\\EvidenceHunter\\runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db; process_exit_evidence.json, orchestrator_identity_capture.json, soak_summary.json, raw/*, quality/* and collector_stdout/stderr.log. ForceOrder zero payload with 75 observable lifecycle records is allowed. Continuous collection is NOT authorized. Final closure adjudication pending."
+    }
+  ],
+  "collector_source_commit": "c59ad33d8694c9f5a33bcb0432ff6fb1b721f629",
+  "collector_source_hashes": [
+    {
+      "path": "EvidenceHunter_collector.py",
+      "bytes": 55578,
+      "commit_blob": "b674cc6854e5c9fce6b25f81a796e5b295f01ca8",
+      "sha256": "09AC8B1D30A802BBC62EE981867EEE34792826046BD1D5A7188FC1F7241FF7F2"
+    },
+    {
+      "path": "EvidenceHunter_orderbook.py",
+      "bytes": 19923,
+      "commit_blob": "741e394bf14e80ea6e79e0647a97488eae463cda",
+      "sha256": "7272A42F93258D8E83D6F47BB63976ACA7B1599A23C7AC70485C851F7D5B21E8"
+    },
+    {
+      "path": "EvidenceHunter_clock_observer.py",
+      "bytes": 9670,
+      "commit_blob": "d03fb6cb5bba18ccf1a84334b92a2430ae761003",
+      "sha256": "FA5829344402928382FD468021827B75E3D193DD5D8F0DEE30884E6662F45CB9"
+    },
+    {
+      "path": "EvidenceHunter_clock.py",
+      "bytes": 6661,
+      "commit_blob": "131c4ddf4f7059ad19dd9590d84fd813fc027ea3",
+      "sha256": "DF385CDC255D5F1E5B6A76012598BABD211A323C2C4038B1EB5B6DE8C436DEFB"
+    },
+    {
+      "path": "EvidenceHunter_collector_ws.py",
+      "bytes": 12038,
+      "commit_blob": "4373aabe695129503d1dd42bc63cbb9e5f65f862",
+      "sha256": "CCD85095EFF43E1C4B17A46CC4D3BCE46AAA66E95379EC57E90E115722B91EB0"
+    },
+    {
+      "path": "EvidenceHunter_collector_supervisor.py",
+      "bytes": 15447,
+      "commit_blob": "a3778071511610de003620c51327baf462ade7bc",
+      "sha256": "E74193CBD12BDC285A29C0E5C4ACD765B28130EA99D55D60BFA5B90D1A521180"
+    },
+    {
+      "path": "EvidenceHunter_gap_ledger.py",
+      "bytes": 6948,
+      "commit_blob": "54b020e5eb12de81f5b96acdf507c839c76295c4",
+      "sha256": "8BCC29BC943FAEBB17D89941DA171FF2AAB74ADC22ACC42BA8C341BA933C4A2C"
+    },
+    {
+      "path": "EvidenceHunter_resource_sampling.py",
+      "bytes": 12266,
+      "commit_blob": "a6844916baa9e87dd15720c2ce2e3f36599cc3f1",
+      "sha256": "B14EC13CAE7D702DC1BA8558560989D5C224F752E08958CCE112D2B4AE40A015"
+    },
+    {
+      "path": "EvidenceHunter_collector_readiness.py",
+      "bytes": 48723,
+      "commit_blob": "7827f982d2954801b1b09bec19d176f9b754fdeb",
+      "sha256": "2D18A5A2CBD62FBB8A0AA7207DB4AFE12338A1072DEF3E199436AE8657729082"
+    },
+    {
+      "path": "requirements-collector.txt",
+      "bytes": 2168,
+      "commit_blob": "edad0c619bc021daadd24c10e709c03033d320e0",
+      "sha256": "404DB958AA2B5243F7F423FB0C0227DBD8B232E0DF9F09E7A321777ED0C875F6"
+    },
+    {
+      "path": "tests/test_day1_completeness.py",
+      "bytes": 23589,
+      "commit_blob": "89b7a3685b0278ecae68a1cbd9101cdccb7f428f",
+      "sha256": "E77DAA6CFD9C3933E76FCE3E6F8DD38AA5D9629B7D024A5144E30071276DC5FF"
+    },
+    {
+      "path": "tests/test_collector_supervisor.py",
+      "bytes": 9641,
+      "commit_blob": "5ff77b047160b24f0b9fe3f26ab98d62aa42d469",
+      "sha256": "74021766299F68AB95F1F6D339433E2954661AF8ED3FE479B854D1E118EAC1CC"
+    },
+    {
+      "path": "tests/test_resource_sampling.py",
+      "bytes": 2121,
+      "commit_blob": "73b9bb1986a35fdd22c5f92137ae85424257abdc",
+      "sha256": "9C873CF1C8473110AAD884C81F4E82568E56080ADD0CF0304ADF4587C7EA11E9"
+    }
+  ],
+  "readiness_report_path": "research/governance/COLLECTOR_READINESS_REPORT_V3.json",
+  "readiness_report_sha256": "03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec",
+  "requirements_collector_sha256": "404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6",
+  "collector_runtime_root": "D:\\EvidenceHunter\\runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db",
+  "active_acquisition_root": "D:\\EvidenceHunter\\runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db",
+  "expected_stream_set": [
+    "aggTrade",
+    "diff_depth",
+    "forceOrder",
+    "depth_snapshot",
+    "clock_observations",
+    "rest_telemetry"
+  ],
+  "stream_schema_bindings": {
+    "aggTrade": "RAW_EXCHANGE_PAYLOAD_NO_COLLECTOR_SCHEMA_WRAPPER -- Binance native combined-stream aggTrade message, persisted verbatim per the RAW MEANS RAW constraint; no collector-defined 'schema' field is added to this stream",
+    "diff_depth": "RAW_EXCHANGE_PAYLOAD_NO_COLLECTOR_SCHEMA_WRAPPER -- Binance native diff-depth (depthUpdate) message, persisted verbatim; file name depth.jsonl per EvidenceHunter_collector_readiness.py RAW_STREAM_FILES; no collector-defined 'schema' field",
+    "forceOrder": "RAW_EXCHANGE_PAYLOAD_NO_COLLECTOR_SCHEMA_WRAPPER -- Binance native forceOrder (liquidation) message, persisted verbatim; windowed-snapshot semantics (absence of a message is not evidence no liquidation occurred); no collector-defined 'schema' field",
+    "depth_snapshot": "COLLECTOR_DEPTH_SNAPSHOT_EVIDENCE_V1 (EvidenceHunter_orderbook.DEPTH_SNAPSHOT_RECORD_SCHEMA, verified present in source at line 38/134 of EvidenceHunter_orderbook.py)",
+    "clock_observations": "COLLECTOR_CLOCK_OBSERVATION_V1 (EvidenceHunter_clock_observer.CLOCK_OBSERVATION_SCHEMA, verified present in source at line 47/100 of EvidenceHunter_clock_observer.py)",
+    "rest_telemetry": "COLLECTOR_REST_TELEMETRY_V1 (EvidenceHunter_collector.REST_TELEMETRY_SCHEMA, verified present in source at line 87/169 of EvidenceHunter_collector.py)",
+    "binding_method": "Every non-raw value above was read directly from the currently-bound source (grep + line citation), not guessed or copied from an unrelated file, per GPT's manifest-field requirement."
+  },
+  "markPriceUpdate_disposition": "DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN",
+  "collector_run_state": "STOPPED_AFTER_START_ACCEPTANCE",
+  "continuous_collection_authorized": false,
+  "immutability_note": "dataset_id, prepared_at_utc, collector_source_commit, collector_source_hashes, readiness_report_path, readiness_report_sha256, requirements_collector_sha256, expected_stream_set, stream_schema_bindings, collector_runtime_root and active_acquisition_root are immutable from this PREPARED write onward. The entire manifest becomes frozen once dataset_status reaches ACTIVE or START_FAILED.",
+  "canonical_governance_binding": {
+    "change_roles": "research/governance/CHANGE_ROLES_NEXT_DATASET_FORMAL_START_20260908.json",
+    "change_roles_sha256": "c4fecbd17bfcb304cfb59d50bd6a5f81298532b9ba4751dde43e48cbb4084710",
+    "scope_declaration": "research/governance/SCOPE_DECLARATION_NEXT_DATASET_FORMAL_START_20260908.json",
+    "scope_declaration_sha256": "93b7ee38164694505828dba7cdff59c965a76ca17e40b9e4cfde29687269351a",
+    "final_scope_binding_review": "PROJECT_OWNER + GPT, 2026-09-08: SCOPE_BINDING=APPROVED, GOVERNANCE_FILES=ACCEPTED, EXECUTION_PHASE=PREPARE_ONLY_AUTHORIZED, 900s_STARTUP_ACCEPTANCE=NOT_YET_AUTHORIZED"
+  },
+  "prepare_preflight_evidence": {
+    "executed_at_utc": "2026-09-08T08:30:48.240239+00:00",
+    "executed_by": "Claude, via direct read-only file staging from the real machine (no code execution, no side effects)",
+    "PF1_v3_path_and_sha": "PASS -- research/governance/COLLECTOR_READINESS_REPORT_V3.json, 16029 bytes, sha256 03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec, exact match",
+    "PF2_collector_source_hashes_vs_v3_binding": "PASS -- all 13 files in collector_source_hashes independently rehashed from disk and matched exactly (see collector_source_hashes above)",
+    "PF3_requirements_hash": "PASS -- requirements-collector.txt 2168 bytes, sha256 404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6, exact match",
+    "PF4_change_roles_and_scope_hash": "PASS -- both files rehashed from disk and matched the frozen fingerprints in canonical_governance_binding exactly",
+    "PF5_manifest_v1_absent": "PASS -- confirmed absent via device_list_dir of research/governance/ immediately before this write",
+    "PF6_frozen_dataset_snapshot_captured": "PASS -- see existing_frozen_dataset_snapshot below, captured immediately before any lifecycle edit (no edit performed this step)",
+    "PF7_protected_paths_enumerated_and_disjoint": "PASS -- see protected_paths_disjointness_check below",
+    "PF8_dataset_id_and_runtime_root_uncollided": "PASS -- BTCOF2C1_20260908T083048Z_fc9937db present in neither frozen_datasets nor active_datasets (key does not yet exist); runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db confirmed absent via device_list_dir of D:\\EvidenceHunter immediately before this write"
+  },
+  "existing_frozen_dataset_snapshot": {
+    "captured_at_utc": "2026-09-08T08:30:48.240239+00:00",
+    "purpose": "For a later parsed-value deep-equality comparison after dataset_lifecycle.json is eventually edited to add active_datasets (CORR2). This snapshot proves the frozen entry's state at the moment PREPARE completed.",
+    "dataset_lifecycle_schema_version": 1,
+    "frozen_datasets": {
+      "BTCV12P3_20260828T000323Z_75696678": {
+        "status": "FROZEN_CLOSED",
+        "protected_paths": [
+          "logs/v2/EvidenceHunter_shadow_records.jsonl",
+          "logs/v2/EvidenceHunter_shadow_outcomes.jsonl",
+          "logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+          "runtime/v2/dataset_session.json"
+        ],
+        "canonical_outcome": {
+          "path": "logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+          "sha256": "184e307f31a3265ffa0fed7af824f8d558043254840ed2a87c5f6b28b6d68786"
+        },
+        "source": "archive/discovery_evidence_v1_to_v2/outcome_dataset_disposition.json",
+        "next_collection": "Requires separately prepared new dataset and output paths; do not clear frozen working directories."
+      }
+    },
+    "active_datasets_key_present": false,
+    "dataset_lifecycle_json_bytes_at_snapshot": 845
+  },
+  "protected_paths_disjointness_check": {
+    "method": "Resolved absolute Windows path components compared case-insensitively as tuples (pathlib.PureWindowsPath .parts, lower-cased), checking that neither path's component sequence is a prefix of the other's. A naive str.startswith() was deliberately NOT used -- it was verified to produce a FALSE POSITIVE collision on this exact runtime root (str(runtime_root).lower().startswith('...\\\\runtime') == True, purely because the top-level directory name 'runtime_formal_...' shares the substring 'runtime' with the sibling directory 'runtime\\v2'), which the component-wise method correctly resolves as disjoint.",
+    "candidate_runtime_root": "D:\\EvidenceHunter\\runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db",
+    "checked_against": [
+      {
+        "path": "logs\\v2",
+        "disjoint": true
+      },
+      {
+        "path": "runtime\\v2",
+        "disjoint": true
+      },
+      {
+        "path": "logs\\v2\\EvidenceHunter_shadow_records.jsonl",
+        "disjoint": true
+      },
+      {
+        "path": "logs\\v2\\EvidenceHunter_shadow_outcomes.jsonl",
+        "disjoint": true
+      },
+      {
+        "path": "logs\\v2\\EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+        "disjoint": true
+      },
+      {
+        "path": "runtime\\v2\\dataset_session.json",
+        "disjoint": true
+      }
+    ],
+    "all_disjoint": true
+  }
+}
+

@@ -1,0 +1,82 @@
+{
+  "contract_id": "AI_EXECUTION_CONTRACT_V1",
+  "version": "1.0.0",
+  "created_date": "2026-09-07",
+  "author": "Claude (cloud session), per PROJECT_OWNER/GPT decision under changeset AI_EXECUTION_BOUNDARY_V1_20260907",
+  "purpose": "Turn the project's BOUNDED CHANGESET / ANTI-RECURSIVE-AUDIT prompt-level rule (AI_START_HERE.md) into a machine-checkable contract: a fixed structured-output schema plus default numeric/path budgets that governance_guard.py can validate mechanically, instead of relying only on an AI reading and following prose instructions.",
+  "scope_of_this_contract": "This file defines defaults and schemas only. It does not itself declare or enforce scope for any specific changeset. Each changeset supplies its own scope_declaration (see scope_declaration_template) consistent with these defaults, or with explicit PROJECT_OWNER-approved overrides recorded in that changeset's own CHANGE_ROLES file.",
+
+  "document_semantics": {
+    "RETIRED": "EXCLUDED_FROM_ACTIVE_WORKING_SET -- not deleted",
+    "ARCHIVED": "EXCLUDED_FROM_ACTIVE_WORKING_SET -- not deleted",
+    "CURRENT": "DEFAULT_READ = true",
+    "RETIRED_default_read": false,
+    "ARCHIVED_default_read": false,
+    "note": "A file or directory's RETIRED/ARCHIVED status only changes whether it is read by default in a normal session boot. It never implies deletion and never changes on-disk content."
+  },
+
+  "default_budgets": {
+    "MAX_NEW_FILES": 2,
+    "MAX_NEW_DIRS": 0,
+    "MAX_FULL_REPO_SCANS": 0,
+    "MAX_FULL_TEST_RUNS": 1,
+    "MAX_RECONCILIATION_RUNS": 1,
+    "MAX_AGENT_TURNS": 4,
+    "MASTER_APPEND_BUDGET_BYTES": 2000,
+    "CHANGELOG_MAX_ENTRIES": 1,
+    "note": "These are the project's DEFAULT ceilings for a typical bounded changeset (e.g. AI_EXECUTION_BOUNDARY_V1_20260907 itself). A changeset that genuinely needs more -- for example NEXT_DATASET_COLLECTOR_IMPLEMENTATION, which will create many source/test files -- must supply its own scope_declaration with explicit, PROJECT_OWNER-approved budget_overrides. governance_guard.py always checks against the effective budget (override value if present, else this default), never silently loosens a limit on its own."
+  },
+
+  "blocking_conditions": [
+    "FROZEN_OR_CANONICAL_ARTIFACT_CORRUPTION_RISK",
+    "APPROVED_CHANGE_CAUSED_TEST_FAILURE",
+    "APPROVED_CHANGE_CAUSED_RECONCILIATION_FAILURE",
+    "COMMIT_CONTENT_OUTSIDE_APPROVED_SCOPE",
+    "SECRET_OR_DATA_LOSS_RISK"
+  ],
+  "out_of_scope_finding_default_disposition": "NON_BLOCKING_BACKLOG",
+
+  "scope_declaration_template": {
+    "changeset_id": "<string, e.g. NEXT_DATASET_COLLECTOR_IMPLEMENTATION>",
+    "allowed_paths": ["<repo-relative path prefix, e.g. research/governance/>"],
+    "forbidden_paths": ["<repo-relative path prefix that must never be touched by this changeset>"],
+    "budget_overrides": {
+      "MAX_NEW_FILES": "<int, optional -- omit to use default_budgets value>",
+      "MAX_NEW_DIRS": "<int, optional>",
+      "MAX_FULL_REPO_SCANS": "<int, optional>",
+      "MAX_FULL_TEST_RUNS": "<int, optional>",
+      "MAX_RECONCILIATION_RUNS": "<int, optional>",
+      "MASTER_APPEND_BUDGET_BYTES": "<int, optional>",
+      "CHANGELOG_MAX_ENTRIES": "<int, optional>"
+    }
+  },
+
+  "structured_output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["status", "action", "scope_status", "blocking_issue", "scope_change_requested", "next_action"],
+    "properties": {
+      "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+      "action": {"type": "string"},
+      "scope_status": {"type": "string", "enum": ["IN_SCOPE", "OUT_OF_SCOPE"]},
+      "blocking_issue": {"type": ["string", "null"]},
+      "scope_change_requested": {"type": "boolean"},
+      "next_action": {"type": "string", "enum": ["CONTINUE", "STOP", "ESCALATE_TO_OWNER"]}
+    }
+  },
+  "example_stop_output": {
+    "status": "PASS",
+    "action": "validate_execution_contract",
+    "scope_status": "IN_SCOPE",
+    "blocking_issue": null,
+    "scope_change_requested": false,
+    "next_action": "STOP"
+  },
+
+  "enforcement_mechanism": "governance_guard.py (repo root) implements two read-only, no-network, no-repo-mutation checks: (1) validate_output(candidate, schema) -- rejects any structured-output object with keys outside structured_output_schema.properties, missing required keys, or enum/type violations; (2) check_change_budget(scope_declaration, change_summary, defaults) -- checks a *declared* summary of a changeset's new files/dirs, scan/test/reconciliation run counts, and MASTER/CHANGELOG append sizes against the effective budgets (override if given, else default_budgets), and checks every new path against allowed_paths/forbidden_paths prefixes. It does not itself walk the git repository or infer newness -- the caller supplies the change_summary explicitly, keeping the guard a simple, auditable mechanical check rather than an autonomous scanner.",
+
+  "non_goals": [
+    "This contract does not replace PROJECT_OWNER/GPT review -- it only prevents a subset of scope-creep and malformed-output failure modes mechanically, before a human ever has to notice them.",
+    "It does not attempt to detect every possible governance violation; it enforces the specific, previously-recurring failure modes this project has actually hit (unbounded MASTER growth, undeclared new files/dirs, unschema'd status output, silent scope expansion)."
+  ]
+}

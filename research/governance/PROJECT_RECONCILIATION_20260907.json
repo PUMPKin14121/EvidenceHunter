@@ -1,0 +1,15 @@
+{
+  "scope": "20260907 lifecycle protections + minimal registered-asset reconciliation + OF2 plan only",
+  "RECONCILIATION_STATUS": "PASS_FOR_REGISTERED_ASSET_VERSIONS_ONLY",
+  "INDEPENDENT_REVIEW_STATUS": "PENDING",
+  "RELEASE_READY": false,
+  "findings": [],
+  "chinese_summary": "本次登记资产的文件与哈希一致；已测试的修改仍待独立审核。此检查不代表全项目治理、运行状态或交易资格验收。",
+  "not_checked": [
+    "unregistered MASTER requirements",
+    "live processes",
+    "UI wiring",
+    "all historical artifacts",
+    "independent review authenticity"
+  ]
+}

@@ -1,0 +1,106 @@
+﻿{
+  "status_id": "DISCOVERY_READINESS_STATUS_20260906_POST_MATERIALIZATION_READY",
+  "status_type": "READ_ONLY_PRE_FLIGHT_READINESS_RECORD",
+  "supersedes_for_readiness_purposes": [
+    "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/readiness/DISCOVERY_READINESS_STATUS_20260904.json",
+    "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/readiness/DISCOVERY_READINESS_STATUS_20260906_FINAL_PREFLIGHT.json"
+  ],
+  "supersedes_note": "Neither prior status file is deleted or overwritten (append-only / no-silent-overwrite convention). Both remain on disk as historical records. This file documents what changed between them: the 2026-09-04 archive was explicitly materialized (downloaded + official-CHECKSUM-verified) into the local project cache via a new, purely additive tool (EvidenceHunter_archive_materialize.py), independently re-verified by this session, closing the sole remaining gap.",
+  "generated_at_utc": "2026-09-06T09:34:00Z",
+  "requested_by": "PROJECT_OWNER / GPT joint instruction: 'BTC HUNTER — 2026-09-04 ARCHIVE MATERIALIZATION STEP', executed via EXECUTION_AGENT_VIA_USER_RELAY, then independently re-verified in this status file.",
+  "code_commit": {
+    "value": "21e7e2d9813f8d7dcc796a446bc0e31b33413b76",
+    "verification_method": "Read directly from D:\\EvidenceHunter\\.git\\HEAD and .git\\refs\\heads\\master via the device file-bridge (no shell access to the target machine in this session). Unchanged since the prior Final Pre-Flight check earlier this same turn-chain.",
+    "note": "The new file EvidenceHunter_archive_materialize.py was added to the working tree this turn but has NOT been committed to git; this HEAD value reflects the last commit only, not working-tree state. This is flagged as a known_unknown below."
+  },
+  "contract_reference": {
+    "contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+    "contract_path": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1.json",
+    "contract_sha256_recomputed": "15ddd4b2a7d9fb8a88711ee73940a140e3ff6b409da54a643aadd9c329de453c",
+    "matches_prior_recorded_value": true,
+    "contract_modified_by_this_status_file": false,
+    "required_remote_assets_per_contract_text": {
+      "aggTrades_archive": "REQUIRED (data_lineage.historical_path_source and data_lineage.future_target_source both specify 'Binance public USD-M Futures aggTrades archive')",
+      "klines_archive": "NOT REFERENCED ANYWHERE IN THE CONTRACT TEXT. Klines archive is used elsewhere in the codebase (EvidenceHunter_market.py get_klines_range, for live production market data with REST fallback) but is not part of this Contract's own price-reconstruction methodology. It was still materialized for 2026-09-04 for parity with the project's existing archive_prefetch.py convention, not because the Contract requires it.",
+      "indexPriceKlines": "NOT USED ANYWHERE. The 'INDEX OK' output some prior status records referenced is a purely local CSV-indexing step inside EvidenceHunter_archive.py (_build_agg_index), triggered via a tiny get_archive_agg_trades_between() call. It is not a Binance remote asset. This is unrelated to and should not be conflated with the separate, now-resolved 'indexPriceKlines returned 404 for ~2 days' historical mystery (see known_unknowns)."
+    }
+  },
+  "dataset_identity": {
+    "dataset_id": "BTCV12P3_20260828T000323Z_75696678",
+    "dataset_file": "logs/v2/EvidenceHunter_shadow_records.jsonl",
+    "dataset_sha256_recomputed": "571c497ab0e251e1e88b15bc9b6a2ca832a863b9c9d3ac69fb9ea175053de75d",
+    "dataset_file_size_bytes": 69989681,
+    "dataset_mtime_utc": "2026-09-04T01:28:18.342Z",
+    "matches_prior_recorded_value": true,
+    "verification_method": "Re-hashed against the same staged copy used for the Final Pre-Flight audit earlier this turn-chain; unchanged."
+  },
+  "archive_coverage": {
+    "terminology_revision_note": "Per GPT/PROJECT_OWNER review, this and all future readiness snapshots separate three previously-conflated states: REMOTE_ARCHIVE_AVAILABLE (the object is fetchable from data.binance.vision), LOCAL_ARCHIVE_MATERIALIZED (the zip has actually been downloaded into this project's local cache), and LOCAL_ARCHIVE_CHECKSUM_VERIFIED (the downloaded zip's SHA256 has been confirmed against the official .CHECKSUM sidecar and a .VERIFIED stamp exists). A day that is remote-available but not yet locally materialized is now labeled with reason code ARCHIVE_LOCAL_MATERIALIZATION_PENDING rather than the coarser ARCHIVE_COVERAGE_MISSING used in the prior two status files.",
+    "required_days": ["2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04"],
+    "days": {
+      "2026-08-28": {"remote_archive_available": true, "local_archive_materialized": false, "local_archive_checksum_verified": false, "coverage_status": "COVERED_REMOTE_ONLY", "note": "Unchanged from prior audits; not independently re-checked this turn (undisputed, no new information). Never needed locally since Backfill locked these records via live REST before archive_prefetch ever needed this day."},
+      "2026-08-29": {"remote_archive_available": true, "local_archive_materialized": false, "local_archive_checksum_verified": false, "coverage_status": "COVERED_REMOTE_ONLY", "note": "Same as 2026-08-28."},
+      "2026-08-30": {"remote_archive_available": true, "local_archive_materialized": false, "local_archive_checksum_verified": false, "coverage_status": "COVERED_REMOTE_ONLY", "note": "Same as 2026-08-28."},
+      "2026-08-31": {"remote_archive_available": true, "local_archive_materialized": true, "local_archive_checksum_verified": true, "coverage_status": "COVERED_LOCAL_VERIFIED", "note": "Local .zip/.CHECKSUM/.VERIFIED reconfirmed present via device_list_dir this turn (unchanged sizes)."},
+      "2026-09-01": {"remote_archive_available": true, "local_archive_materialized": true, "local_archive_checksum_verified": true, "coverage_status": "COVERED_LOCAL_VERIFIED", "note": "Same as 2026-08-31."},
+      "2026-09-02": {"remote_archive_available": true, "local_archive_materialized": true, "local_archive_checksum_verified": true, "coverage_status": "COVERED_LOCAL_VERIFIED", "note": "Same as 2026-08-31."},
+      "2026-09-03": {"remote_archive_available": "REMOTE_REDOWNLOAD_STATUS_UNCERTAIN (see prior status file; does not invalidate local asset per PROJECT_OWNER ruling 2026-09-04)", "local_archive_materialized": true, "local_archive_checksum_verified": true, "coverage_status": "COVERED_LOCAL_VERIFIED", "note": "Local .zip/.CHECKSUM/.VERIFIED reconfirmed present via device_list_dir this turn (unchanged sizes: klines 62921 bytes, aggTrades 21991621 bytes)."},
+      "2026-09-04": {
+        "remote_archive_available": true,
+        "local_archive_materialized": true,
+        "local_archive_checksum_verified": true,
+        "coverage_status": "COVERED_LOCAL_VERIFIED",
+        "materialization_method": "EvidenceHunter_archive_materialize.py --date 2026-09-04 --asset both, run by PROJECT_OWNER via EXECUTION_AGENT_VIA_USER_RELAY. Raw output: 'AGG OK', 'INDEX OK', 'KLINE OK', 'MATERIALIZATION_COMPLETE: 2026-09-04'.",
+        "independent_verification_this_session": {
+          "kline_zip_sha256_recomputed": "5b5bbd3711f1f732e153a4deaa8bc51916850fd7bfa805e9d85c5686403d8e4c",
+          "kline_zip_matches_checksum_and_verified_stamp": true,
+          "kline_zip_crc_test": "PASS (zipfile.testzip() returned None)",
+          "kline_content_sanity": "Extracted CSV contains exactly 1440 data rows (excluding header) spanning 2026-09-04T00:00:00Z to 2026-09-04T23:59:59.999Z, a complete non-overlapping 1-minute daily series.",
+          "agg_zip_sha256_recomputed": "9ec137c60c6bfce0473dac8a183e96ffae1db90b8c3fe829cf8ca2f8b2e5ee42",
+          "agg_zip_matches_checksum_and_verified_stamp": true,
+          "agg_zip_crc_test": "PASS (zipfile.testzip() returned None)",
+          "agg_content_sanity": "Extracted CSV uncompressed size (97716701 bytes) matches the on-disk extracted .csv file size exactly."
+        }
+      }
+    }
+  },
+  "eligibility": {
+    "audit_scope": "All 10083 shadow_records.jsonl rows matching dataset_id, re-run in full this turn against the same hash-confirmed-unchanged dataset file, with 2026-09-04 now added to the covered-days set following independent verification above.",
+    "non_archive_eligibility_failures": 0,
+    "non_archive_fields_checked": [
+      "dataset_id match", "data_quality_dimensions.freshness.pass",
+      "data_quality_dimensions.completeness.pass",
+      "data_quality_dimensions.continuity.pass",
+      "data_quality_dimensions.continuity.trade_gap == false",
+      "data_quality_dimensions.validity.pass",
+      "features.orderflow.ready", "features.orderflow.aggressive_buy_usdt + aggressive_sell_usdt > 0",
+      "features.timestamp present and parseable"
+    ],
+    "total_records": 10083,
+    "eligible_records": 10083,
+    "ineligible_records": 0,
+    "eligibility_rate_percent": 100.0,
+    "ineligible_reason_counts": {},
+    "earliest_eligible_time_utc": "2026-08-28T00:06:59.608Z",
+    "latest_eligible_time_utc": "2026-09-04T01:28:05.958Z",
+    "required_archive_days": ["2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04"],
+    "missing_archive_requirements": [],
+    "historical_snapshot_preserved_not_overwritten": {
+      "source_file": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/readiness/DISCOVERY_READINESS_STATUS_20260904.json (and the 20260906_FINAL_PREFLIGHT.json restatement of the same numbers)",
+      "historical_values": {"ineligible_records": 115, "ineligible_reason_counts": {"ARCHIVE_COVERAGE_MISSING": 115}},
+      "corrected_interpretation": "Those 115 records were never actually data-defective. Every one of them failed solely because 2026-09-04's archive had not yet been locally materialized at the time of that audit. Per GPT/PROJECT_OWNER's terminology revision, that historical reason code would today be phrased ARCHIVE_LOCAL_MATERIALIZATION_PENDING rather than ARCHIVE_COVERAGE_MISSING. The historical file is left as-is; this note is the supersession record."
+    }
+  },
+  "discovery_ready": true,
+  "blocking_item": null,
+  "known_unknowns": [
+    "EvidenceHunter_archive_materialize.py was added to the working tree this turn (delivered by this session, written to disk by PROJECT_OWNER's local environment) but has not been committed to git as of this status file's generation. CODE_COMMIT above reflects HEAD only, not working-tree state. This is a net-new, additive, non-Frozen utility file; it does not affect the Contract, the Dataset, or any research semantics, but PROJECT_OWNER may want to commit it for their own project hygiene.",
+    "The 2026-09-03 remote-404-vs-local-verified discrepancy remains unresolved as a causal matter (genuine Binance-side flux vs. this session's network path); it does not block discovery_ready under the adopted interpretation, and is unrelated to 2026-09-04 (which is now independently local-verified by this session directly, not merely asserted).",
+    "This session's WebFetch tool currently refuses to fetch arbitrary data.binance.vision URLs not already in an approved 'provenance set' (error PROVENANCE_REQUIRED, first observed earlier this turn-chain). This did not block this status file's conclusions, since 2026-09-04 coverage was established via direct local file verification (SHA256 + CRC + content sanity) rather than a remote WebFetch check. It remains a standing limitation on this session's ability to independently spot-check remote-only claims going forward.",
+    "Correction on record (unchanged from the prior status file): the long-standing 'indexPriceKlines 404 for ~2 days' mystery from earlier sessions of this project was a human typo in a manually-constructed ZIP filename during a manual check, not a genuine Binance publish delay. This is unrelated to the local 'INDEX OK' indexing step described in contract_reference.required_remote_assets_per_contract_text above."
+  ],
+  "no_research_results_included": true,
+  "forbidden_content_confirmation": "This file contains no Effort x Response binning, no Future Return statistics, no 5x5 heatmap, no horizon comparison, and no subgroup findings.",
+  "next_gate": "DISCOVERY_READY = TRUE as of this status file. Per PROJECT_OWNER's explicit governance sequencing, this is a STOP point: no Effort/Response binning, 5x5 matrix, horizon comparison, subgroup analysis, or Edge/EV statistic may be run yet. This result should go to GPT for review. The next authorized step after that review is: Claude implements a Discovery Runner + tests strictly per the Frozen Contract, without viewing results, and submits code identity/diff/test results/dry-run schema output to GPT for independent review; only after GPT approval is the first real Discovery execution authorized. IMPLEMENTED != VERIFIED. READY != DISCOVERY_EXECUTED. DISCOVERY_RESULT != CONFIRMATION."
+}
+

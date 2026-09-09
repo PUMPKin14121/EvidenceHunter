@@ -1,0 +1,989 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "DATASET_COLLECTION_OPERATIONS",
+  "stage": "DESIGN_GOVERNANCE_ONLY",
+  "revision": "FINAL -- APPROVED FOR FREEZE by PROJECT_OWNER + GPT, 2026-09-08. Content identical to DRAFT v6 except this revision/status/successor-chain wording, corrected per the v6 DESIGN FREEZE AUTHORIZATION to describe DATASET_COLLECTION_OPERATIONS as a closing (not open-and-nesting) design-freeze changeset.",
+  "status": "APPROVED_FINAL -- DESIGN_GOVERNANCE_ONLY stage content frozen 2026-09-08. This changeset closes as DATASET_COLLECTION_OPERATIONS / CLOSED_DESIGN_FREEZE_PASS upon this write+commit; the canonical closure record lives in PROJECT_CURRENT_STATE.json, not in this file.",
+  "primary_builder": "Claude",
+  "independent_reviewer": "GPT, via PROJECT_OWNER relay",
+  "purpose": "Design, but do NOT execute, the complete operational contract for long-running continuous collection of the already-ACTIVE dataset BTCOF2C1_20260908T083048Z_fc9937db, including the Network Epoch model PROJECT_OWNER requested: the dataset must survive normal, real-life network changes (proxy node switches, TUN on/off, UU accelerator, etc.) as ordinary, auditable operational events rather than as dataset-invalidating incidents.",
+  "readiness_precondition": {
+    "prior_changeset": "NEXT_DATASET_FORMAL_START",
+    "prior_changeset_status": "CLOSED_2026-09-08_PASS",
+    "prior_changeset_closure_commit": "bd8dde02db4e7e410d022466847b19d8d048a7d7",
+    "active_dataset_id": "BTCOF2C1_20260908T083048Z_fc9937db",
+    "dataset_status": "ACTIVE",
+    "collector_run_state": "STOPPED_AFTER_START_ACCEPTANCE",
+    "continuous_collection_authorized": false,
+    "discovery_status": "NOT_STARTED",
+    "trade_permission": false
+  },
+  "permanent_principles_preserved": [
+    "COLLECTOR COLLECTS FACTS. RESEARCH ENGINE DERIVES FEATURES.",
+    "ACTIVE Dataset != collector currently running.",
+    "Risk controls cannot create edge.",
+    "No research result may be inferred from operational health.",
+    "No silent gap repair.",
+    "No overwrite of historical evidence.",
+    "No recursive Readiness reruns.",
+    "No continuous collection until separately approved.",
+    "NEW (this revision): normal operator use of the machine (network/proxy/accelerator changes) is an auditable operational event, never a reason to silently pretend nothing changed and never, by itself, a reason to invalidate the dataset.",
+    "NEW (v3): ONE DATASET != ONE CONTINUOUS PROCESS. ONE DATASET = MULTIPLE COLLECTION SESSIONS + MULTIPLE NETWORK EPOCHS + MULTIPLE VALID SEGMENTS + EXPLICIT DOWNTIME/GAPS. Ordinary interruption (planned shutdown, reboot, Windows update, gaming/UU use, ISP outage, power loss, OS/process crash, or an intentional long hiatus of any length) is NOT, by itself, grounds for Dataset-level invalidation. What is forbidden is pretending a gap does not exist, or using later data to silently erase an earlier gap."
+  ],
+  "area_02b_multi_session_source_verdict": {
+    "method": "READ-ONLY inspection of the real source on disk, as explicitly authorized. No code executed, no tests run.",
+    "verdict": "CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE",
+    "evidence": [
+      "RawPayloadWriter._run() (EvidenceHunter_collector.py L363-364) opens every raw/quality stream file with self.path.open('a', ...) -- genuine append mode. This is the writer class used for ALL SIX evidence streams (aggTrade, depth/diff_depth, forceOrder, depth_snapshot, clock_observations, rest_telemetry -- see build_components() L883-888). Its own docstring states: 'Bounded-queue, single background-thread append-only JSONL writer.'",
+      "EvidenceHunter_gap_ledger.py L64 also opens with path.open('a', ...) -- gap_ledger.jsonl is genuinely append-only.",
+      "collector_alerts.jsonl (EvidenceHunter_collector.py L135) is also opened with .open('a', ...).",
+      "Every writer's start() (L343) calls self.path.parent.mkdir(parents=True, exist_ok=True) -- exist_ok=True, so the writer never objects to raw/ or quality/ subdirectories already existing from a prior session.",
+      "main() (L1132) and build_components() (L868) contain NO directory-existence guard at all -- there is no os.mkdir(runtime_dir, exist_ok=False) or equivalent anywhere in the collector itself. The exist_ok=False guard used during Formal Start (RUNTIME.mkdir(exist_ok=False)) lived in the ONE-OFF inline orchestrator script Codex wrote for that single-attempt run, not in the collector. A different, purpose-built operations-launcher (not that Formal Start script) is free to point the collector at an existing runtime_dir.",
+      "build_components() (L892-901) explicitly calls read_continuity_checkpoint(runtime_dir) at every startup and feeds the prior process's last-durably-persisted trade_id/update_id into AggTradeCollector/DiffDepthCollector as restart_checkpoint_id/restart_checkpoint_update_id -- this is a REAL, already-implemented, already-G6-tested restart-boundary/gap-detection mechanism, not something this changeset needs to invent. Its own comment: 'a prior process's checkpoint is read as EVIDENCE only. No component state, no order book and no HEALTHY status is restored from it' -- exactly the anti-silent-resume discipline this changeset's Area 6/15 need.",
+      "write_continuity_checkpoint() (L418-461) is refreshed every CONTINUITY_CHECKPOINT_INTERVAL_SECONDS=5.0s DURING a run, AND written once more explicitly AFTER writer drain at graceful shutdown (L1231, comment: 'Final checkpoint AFTER the writers have drained, so it reflects everything actually on disk') -- a graceful multi-session pause therefore leaves a CLEANER checkpoint than the already-proven G6 hard-kill case, so if a kill-based restart already passed G6, a graceful pause/resume cycle is at least as safe.",
+      "This restart/checkpoint mechanism was already empirically validated for a REAL process kill during COLLECTOR_READINESS_REBIND's G6 gate (pre PID 33240 verified-killed exit 137 -> 30.0004s interruption -> post PID 31504 fresh identity exit 0, PASS).",
+      "NEW (v3, re-verified against a freshly re-staged copy of EvidenceHunter_collector.py, sha256 09ac8b1d30a802bbc62ee981867eee34792826046bd1d5a7188fc1f7241ff7f2, 55578 bytes, mtimeMs 1788835044269 -- unchanged since the prior U2 inspection, confirming no source edit occurred in between): a full-file Grep for lock/PID/signal-handling keywords found NO single-instance lock file, NO PID file, NO signal.signal()/SIGINT/SIGTERM handler, and NO atexit hook anywhere in EvidenceHunter_collector.py. The ONLY code path that reaches the graceful drain sequence (stop_event.set() -> writer.stop() drain -> final write_continuity_checkpoint() AFTER drain -> soak_summary.json write, main() L1218-1256) is time.sleep(args.duration_seconds) (L1218) returning NATURALLY after the pre-set --duration-seconds elapses. argparse (L860-864) enforces no upper bound on --duration-seconds (a plain float, default 60.0), and the script's own top-of-file description states it explicitly: 'it always exits after --duration-seconds ... it is not a long-running daemon by default' (L850-852) -- this is original design intent, directly corroborating the U2 many-bounded-sessions architecture rather than contradicting it. The direct consequence: there is currently NO live, on-demand graceful-pause mechanism. A Ctrl+C or taskkill delivered while inside time.sleep() raises/terminates BEFORE line 1219 and skips the entire drain/final-checkpoint/summary sequence -- mechanically indistinguishable from the already-G6-proven kill-based restart case, and therefore just as SAFE to recover from via the existing checkpoint-based mechanism, but it is NOT the same code path as a natural CLEAN_PLANNED_STOP and must not be labeled as one."
+    ],
+    "one_operational_caveat_not_a_code_defect": "soak_summary.json is OVERWRITTEN (Path.write_text, L1250), not appended, at the end of EVERY invocation, under a fixed filename with no session id. Two consequences the operations design must handle procedurally (NOT by changing collector code): (1) build_soak_summary()'s per-stream raw_bytes/raw_lines are recomputed by re-reading the ACTUAL file from disk (_count_file_bytes_and_lines(), L943-953) and are therefore CUMULATIVE across every session that has ever written to this runtime_dir, whereas message_count/written_count come from the writer object's own in-memory counters and reset to 0 at every new process start -- so after a second session, a single soak_summary.json would show cumulative raw_bytes alongside a session-2-only message_count, and its bytes_per_second/projected_gb_per_day fields (cumulative bytes divided by session-2's own actual_duration_seconds) would be MISLEADINGLY INFLATED. The operations layer must compute its own per-session and cumulative throughput from operational_sessions.jsonl + raw-file byte deltas, and must NOT read soak_summary.json's bytes_per_second/projected_gb_per_day fields as meaningful once a runtime_dir has been reused across more than one session. (2) Because it is overwritten under a fixed filename, session 1's soak_summary.json is LOST the moment session 2 ends and writes a new one -- this would silently violate the 'no overwrite of historical evidence' principle unless the operations layer copies/archives soak_summary.json to a session-numbered filename (e.g. soak_summary_session_001.json) immediately after each session ends and before the next session starts. This is a required OPERATIONAL PROCEDURE for Area 3/14, not a code change, and is now written into area_03_start_resume_semantics below.",
+    "verdict_still_holds": "CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE -- this is the corrected, precisely-scoped form of what was called CURRENT_COLLECTOR_MULTI_SESSION_SAFE in v1-v3. The underlying evidence (append-only writers, no directory-existence guard, G6-proven checkpoint-based restart-boundary detection) is unchanged; only the LABEL is corrected to avoid implying operations-readiness it does not have.",
+    "verdict_meaning": "Sequential bounded collection sessions may reuse the same Dataset/runtime root with append/checkpoint/reconciliation semantics, PROVIDED sessions never overlap and single-instance ownership is externally guaranteed. This is NOT a claim that the current collector is ready for unattended continuous-collection operations.",
+    "safety_condition": "Safe ONLY when sessions do not overlap in time AND single-instance ownership of the runtime root is externally guaranteed. The collector itself enforces neither condition (see continuous_collection_operations_readiness below)."
+  },
+  "u1_through_u10_adjudicated": {
+    "U1_state_storage": "RESOLVED. Do NOT write high-frequency operational state into dataset_lifecycle.json. New runtime-local artifacts under the dataset's own runtime root: <runtime_root>/operations/collection_operational_state.json (mutable, atomically overwritten -- latest state only) and <runtime_root>/operations/operational_state_history.jsonl (append-only). dataset_lifecycle.json remains coarse canonical lifecycle/governance only, untouched by routine operational transitions.",
+    "U2_architecture": "RESOLVED. ONE Dataset + multiple bounded Collection Sessions with explicit session boundaries -- NOT one multi-day process. Read-only source verdict: CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE (see area_02b above); no code change required for this architecture. v3 CORROBORATION: the collector's own --duration-seconds design (no upper bound, explicit 'not a long-running daemon by default' docstring) independently confirms this architecture matches original implementation intent, not just an operations-layer workaround.",
+    "U3_approval_tiers": "RESOLVED. Initial continuous-collection START = PROJECT_OWNER + GPT. Planned PAUSE = PROJECT_OWNER. Planned RESUME after a clean preflight = PROJECT_OWNER. Automatic WS/REST reconnect = AUTOMATIC under the already-frozen resilience rules. Recovery after an integrity-critical failure / unknown identity / canonical corruption = PROJECT_OWNER + GPT, and possibly a separate bounded-fix changeset.",
+    "U4_network_changes": "RESOLVED. See top-level network_epoch_model below. TUN/Singapore02/one fixed proxy node are NOT permanent requirements -- those were frozen only for the Formal Start acceptance window.",
+    "U5_clock": "RESOLVED. UNSYNCHRONIZED/LeapIndicator=3 alone remains NON_BLOCKING but must be explicitly recorded as CLOCK_DEGRADED, never silently ignored. PAUSE only when timing evidence actually becomes unusable (unexplained wall-clock jump, missing/non-convertible exchange timestamp, ordering contradiction, or a clock-observation mechanism failure severe enough that timing provenance becomes unknowable). No fabricated zero offset ever.",
+    "U6_numeric_thresholds": "PARTIALLY RESOLVED this round via read-only inspection -- see area_11b_calibration_facts_and_proposed_thresholds below for the measured/calculated facts and the proposed numbers with rationale. D:\\ free-space is the one fact still pending EXECUTION_AGENT_VIA_USER_RELAY.",
+    "U7_os_auto_restart": "RESOLVED. DEFERRED for the first Operations version. No Windows Task Scheduler / RestartOnFailure. Rationale (PROJECT_OWNER's own): the operator legitimately uses this machine for gaming/network/maintenance/UU accelerator, and a machine-level auto-restart is too likely to race with a deliberate human state (e.g. TUN intentionally off). Internal WS/REST auto-reconnect remains allowed and unaffected.",
+    "U8_integrity_monitoring": "RESOLVED. Lightweight incremental checks only. Operational checkpoint ~= every 5 minutes; incremental integrity checkpoint ~= every 60 minutes, checking ONLY the byte/record ranges newly appended since the previous checkpoint -- never a full-file rescan, never a Readiness rerun.",
+    "U9_duration_and_freeze": "RESOLVED. Operations does not invent a research-sufficiency duration or coverage target. Tracks first_collection_time, last_collection_time, wall_clock_span, observed_uptime, effective_observed_coverage, downtime, gap durations, valid segment count, network epoch count, collection session count. Freeze eligibility is explicitly RESEARCH_SUFFICIENCY_CRITERION_NOT_YET_FROZEN pending a later, separate research/governance decision.",
+    "U10_markPriceUpdate": "RESOLVED. Remains DEFERRED_NON_BLOCKING_PER_APPROVED_DESIGN for the ENTIRE lifetime of dataset BTCOF2C1_20260908T083048Z_fc9937db. Explicitly forbidden to add mid-dataset. Any future inclusion belongs to a future Dataset/schema version, not this one."
+  },
+  "network_epoch_model": {
+    "rationale": "PROJECT_OWNER's explicit correction: EvidenceHunter must not require the operator to keep one fixed network configuration (TUN ON, Singapore02, one proxy node) forever just to keep collecting. That configuration was frozen ONLY for the Formal Start 900-second acceptance window. Long-running collection must recognize that network reality changes during normal computer use (switching proxy nodes, turning TUN on/off, using/stopping a game accelerator such as UU, changing interface/DNS) and record each such change as an ordinary, auditable operational fact -- never silently, and never as an automatic dataset-invalidating event.",
+    "new_artifact": "<runtime_root>/operations/network_epochs.jsonl -- append-only. One record opens when a new epoch starts; the same record (or a matching close record) is updated/appended with epoch_end_utc when the epoch ends.",
+    "record_fields": [
+      "network_epoch_id",
+      "epoch_start_utc",
+      "epoch_end_utc",
+      "network_fingerprint (a deterministic hash of the fields below, for quick equality checks)",
+      "interface_set (the adapter list, reusing the same Get-NetAdapter-style capture already used for host_network_configuration.json)",
+      "proxy_state (system proxy on/off + address, if observable)",
+      "tun_state (on/off)",
+      "dns_state (resolved server addresses per interface, reusing the existing host_network_configuration.json shape)",
+      "known_accelerator_or_proxy_mode (e.g. UU Accelerator, a named proxy node) if observable",
+      "change_reason: PLANNED_OPERATOR_CHANGE | DETECTED_RUNTIME_CHANGE | UNKNOWN"
+    ],
+    "planned_change_procedure": [
+      "graceful PAUSE",
+      "operator changes network (switch node / TUN off / UU on/off / etc.)",
+      "wait until the new network state is stable",
+      "capture a fresh network fingerprint (same methodology as host_network_configuration.json)",
+      "open a new network_epoch_id",
+      "run resume preflight (same identity/connectivity checks as any resume)",
+      "resume into a new collection session and/or continuity segment as the evidence warrants"
+    ],
+    "unexpected_change_while_running": {
+      "trigger": "NETWORK_FINGERPRINT_CHANGED detected while ACTIVE_RUNNING",
+      "immediate_transition": "ACTIVE_RUNNING -> DEGRADED (never an automatic dataset-invalidating event)",
+      "then": [
+        "close the old network_epoch_id (epoch_end_utc = detection instant)",
+        "open a new network_epoch_id with change_reason=DETECTED_RUNTIME_CHANGE",
+        "check WS/REST/depth continuity across the boundary"
+      ],
+      "outcome_if_continuity_provable": "-> ACTIVE_RUNNING, continuing under the new network epoch, no gap needed.",
+      "outcome_if_continuity_breaks_but_explainable": "-> a new valid segment begins, with explicit segment/gap/resync provenance in gap_ledger.jsonl exactly as any other gap.",
+      "outcome_if_identity_or_integrity_cannot_be_established": "-> PAUSE_REQUIRED, escalated per Area 9's integrity-critical tier (PROJECT_OWNER + GPT)."
+    },
+    "uu_accelerator_treatment": "UU Accelerator is NOT forbidden. It is treated as one possible cause of a network-routing/topology change, handled identically to any other network change under this model -- no special-case logic, no blocklist of specific software."
+  },
+  "dataset_state_model": {
+    "manifest_layer_unchanged": "dataset_status stays ACTIVE (frozen, immutable, Manifest V1). Never edited by this changeset.",
+    "operational_layer_storage": "<runtime_root>/operations/collection_operational_state.json (mutable, atomic overwrite) + <runtime_root>/operations/operational_state_history.jsonl (append-only) -- per U1. dataset_lifecycle.json is NOT used for this.",
+    "states": [
+      "ACTIVE_STOPPED",
+      "STARTING",
+      "ACTIVE_RUNNING",
+      "PAUSING",
+      "PAUSED",
+      "DEGRADED",
+      "RECOVERING",
+      "STOPPING",
+      "START_FAILED_OPERATIONAL",
+      "DATASET_FREEZE_PENDING",
+      "FROZEN"
+    ],
+    "first_class_identifiers": {
+      "collection_session_id": "One per bounded collector process invocation. Assigned at STARTING, closed at ACTIVE_STOPPED/PAUSED/STOPPING completion. Recorded in operational_sessions.jsonl (Area 3).",
+      "network_epoch_id": "One per distinct network configuration period. See network_epoch_model above. Independent of collection_session_id -- an epoch can span multiple sessions, and in principle a session could observe an epoch boundary mid-run (handled per network_epoch_model.unexpected_change_while_running).",
+      "segment_id": "One per continuity segment in the gap ledger sense -- increments on every L2_DIFF_UNRECOVERABLE_GAP or equivalent unrecoverable break, whatever its cause (component failure, network change, planned pause). Purely a data-continuity concept, orthogonal to session/epoch boundaries (a session or epoch boundary does NOT by itself force a new segment if continuity is otherwise provable).",
+      "pause_reason": "Enum-like free text on every PAUSING/PAUSED transition: OPERATOR_PLANNED | DEGRADED_TIMEOUT | INTEGRITY_CRITICAL_FAILURE | UNKNOWN_PROCESS_IDENTITY | DISK_THRESHOLD | CANONICAL_CORRUPTION | OTHER (explained).",
+      "resume_reason": "Enum-like free text on every PAUSED->STARTING transition: OPERATOR_PLANNED_RESUME | POST_INCIDENT_RESUME_AFTER_OWNER_GPT_REVIEW.",
+      "operator_network_change": "A boolean/flag on a network_epoch record distinguishing a PROJECT_OWNER-initiated change (change_reason=PLANNED_OPERATOR_CHANGE) from one the system merely detected (DETECTED_RUNTIME_CHANGE).",
+      "downtime_fields": "downtime_start_utc / downtime_end_utc / downtime_duration_seconds / downtime_reason, recorded in operational_state_history.jsonl for every gap between a session's end and the next session's start (including hiatuses of any length).",
+      "segment_validity": "A field on each segment_id record in gap_ledger.jsonl-adjacent bookkeeping stating whether the segment is a clean continuation or opens/closes on an explicit gap boundary -- reuses the existing gap_ledger.jsonl schema fields rather than inventing a parallel one.",
+      "session_end_record_v5": "Recorded in operational_sessions.jsonl for every closed session -- REQUIRED, never left blank: session_end_cleanliness (CLEAN|UNCLEAN|UNKNOWN) and machine_observed_end_cause (NATURAL_DURATION_COMPLETE|GRACEFUL_STOP_CONFIRMED|PROCESS_CRASH_CONFIRMED|NETWORK_FAILURE_CONFIRMED|UNCLEAN_NO_CLEAN_MARKER|UNKNOWN) -- these two fields alone are authoritative and drive every resume/recovery/research-eligibility decision. termination_initiator / preceding_condition MAY be recorded as optional machine-derived telemetry when already mechanically observable, but are never required and never gate any decision. There is NO operator self-report field of any kind in Operations V1 -- the operator is never prompted to explain a prior session's end."
+    },
+    "mapping_to_existing_frozen_vocabulary": "Manifest's existing collector_run_state=STOPPED_AFTER_START_ACCEPTANCE is the historical value this model's initial state, ACTIVE_STOPPED, continues from. START_FAILED_OPERATIONAL is deliberately distinct from Manifest's frozen dataset_status=START_FAILED -- a failed continuous-collection START attempt never invalidates the dataset itself.",
+    "no_research_states": "This model defines only operational states; it never touches Discovery/hypothesis/confirmation state."
+  },
+  "state_transition_table": [
+    {
+      "from": "ACTIVE_STOPPED",
+      "to": "STARTING",
+      "trigger": "PROJECT_OWNER + GPT authorized continuous-collection start (first time) or a planned/clean-preflight resume",
+      "approval_tier": "PROJECT_OWNER_AND_GPT for the first start; PROJECT_OWNER for a subsequent planned resume with all preflight PASS"
+    },
+    {
+      "from": "STARTING",
+      "to": "ACTIVE_RUNNING",
+      "trigger": "worker identity independently verified AND all in-scope streams past connection-acceptance gate",
+      "approval_tier": "AUTOMATIC_ON_EVIDENCE"
+    },
+    {
+      "from": "STARTING",
+      "to": "START_FAILED_OPERATIONAL",
+      "trigger": "worker identity verification failed or handshake timeout",
+      "approval_tier": "AUTOMATIC_FAIL_CLOSED"
+    },
+    {
+      "from": "START_FAILED_OPERATIONAL",
+      "to": "ACTIVE_STOPPED",
+      "trigger": "PROJECT_OWNER + GPT review of the failed-start evidence; no silent retry",
+      "approval_tier": "PROJECT_OWNER_AND_GPT"
+    },
+    {
+      "from": "ACTIVE_RUNNING",
+      "to": "PAUSING",
+      "trigger": "manual PROJECT_OWNER pause request (pause_reason=OPERATOR_PLANNED), e.g. ahead of a planned network change",
+      "approval_tier": "PROJECT_OWNER"
+    },
+    {
+      "from": "PAUSING",
+      "to": "PAUSED",
+      "trigger": "graceful writer drain complete, backlog=0, final checkpoint + session-archival steps done (Area 3)",
+      "approval_tier": "AUTOMATIC_ON_EVIDENCE"
+    },
+    {
+      "from": "ACTIVE_RUNNING",
+      "to": "DEGRADED",
+      "trigger": "soft fault: component STALE beyond SILENT_STALL_SECONDS=30.0 (existing, already-proven constant), a NETWORK_FINGERPRINT_CHANGED event, or disk approaching the WARNING threshold",
+      "approval_tier": "AUTOMATIC_FAIL_CLOSED"
+    },
+    {
+      "from": "DEGRADED",
+      "to": "RECOVERING",
+      "trigger": "automatic recovery procedure engaged (reconnect/backoff/resync in progress, or continuity check after a network epoch change)",
+      "approval_tier": "AUTOMATIC"
+    },
+    {
+      "from": "RECOVERING",
+      "to": "ACTIVE_RUNNING",
+      "trigger": "affected component(s) confirmed HEALTHY again, or continuity across a network epoch boundary is mechanically provable",
+      "approval_tier": "AUTOMATIC_ON_EVIDENCE"
+    },
+    {
+      "from": "DEGRADED",
+      "to": "PAUSED",
+      "trigger": "bounded recovery window exceeded without resolution (see area_11b for the proposed window), or continuity/integrity cannot be established across a network change (PAUSE_REQUIRED)",
+      "approval_tier": "PROJECT_OWNER_AND_GPT"
+    },
+    {
+      "from": "PAUSED",
+      "to": "STARTING",
+      "trigger": "resume request; re-verifies identity and a fresh network fingerprint (new network_epoch_id if changed)",
+      "approval_tier": "PROJECT_OWNER for a planned resume with clean preflight (resume_reason=OPERATOR_PLANNED_RESUME); PROJECT_OWNER_AND_GPT if the pause originated from DEGRADED-timeout, a crash, or an integrity-critical condition (resume_reason=POST_INCIDENT_RESUME_AFTER_OWNER_GPT_REVIEW)"
+    },
+    {
+      "from": "ACTIVE_RUNNING",
+      "to": "STOPPING",
+      "trigger": "manual graceful stop request",
+      "approval_tier": "PROJECT_OWNER"
+    },
+    {
+      "from": "[ACTIVE_RUNNING, DEGRADED, PAUSED]",
+      "to": "STOPPING",
+      "trigger": "any Area-13 hard-stop condition detected -- forced, fail-closed, not a request",
+      "approval_tier": "AUTOMATIC_FAIL_CLOSED"
+    },
+    {
+      "from": "STOPPING",
+      "to": "ACTIVE_STOPPED",
+      "trigger": "drain complete, final continuity checkpoint written, soak_summary.json archived to a session-numbered filename, operational_sessions.jsonl entry closed",
+      "approval_tier": "AUTOMATIC_ON_EVIDENCE"
+    },
+    {
+      "from": "ACTIVE_STOPPED",
+      "to": "DATASET_FREEZE_PENDING",
+      "trigger": "PROJECT_OWNER + GPT decide to begin closure evaluation -- NOT executed by this changeset",
+      "approval_tier": "PROJECT_OWNER_AND_GPT"
+    },
+    {
+      "from": "DATASET_FREEZE_PENDING",
+      "to": "FROZEN",
+      "trigger": "closure adjudication PASS, including a frozen research-sufficiency criterion by then -- NOT executed by this changeset",
+      "approval_tier": "PROJECT_OWNER_AND_GPT"
+    },
+    {
+      "from": "DATASET_FREEZE_PENDING",
+      "to": "ACTIVE_STOPPED",
+      "trigger": "closure adjudication decides more collection is needed -- reversible, unlike Manifest's own dataset_status",
+      "approval_tier": "PROJECT_OWNER_AND_GPT"
+    }
+  ],
+  "area_01_continuous_collection_start": {
+    "exact_prerequisite_state": [
+      "Manifest dataset_status == ACTIVE (already true, immutable)",
+      "collection_operational_state == ACTIVE_STOPPED (or PAUSED for a resume)",
+      "continuous_collection_authorized == true (set only by a separately-approved execution phase)",
+      "active_acquisition_root exists and matches the frozen path exactly",
+      "no other process currently holds a valid single-instance lock",
+      "a fresh network fingerprint has been captured for the CURRENT network state (no longer required to match any specific frozen config -- see network_epoch_model)"
+    ],
+    "who_may_authorize_start": "Per U3: initial continuous-collection START = PROJECT_OWNER + GPT. A planned resume with all preflight PASS = PROJECT_OWNER alone.",
+    "single_instance_protection": "A lock artifact under the runtime root records PID + creation_filetime + nonce using the same verified-identity handshake already proven in Formal Start. Never blindly trusted or blindly deleted -- absence of a live matching process must be independently re-verified via CIM before clearing an apparently-orphaned lock.",
+    "process_identity_requirements": "Reuses, unmodified, the frozen-venv inline orchestrator + nonce-bound worker self-report + retained Windows process handle + independent CIM verification chain already demonstrated in NEXT_DATASET_FORMAL_START.",
+    "runtime_root_reuse_rules": "Continuous collection reuses the SAME frozen active_acquisition_root. Confirmed safe by the U2 source-inspection verdict above."
+  },
+  "area_02_dataset_state_model": "See top-level dataset_state_model, network_epoch_model, and state_transition_table.",
+  "area_03_start_resume_semantics": {
+    "resume_reuses_same_runtime_root": true,
+    "append_only_guarantee": "Confirmed by source inspection: every raw/quality/alerts writer opens in append mode. A resume never truncates or rewrites them.",
+    "session_boundary_recording": "Each start/resume/stop cycle gets a new collection_session_id, recorded in <runtime_root>/operations/operational_sessions.jsonl (append-only): session_id, session_start_utc, session_end_utc (null while running), trigger (MANUAL_START | AUTO_RESUME_AFTER_DEGRADED | MANUAL_RESUME_AFTER_PAUSE | CRASH_RESTART), pause_reason/resume_reason where applicable, the active network_epoch_id at session start and end, the same worker-identity-chain fields Formal Start already produces, and -- per the v6 mechanical-only taxonomy -- session_end_cleanliness / machine_observed_end_cause (the two authoritative fields; see interruption_downtime_recovery_contract.session_end_dimensions_v5). There is NO operator self-report field in Operations V1 -- the operator is never prompted to explain a prior session's end.",
+    "required_operational_procedure_soak_summary_archival": "Because the collector overwrites soak_summary.json under a fixed filename every run (source-confirmed, see area_02b), the orchestration/operations layer MUST copy the just-written soak_summary.json to a session-numbered filename (e.g. operations/soak_summary_session_<NNN>.json) immediately after each session ends and before the next session starts. This is an operational procedure requirement, not a code change, and directly preserves the 'no overwrite of historical evidence' principle across sessions."
+  },
+  "area_04_process_supervision": {
+    "inherits_by_reference": "OF2_PRESTART_DESIGN_V1 principles 1, 2 and 9.",
+    "single_worker_enforcement": "Via the Area 1 lock mechanism.",
+    "stale_orphan_process_handling": "If a lock file references a PID/creation_filetime an independent CIM check shows is no longer alive or no longer matches, the lock is ORPHANED and may be cleared only after independently VERIFYING absence -- never by force-killing anything that might still be alive.",
+    "os_level_auto_restart": "DEFERRED per U7. No Windows Task Scheduler RestartOnFailure in this first Operations version."
+  },
+  "area_05_network_exchange_failure": {
+    "resolved_per_U4_and_network_epoch_model": true,
+    "websocket_disconnect": "Component-level auto-reconnect with the EXISTING, already-implemented and already-observed bounded exponential backoff (DEFAULT_RECONNECT_BACKOFF_SECONDS=2.0, DEFAULT_MAX_RECONNECT_BACKOFF_SECONDS=30.0, EvidenceHunter_collector_supervisor.py) -- no new backoff design needed.",
+    "rest_failure_rate_limit": "Logged as quality telemetry (rest_telemetry.jsonl, schema already frozen and already proven).",
+    "tun_vpn_proxy_accelerator_change": "See network_epoch_model -- explicitly ALLOWED, never a permanent requirement to keep fixed.",
+    "dns_change": "Treated as a network-configuration change under the same network_epoch_model."
+  },
+  "area_06_gap_resync_policy": {
+    "inherits_by_reference": "OF2_PRESTART_DESIGN_V1 principles 3, 4, 5 and 6 in full -- not re-derived here.",
+    "segment_boundaries": "Each L2_DIFF_UNRECOVERABLE_GAP (from ANY cause: component failure, network epoch change, or planned pause) starts a new continuity segment (incrementing segment_id) -- segment_id is orthogonal to collection_session_id and network_epoch_id (see dataset_state_model.first_class_identifiers).",
+    "dataset_validity_despite_gaps": "The dataset remains VALID overall for as long as every segment boundary carries explicit gap/resync provenance in gap_ledger.jsonl -- the same invariant as Formal Start's A5 criterion, extended for the dataset's whole life."
+  },
+  "area_07_evidence_writer_safety": {
+    "inherits_by_reference": "The already-proven soak_summary.json per-writer telemetry, with the multi-session caveat documented in area_02b.",
+    "fail_closed_on_disk_or_write_failure": "Sustained backlog growth or an OS-level write error transitions the affected component (and, if severe, the whole collector) to DEGRADED/PAUSED rather than silently dropping records."
+  },
+  "area_08_clock_time_evidence": {
+    "resolved_per_U5": true,
+    "existing_cadence": "clock_observations.jsonl already samples roughly every 60 seconds (observed directly in the Formal Start evidence). No new cadence needed.",
+    "clock_health_states": [
+      "CLOCK_HEALTHY",
+      "CLOCK_DEGRADED",
+      "CLOCK_INVALID"
+    ],
+    "clock_degraded_definition": "UNSYNCHRONIZED / LeapIndicator=3 alone (already observed as the host's actual real-world state during the real Formal Start run) -> CLOCK_DEGRADED, recorded, NON_BLOCKING.",
+    "clock_invalid_definition_pause_trigger": [
+      "a non-explainable wall-clock jump",
+      "a missing or non-convertible exchange timestamp on a persisted record",
+      "an ordering contradiction in the timing evidence",
+      "a clock-observation mechanism failure severe enough that timing provenance becomes unknowable"
+    ],
+    "no_fabricated_offset": "Never invent a zero offset when the real offset is unknown; record UNKNOWN explicitly instead."
+  },
+  "area_09_operator_actions": {
+    "resolved_per_U3": true,
+    "automatically_allowed_no_approval_per_instance": [
+      "component-level auto-reconnect (WS/REST, existing frozen resilience rules)",
+      "aggTrade REST gap auto-repair within the REST window",
+      "depth resync-from-snapshot on a continuity break",
+      "periodic operational checkpoint refresh",
+      "periodic clock/REST telemetry sampling"
+    ],
+    "requires_project_owner_approval": [
+      "planned pause",
+      "planned resume after a clean preflight (all integrity checks PASS)",
+      "graceful stop",
+      "v6: resume after an UNCLEAN or UNKNOWN prior session end, PROVIDED mechanical_reconciliation_checklist_v6 passes in full -- ordinary power loss, reboot, Task Manager termination, hang+kill, and long machine-off periods all qualify here when reconciliation passes"
+    ],
+    "requires_project_owner_and_gpt_approval": [
+      "initial continuous-collection START",
+      "v6: recovery/resume where mechanical_reconciliation_checklist_v6 has ANY FAILED item, or provenance remains integrity-critical or ambiguous -- this, not the mere fact of an UNCLEAN/UNKNOWN prior end, is what triggers GPT escalation",
+      "any decision to mark a segment/gap as unrecoverable-and-accepted vs. requiring investigation",
+      "Dataset closure / freeze (not executed by this changeset regardless)"
+    ]
+  },
+  "area_10_checkpointing": {
+    "resolved_per_U8": true,
+    "operational_checkpoint": "<runtime_root>/operations/operational_checkpoint_latest.json -- mutable, atomically overwritten, refreshed approximately every 5 minutes. Contents: per-stream message counts and last-received-time, per-writer dropped/backlog, current collection_operational_state, current network_epoch_id, current clock health state, most recent alerts, free disk space.",
+    "incremental_integrity_checkpoint": "Approximately every 60 minutes: checks ONLY the byte/record ranges newly appended since the previous integrity checkpoint (e.g. JSONL parse-validity of the new tail, continuity of newly-written sequential identifiers) -- never a full-file rescan, never a G1-G8 Readiness rerun.",
+    "explicit_constraints": [
+      "No research interpretation: pure operational telemetry, no derived/Feature-layer fields.",
+      "No repeated full Readiness audits."
+    ]
+  },
+  "area_11_monitoring_frequency": {
+    "operational_checkpoint_refresh": "~5 minutes (U8).",
+    "incremental_integrity_checkpoint": "~60 minutes (U8), incremental only.",
+    "event_driven_alerts_immediate": [
+      "an unrecoverable gap",
+      "a component entering PAUSED/DEGRADED beyond its bounded window",
+      "a writer sink failure",
+      "a disk-space WARNING/HARD_PAUSE threshold breach",
+      "a NETWORK_FINGERPRINT_CHANGED event"
+    ],
+    "periodic_summary_distinct_from_alerts": "A periodic checkpoint refresh is a passive status update, not itself an alert."
+  },
+  "area_11b_calibration_facts_and_proposed_thresholds": {
+    "method": "READ-ONLY inspection of existing source constants + the real Formal Start evidence already on disk, as authorized. No code run, no tests run.",
+    "existing_already_proven_constants_found_in_source": {
+      "SILENT_STALL_SECONDS": "30.0 (EvidenceHunter_collector.py L76) -- the component-STALE threshold ALREADY EXISTS and has already run live for 900s without a false trigger.",
+      "STALL_CHECK_INTERVAL_SECONDS": "5.0 (EvidenceHunter_collector.py L77)",
+      "DEFAULT_RECONNECT_BACKOFF_SECONDS": "2.0 (EvidenceHunter_collector_supervisor.py L73)",
+      "DEFAULT_MAX_RECONNECT_BACKOFF_SECONDS": "30.0 (EvidenceHunter_collector_supervisor.py L74)",
+      "CONNECTION_READY_TIMEOUT_SECONDS": "10.0 (EvidenceHunter_collector_ws.py L64)",
+      "CONTINUITY_CHECKPOINT_INTERVAL_SECONDS": "5.0 (EvidenceHunter_collector.py L107) -- this is the collector's OWN internal gap-detection checkpoint, distinct from the new 5-minute operational_checkpoint_latest.json above; both are kept, at different cadences, for different purposes.",
+      "BINANCE_MAX_CONNECTION_LIFETIME_SECONDS": "86400 (24h, Binance's own documented WS connection lifetime -- not project-invented)"
+    },
+    "cross_validated_against_real_formal_start_evidence": {
+      "forceOrder_reconnect_cycle_observed": "Independently re-measured from the real collector_alerts.jsonl timestamps during Formal Start: cycle length grew 12s, 15s, 19s, 27s, 40s, then plateaued at ~41s for the remaining cycles -- consistent with CONNECTION_READY_TIMEOUT_SECONDS=10s plus the backoff climbing to its 30s cap (10+30=40, matching the observed plateau almost exactly). The existing backoff/timeout constants are therefore already cross-validated against real production behavior, not merely theoretical.",
+      "measured_write_rate": "totals.bytes_per_second=19621.5, totals.projected_gb_per_day=1.5788728930452578 (soak_summary.json, the actual Formal Start run) -- combined across all 6 evidence streams."
+    },
+    "proposed_new_thresholds_with_rationale": {
+      "component_stale_threshold": "REUSE the existing, already-proven SILENT_STALL_SECONDS=30.0 -- no new number needed for Area 4/state-transition purposes.",
+      "reconnect_backoff": "REUSE the existing, already-proven DEFAULT_RECONNECT_BACKOFF_SECONDS=2.0 / DEFAULT_MAX_RECONNECT_BACKOFF_SECONDS=30.0.",
+      "degraded_bounded_recovery_window_before_forced_pause": "PROPOSED: 15 minutes. Rationale: a single reconnect cycle already takes ~40s at the observed backoff plateau; 15 minutes allows roughly 20+ automatic reconnect cycles to resolve a transient issue on their own (the AUTOMATIC tier, per U3) before escalating to a PROJECT_OWNER+GPT-tier PAUSE decision -- long enough to not be trigger-happy about a brief real-world network hiccup, short enough that a genuinely stuck component does not go unnoticed for hours. This is a PROPOSED DEFAULT, not yet PROJECT_OWNER/GPT-confirmed.",
+      "operational_checkpoint_interval": "5 minutes -- already decided directly by PROJECT_OWNER/GPT (U8), not re-proposed here.",
+      "incremental_integrity_checkpoint_interval": "60 minutes -- already decided directly by PROJECT_OWNER/GPT (U8), not re-proposed here.",
+      "disk_warning_threshold": "CONFIRMED: DISK_WARNING_FREE_GIB = 22.10 (= max(14 days * 1.5788728930452578 GiB/day = 22.104 GiB, 20 GiB floor)). Action at WARNING: alert only, collection continues.",
+      "disk_hard_pause_threshold": "CONFIRMED: DISK_HARD_PAUSE_FREE_GIB = 5.00 (= max(3 days * 1.5788728930452578 GiB/day = 4.737 GiB, 5 GiB floor) -- the 5 GiB floor dominates). Action at HARD_PAUSE: graceful pause if mechanically possible, preserve all evidence, NEVER auto-delete historical raw data to free space."
+    },
+    "still_pending": "RESOLVED in v3 -- both disk thresholds are now concrete GiB numbers, PROJECT_OWNER + GPT approved.",
+    "d_drive_measurement_v3_confirmed": {
+      "method": "EXECUTION_AGENT_VIA_USER_RELAY: Get-Volume -DriveLetter D, PROJECT_OWNER pasted raw output back verbatim.",
+      "raw_output": {
+        "SizeRemaining_bytes": 365943500800,
+        "Size_bytes": 569512656896
+      },
+      "unit_note": "soak_summary.json's 'projected_gb_per_day' field is LEGACY-NAMED but its numeric calculation is actually GiB/day (1024-based), independently confirmed by recomputing 19621.5 B/s * 86400 s/day / 1024^3 = 1.578869 GiB/day, matching the recorded 1.5788728930452578 to within rounding of the source bytes_per_second figure. All disk figures below use the SAME GiB convention for internal consistency -- this unit mismatch is now explicitly documented rather than silently mixed.",
+      "computed": {
+        "free_GiB": 340.8114433288574,
+        "total_GiB": 530.3999938964844,
+        "free_percentage": 64.25555189492931,
+        "observed_rate_GiB_per_day": 1.5788728930452578,
+        "runway_days_at_current_free_and_rate": 215.8574289482644
+      }
+    },
+    "degraded_bounded_recovery_window_v3_status": "CONFIRMED / APPROVED by PROJECT_OWNER + GPT: DEGRADED_AUTO_RECOVERY_WINDOW = 15 minutes. Scope clarification (per GPT's explicit adjudication): this timer applies ONLY while the machine/worker process remains alive and a transient runtime/network degradation is attempting automatic recovery under the existing frozen resilience rules. If unresolved after 15 minutes -> PAUSE_REQUIRED / ACTIVE_STOPPED (an operational stop requiring PROJECT_OWNER + GPT per the resume table above), NEVER an automatic Dataset-level invalidation. This timer has NO meaning for a power-off/machine-off downtime interval (long_hiatus / unplanned interruption resume path) -- those are governed entirely by the resume reconciliation procedure on next startup, not by any live timer."
+  },
+  "area_12_dataset_validity_during_interruptions": {
+    "valid_vs_invalid_segment": "Defined by gap_ledger.jsonl segment boundaries (Area 6), regardless of whether the break was caused by a component failure, a session boundary, or a network epoch change.",
+    "downtime_accounting": "operational_sessions.jsonl gives the wall-clock start/end of every running session; total downtime = wall_clock_span - sum(session durations).",
+    "no_retroactive_erasure": "A later valid segment never retroactively marks an earlier unrecoverable gap as resolved.",
+    "two_distinct_metrics_tracked": [
+      "wall_clock_span (elapsed calendar time since formal_start_time_utc)",
+      "effective_observed_coverage (sum of valid segment durations, excluding all UNRECOVERABLE gap intervals)"
+    ]
+  },
+  "area_13_pause_stop_rules": {
+    "hard_stop_conditions_fail_closed": [
+      "evidence loss (any writer's dropped_count becomes nonzero without an accompanying incident record)",
+      "unreconciled writer failure (a writer thread dies and does not restart within its bounded retry budget)",
+      "unknown process identity (an independent CIM re-check no longer matches the process's own launch-time claim)",
+      "disk exhaustion risk (free space below the HARD_PAUSE threshold, area_11b)",
+      "canonical corruption (a JSONL file fails an incremental parse-validity check, area_10)",
+      "protected-path conflict (reuses the exact PF7 path-component-comparison methodology already proven correct in NEXT_DATASET_FORMAL_START)",
+      "network continuity/identity cannot be established across a NETWORK_FINGERPRINT_CHANGED event (network_epoch_model.unexpected_change_while_running -> PAUSE_REQUIRED)"
+    ]
+  },
+  "area_14_graceful_shutdown": {
+    "sequence": [
+      "supervisor shutdown signal",
+      "writer drain (queues reach backlog=0 or force-flush within a bounded timeout)",
+      "stop_event set for all threads",
+      "final continuity_checkpoint.json write (existing pattern, reused unmodified)",
+      "archive soak_summary.json to a session-numbered filename (area_03 required operational procedure)",
+      "final operational_sessions.jsonl entry closed with session_end_utc + end_reason",
+      "close the current network_epoch_id's epoch_end_utc if this shutdown coincides with a planned network change",
+      "transition to ACTIVE_STOPPED (or PAUSED, depending on the trigger)"
+    ]
+  },
+  "area_15_restart_after_failure": {
+    "evidence_preservation": "Everything, always -- no deletion, ever.",
+    "same_dataset_id_may_continue_when": "The failure is component-level, process-level, or network-related and does not meet any Area-13 hard-stop condition -- confirmed safe in place by the U2 source verdict (append-only writers + checkpoint-based restart-boundary detection).",
+    "new_dataset_id_required_when": "Only if the underlying collector source code, schema, or symbol/market scope materially changes -- a NEW NEXT_DATASET_FORMAL_START-class event, always out of scope for a mere operational restart.",
+    "no_silent_reset": "Every restart, whatever its trigger, is recorded in operational_sessions.jsonl with an explicit trigger reason."
+  },
+  "area_16_storage_retention": {
+    "runtime_evidence_stays_outside_git": "Unchanged.",
+    "raw_evidence_append_only": "Confirmed by source inspection (area_02b) -- never truncated or rewritten.",
+    "no_cleanup_during_active_dataset": "No deletion of any evidence file while dataset_status=ACTIVE, ever.",
+    "disk_capacity_thresholds": "See area_11b -- formula proposed, concrete GB values pending the D:\\ measurement step."
+  },
+  "area_17_collection_duration": {
+    "resolved_per_U9": true,
+    "no_hard_coded_duration": "Confirmed no existing research plan document specifies a target total collection duration. None is proposed here.",
+    "tracked_quantities_not_targets": [
+      "first_collection_time",
+      "last_collection_time",
+      "wall_clock_span",
+      "observed_uptime",
+      "effective_observed_coverage",
+      "downtime",
+      "gap durations",
+      "valid segment count",
+      "network epoch count",
+      "collection session count"
+    ]
+  },
+  "area_18_dataset_closure_freeze": {
+    "not_executed_by_this_changeset": true,
+    "freeze_eligibility_token": "RESEARCH_SUFFICIENCY_CRITERION_NOT_YET_FROZEN -- a later, separate research/governance decision supplies the required coverage/duration bar before FREEZE can be requested.",
+    "prerequisites_defined_only": [
+      "COLLECTION_STOPPED: graceful shutdown per Area 14 with a final operational_sessions.jsonl entry.",
+      "DATASET_FROZEN requires: (a) COLLECTION_STOPPED, (b) a final integrity/coverage report analogous to Formal Start's A1-A6 evidence but scoped to the full collection history, (c) explicit PROJECT_OWNER + GPT closure adjudication, (d) the dataset_lifecycle.json active_datasets entry transitioning to a frozen_datasets entry with its own protected_paths declared."
+    ]
+  },
+  "area_19_handoff_to_research": {
+    "interface_only": [
+      "a frozen Dataset (post-freeze, immutable evidence tree)",
+      "an integrity/coverage report",
+      "an immutable manifest (the eventual frozen state of the operational-state artifact)"
+    ],
+    "discovery_remains_not_started": "Unchanged."
+  },
+  "area_20_failure_boundaries": {
+    "can_recover_automatically": [
+      "transient WS disconnect/reconnect",
+      "depth resync via snapshot",
+      "aggTrade REST-window gap repair",
+      "brief REST rate-limit backoff",
+      "a network epoch change where continuity remains mechanically provable"
+    ],
+    "require_pause": [
+      "sustained DEGRADED beyond its bounded recovery window (area_11b)",
+      "a network epoch change where continuity cannot be established (PAUSE_REQUIRED)",
+      "clock evidence becoming actually unusable (CLOCK_INVALID, area_08)",
+      "approaching the disk HARD_PAUSE threshold"
+    ],
+    "require_a_separate_bounded_fix_changeset": "Any actual collector-code defect discovered during continuous operation -- this changeset's budget stays MAX_CODE_FILES_MODIFIED=0.",
+    "invalidate_the_dataset_entirely": [
+      "secret/credential leakage detected in evidence",
+      "a protected_paths collision that actually caused a write into another dataset's protected files",
+      "evidence of non-LIVE data mislabeled as LIVE acquisition_mode"
+    ],
+    "note": "These three need PROJECT_OWNER + GPT adjudication on whether the WHOLE dataset_id is unsalvageable vs. only a segment."
+  },
+  "remaining_open_items": [
+    {
+      "id": "RESOLVED-PENDING-1",
+      "description": "D:\\ free/total capacity measured (340.81 GiB free / 530.40 GiB total) and disk thresholds finalized as concrete GiB numbers -- see area_11b.d_drive_measurement_v3_confirmed."
+    },
+    {
+      "id": "RESOLVED-PENDING-2",
+      "description": "DEGRADED_AUTO_RECOVERY_WINDOW = 15 minutes -- PROJECT_OWNER + GPT approved, scope clarified (live-process only, not power-off duration)."
+    },
+    {
+      "id": "SUPERSEDED-NEW-OPEN-ITEM-1",
+      "description": "The v3 'non-blocking future optimization' framing is SUPERSEDED in v4 -- see top-level execution_blockers and continuous_collection_operations_readiness. These are now formal EXECUTION_BLOCKERs against starting continuous collection, not optional convenience items, though they remain non-blocking to freezing THIS design-governance stage."
+    }
+  ],
+  "budget_this_design_stage": {
+    "MAX_NEW_FILES": 2,
+    "MAX_NEW_DIRS": 0,
+    "MAX_CODE_FILES_MODIFIED": 0,
+    "MAX_TEST_RUNS": 0,
+    "MAX_LIVE_RUNS": 0
+  },
+  "allowed_paths_this_stage": [
+    "research/governance/CHANGE_ROLES_DATASET_COLLECTION_OPERATIONS_20260908.json (not yet written)",
+    "research/governance/SCOPE_DECLARATION_DATASET_COLLECTION_OPERATIONS_20260908.json (not yet written)"
+  ],
+  "forbidden_paths_this_stage": [
+    "EvidenceHunter_collector.py and all other collector/test source files (READ-ONLY this stage, confirmed unmodified)",
+    "research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json",
+    "dataset_lifecycle.json",
+    ".gitignore",
+    "any runtime_formal_*/ evidence directory"
+  ],
+  "explicit_prohibitions_this_stage": [
+    "start collector",
+    "start continuous collection",
+    "modify collector source",
+    "modify tests",
+    "modify Manifest",
+    "modify dataset_lifecycle.json",
+    "change Trade Permission",
+    "start Discovery",
+    "rerun Readiness",
+    "rerun the 900s acceptance",
+    "touch .gitignore"
+  ],
+  "review_status": "AWAITING_PROJECT_OWNER_AND_GPT_FINAL_SIGN_OFF_v2",
+  "successor_stage": "PROJECT_OWNER + GPT v6 DESIGN FREEZE AUTHORIZATION, 2026-09-08: this changeset is the DATASET_COLLECTION_OPERATIONS design-and-freeze stage ONLY -- it is not a parent changeset that stays open while a child changeset executes. It closes as CLOSED_DESIGN_FREEZE_PASS upon this write+commit (see PROJECT_CURRENT_STATE.json last_closed_changeset for the canonical closure record). DATASET_COLLECTION_RUNTIME_CONTROL is the next INDEPENDENT changeset -- it must be separately opened, scoped, and closed before any continuous-collection start is authorized. After DATASET_COLLECTION_RUNTIME_CONTROL closes, a further separate future changeset (tentatively named DATASET_COLLECTION_START) will authorize the actual continuous-collection start. No changesets are nested or left open across this boundary.",
+  "stop_rules": [
+    "Do not write these two files to disk until PROJECT_OWNER explicitly instructs it.",
+    "Do not begin drafting collector code changes -- the U2 verdict confirms none are needed for this architecture.",
+    "Do not touch dataset_lifecycle.json, Manifest V1, or .gitignore under any circumstance in this stage."
+  ],
+  "interruption_downtime_recovery_contract": {
+    "source": "PROJECT OWNER + GPT, 2026-09-08, ADD INTERRUPTION / DOWNTIME / RECOVERY CONTRACT",
+    "core_principle": "Dataset != a never-closing Python process. Dataset = multiple verifiable Collection Sessions + multiple valid segments + explicit downtime/gaps + auditable recovery records. What is forbidden is pretending a gap does not exist, or using later re-acquired data to erase an earlier historical gap.",
+    "three_interruption_classes": {
+      "1_planned_shutdown": {
+        "examples": [
+          "operator reboot",
+          "gaming / UU accelerator use",
+          "proxy/TUN change",
+          "operator simply does not want to continue collecting today"
+        ],
+        "ideal_flow": [
+          "ACTIVE_RUNNING",
+          "graceful pause requested",
+          "stop accepting new data",
+          "writer drain",
+          "backlog=0",
+          "write continuity checkpoint",
+          "close collection_session_id",
+          "ACTIVE_STOPPED"
+        ],
+        "resume_flow": [
+          "resume preflight",
+          "new collection_session_id",
+          "new network_epoch_id (if network changed)",
+          "recover via REST snapshot / checkpoint",
+          "begin new valid segment"
+        ],
+        "no_new_dataset_id_required": true,
+        "downtime_fields_recorded": [
+          "downtime_start_utc",
+          "downtime_end_utc",
+          "downtime_duration_seconds",
+          "downtime_reason=PLANNED_OPERATOR_PAUSE"
+        ],
+        "mechanical_caveat_v3": "The current collector only reaches this EXACT flow when the pause coincides with --duration-seconds elapsing naturally (see area_02b v3 finding). An immediate, not-pre-timed planned pause today still requires a kill, which must be recorded as UNCLEAN_OPERATOR_INITIATED_EARLY_STOP (see session_end_type below), NOT as CLEAN_PLANNED_STOP, even though the operator's intent was entirely planned. v5 UPDATE: expressed in the new dimensional model, a today's early manual stop records cleanliness=UNCLEAN, termination_reason=OPERATOR_FORCED_TERMINATION, termination_initiator=OPERATOR -- never cleanliness=CLEAN, however deliberate the operator's intent was."
+      },
+      "2_unplanned_interruption": {
+        "examples": [
+          "sudden power loss",
+          "OS crash / forced restart",
+          "network loss that kills the process",
+          "process crash"
+        ],
+        "detection_on_next_startup": "Absence of a clean session-end marker (i.e. the prior session's operational_sessions.jsonl entry has no session_end_utc / was not closed through the graceful path) is itself the detection signal -- no separate lock-file check is required given the collector has no lock file (v3 finding).",
+        "resume_reconciliation_procedure": [
+          "identify the last confirmed persisted event per stream",
+          "verify JSONL tail structural validity per stream",
+          "read the previous continuity checkpoint",
+          "preserve all prior evidence unmodified",
+          "classify the prior session's session_end_type as one of the UNCLEAN_* reasons",
+          "create an explicit downtime/gap record",
+          "REST resync where required (existing frozen gap-resync principles)",
+          "create a new collection_session_id and a new valid segment"
+        ],
+        "no_silent_continuity_pretense": true,
+        "dataset_invalidation": false
+      },
+      "3_long_hiatus": {
+        "policy": "MAXIMUM_ALLOWED_PAUSE_DURATION = NONE. A Dataset is never automatically invalidated merely because the operator leaves the machine off for hours, days, or weeks.",
+        "tracked_quantities": [
+          "wall_clock_span",
+          "observed_uptime",
+          "effective_observed_coverage",
+          "downtime",
+          "gap_duration",
+          "valid_segment_count"
+        ],
+        "worked_example": "Week 1: 5 days collected. Then 10 days offline. Then 4 more days collected. wall_clock_span = 19 days. The system does NOT report '19 days observed' -- effective_observed_coverage is approximately 9 days minus any real gaps within those two active windows. This is the existing Wall-Clock-Span-!=-Effective-Observed-Coverage discipline, now formally the basis for long-hiatus accounting too.",
+        "sufficiency_decision": "Deferred to a later, separate research/governance decision (RESEARCH_SUFFICIENCY_CRITERION_NOT_YET_FROZEN, per U9) -- Operations only measures, never judges sufficiency."
+      }
+    },
+    "stream_specific_recovery": {
+      "principle": "Recovery is evidence-specific, not blanket. Never claim a later REST snapshot reconstructs a missing WebSocket event history.",
+      "mechanically_recoverable_example": {
+        "stream": "aggTrade",
+        "condition": "exchange REST historical endpoint still covers the missing window and the aggregate-trade-id chain can be aligned across the gap",
+        "procedure": [
+          "LIVE gap detected",
+          "REST historical repair",
+          "repair provenance recorded",
+          "continuity verified"
+        ],
+        "required_tag": "acquisition_mode = BACKFILL / REPAIR (never disguised as LIVE)"
+      },
+      "unrecoverable_example": {
+        "stream": "diff_depth (order-book WebSocket increments)",
+        "why": "A REST snapshot taken after the gap only shows the order book's state AT THAT MOMENT. It cannot reveal which orders were placed and cancelled, when price levels were replenished, the exact U/u/pu sequence, or the book's resilience path during the gap.",
+        "correct_handling": [
+          "close the old valid segment",
+          "record an explicit UNRECOVERABLE gap in gap_ledger.jsonl",
+          "REST resync",
+          "begin a new valid segment"
+        ],
+        "forbidden": "Fabricating or silently smoothing over the missing increment history."
+      },
+      "other_streams_default_rule": "forceOrder and any other stream without a complete historical replay endpoint follow the same principle: if recovery cannot be mechanically proven, record a gap -- never guess.",
+      "research_consequence": "A gap disqualifies only the time windows/hypotheses that need to span it. It does not by itself invalidate the whole Dataset. Example future research query pattern: 'this Dataset has N collection sessions, M network epochs, K valid segments, X hours total downtime, Y unrecoverable diff-depth gaps' -- the research layer then selects only windows/segments that satisfy its own evidence-contract requirements (e.g. a 60-second-continuous hypothesis only uses gap-free windows; a 1-hour order-book-reconstruction hypothesis only uses a single complete valid segment; an aggTrade-only hypothesis over an exact-backfilled window may qualify under its own evidence contract)."
+    },
+    "session_end_type_v3_addition_rationale": "SUPERSEDED IN v5. The v3 single-value session_end_type enum (including its v3 addition UNCLEAN_OPERATOR_INITIATED_EARLY_STOP) is replaced by the four-dimension model in session_end_dimensions_v5 above, for the reasons given in that section's rationale_for_dimensional_model. The underlying substance (an operator-initiated early stop under the current no-signal-handler collector is UNCLEAN, never falsely labeled CLEAN) is preserved exactly -- it is now expressed as cleanliness=UNCLEAN, termination_reason=OPERATOR_FORCED_TERMINATION, termination_initiator=OPERATOR, rather than as a single enum value.",
+    "dataset_level_invalidation_reserved_for": [
+      "canonical Dataset identity corruption",
+      "raw evidence overwritten or lost with provenance unknowable",
+      "Dataset ownership/attribution ambiguity (unclear which dataset_id a record belongs to)",
+      "unversioned mid-dataset schema mutation",
+      "historical evidence mutation (any raw record altered after being durably written)",
+      "irreconcilable provenance corruption"
+    ],
+    "ordinary_downtime_explicitly_excluded_from_invalidation": true,
+    "session_end_dimensions_v5": {
+      "rationale_for_dimensional_model": "A single mutually-exclusive session_end_type enum cannot honestly represent a real scenario like 'the program hung, so I killed it via Task Manager' -- that is simultaneously about WHETHER a clean shutdown happened (no), WHO/WHAT ended it (the operator), WHY (a forced termination, not a crash), and WHAT WAS HAPPENING BEFORE the end (the process was hung). Forcing this into one flat value either produces a dishonest label (e.g. mislabeling it PROCESS_CRASH or NETWORK_LOSS when neither is what happened) or requires the enum to keep growing combinatorially. Splitting into four independent dimensions lets every real scenario be recorded exactly and honestly without inventing new enum values for every new combination. v6 FURTHER SIMPLIFICATION (PROJECT_OWNER + GPT, human-input removal): PROJECT_OWNER explicitly rejected adding any operator reason-entry step to normal Dataset operations -- Operations V1 must be mechanical-evidence-first and require no retrospective operator explanation. What actually matters is only two questions: (1) does mechanical evidence show the prior session ended via a completed clean-shutdown sequence? and (2) if not, does the disk evidence still allow safe reconciliation? Everything else (precisely which human or event caused the end) is optional color, never a required field, and never something the operator is asked to supply after the fact.",
+      "session_end_cleanliness": {
+        "values": [
+          "CLEAN",
+          "UNCLEAN",
+          "UNKNOWN"
+        ],
+        "meaning": "Whether mechanical evidence of a completed clean-shutdown sequence (writer drain -> backlog=0 -> continuity checkpoint -> clean session-end marker) actually exists on disk. This is a MECHANICAL fact, never inferred from operator intent alone."
+      },
+      "termination_reason": {
+        "values": [
+          "PLANNED_OPERATOR_STOP",
+          "OPERATOR_FORCED_TERMINATION",
+          "PROCESS_CRASH",
+          "OS_CRASH",
+          "POWER_LOSS",
+          "NETWORK_LOSS",
+          "UNKNOWN"
+        ],
+        "meaning": "The best-evidenced proximate cause of the session ending."
+      },
+      "termination_initiator": {
+        "values": [
+          "OPERATOR",
+          "PROCESS",
+          "OS",
+          "ENVIRONMENT",
+          "UNKNOWN"
+        ],
+        "meaning": "Who/what is attributed as having ended the session."
+      },
+      "preceding_condition": {
+        "values": [
+          "NORMAL",
+          "HUNG",
+          "UNRESPONSIVE",
+          "NETWORK_DEGRADED",
+          "DISK_PRESSURE",
+          "UNKNOWN"
+        ],
+        "meaning": "What state the session was observed to be in immediately before it ended -- descriptive context, not itself a cleanliness or cause determination."
+      },
+      "compact_derived_label_optional": "A short human-readable label MAY be derived from session_end_cleanliness + machine_observed_end_cause_v6 for display/logging convenience, but these two fields are the AUTHORITATIVE record.",
+      "frozen_semantics_by_scenario": [
+        {
+          "scenario": "FUTURE graceful UI/window-X stop succeeds (clean drain + checkpoint + clean marker all confirmed on disk)",
+          "session_end_cleanliness": "CLEAN",
+          "machine_observed_end_cause": "GRACEFUL_STOP_CONFIRMED"
+        },
+        {
+          "scenario": "A bounded session's --duration-seconds elapses naturally today (the one CLEAN path the current collector already has)",
+          "session_end_cleanliness": "CLEAN",
+          "machine_observed_end_cause": "NATURAL_DURATION_COMPLETE"
+        },
+        {
+          "scenario": "CURRENT collector: window/console closed or Ctrl+C before duration elapses (no graceful-stop handler exists yet)",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "UNCLEAN_NO_CLEAN_MARKER"
+        },
+        {
+          "scenario": "Task Manager 'End Task'",
+          "session_end_cleanliness": "UNCLEAN (clean marker absent is the deciding fact; never assume CLEAN)",
+          "machine_observed_end_cause": "UNCLEAN_NO_CLEAN_MARKER (unless a stronger mechanical signal exists)"
+        },
+        {
+          "scenario": "Process hung/unresponsive, operator manually kills it",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "UNCLEAN_NO_CLEAN_MARKER"
+        },
+        {
+          "scenario": "Process itself raises an unhandled exception / traceback / spontaneous nonzero exit, WITH the traceback and exit code persisted to disk",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "PROCESS_CRASH_CONFIRMED"
+        },
+        {
+          "scenario": "Sudden power loss / OS crash / machine simply disappears with no further evidence",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "UNCLEAN_NO_CLEAN_MARKER (or UNKNOWN if even session identity is unclear)"
+        },
+        {
+          "scenario": "Network outage while the collector process remains alive and reconnecting",
+          "session_end_cleanliness": "NOT_A_SESSION_END -- a live operational state, not a session boundary",
+          "machine_observed_end_cause": "n/a -- recorded instead as operational state NETWORK_DEGRADED / RECOVERING"
+        },
+        {
+          "scenario": "Network outage that ultimately kills the process/session, WITH persisted evidence mechanically tying the failure to the termination",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "NETWORK_FAILURE_CONFIRMED"
+        },
+        {
+          "scenario": "Network outage precedes session end but the causal link is not mechanically provable from persisted evidence",
+          "session_end_cleanliness": "UNCLEAN",
+          "machine_observed_end_cause": "UNCLEAN_NO_CLEAN_MARKER -- do not guess NETWORK_FAILURE_CONFIRMED without evidence"
+        },
+        {
+          "scenario": "On restart, prior session has no clean-end marker and NO stronger mechanical evidence of any kind exists (not even 'no clean marker' can be distinguished from a corrupted/missing operational_sessions.jsonl entry)",
+          "session_end_cleanliness": "UNKNOWN",
+          "machine_observed_end_cause": "UNKNOWN",
+          "rule": "A fully legitimate, final answer. Do not guess."
+        }
+      ],
+      "machine_observed_end_cause_v6": {
+        "values": [
+          "NATURAL_DURATION_COMPLETE",
+          "GRACEFUL_STOP_CONFIRMED",
+          "PROCESS_CRASH_CONFIRMED",
+          "NETWORK_FAILURE_CONFIRMED",
+          "UNCLEAN_NO_CLEAN_MARKER",
+          "UNKNOWN"
+        ],
+        "meaning": "REPLACES termination_reason (v5). Records only what the machine can mechanically establish about how the prior session ended. If the machine cannot establish more than 'no clean marker exists', the correct and SUFFICIENT record is UNCLEAN_NO_CLEAN_MARKER -- there is no obligation to further distinguish Task Manager kill vs. power loss vs. blue screen unless the disk evidence itself makes that distinction possible (e.g. a persisted traceback + nonzero exit code makes PROCESS_CRASH_CONFIRMED possible; a persisted network-failure log entry immediately preceding process disappearance makes NETWORK_FAILURE_CONFIRMED possible). UNKNOWN is a fully legitimate, final answer -- never guessed past.",
+        "principle": "Record only what the machine can establish. If cause cannot be established, record UNKNOWN. Never ask the operator to fill the evidentiary gap. Never infer intent."
+      },
+      "termination_initiator_and_preceding_condition_v6_demoted": "termination_initiator and preceding_condition (from v5) are DEMOTED in v6 to OPTIONAL machine-derived telemetry, recorded ONLY when already mechanically observable from existing logs/evidence with zero additional instrumentation or operator input. They are NOT required operational fields, are NEVER prompted for from the operator, and NEVER gate any resume/recovery/research-eligibility decision. The two authoritative fields for every decision are session_end_cleanliness and machine_observed_end_cause_v6 only."
+    }
+  },
+  "resume_preflight_contract": {
+    "purpose": "Answer, for every resume: when the SAME Dataset ID may continue; when a NEW collection_session_id is required (always, on every resume); when a NEW segment_id is required; when the network_epoch_id changes; what is backfillable vs permanently missing; and which approval tier applies.",
+    "common_steps_all_resume_types": [
+      "independently re-verify process/worker identity per the existing Formal-Start-proven nonce+CIM chain (reused unmodified; no new mechanism invented here)",
+      "capture a fresh network fingerprint and compare it to the network_epoch_id active at the end of the previous session",
+      "read the previous continuity checkpoint as evidence (never as restored state)",
+      "always assign a NEW collection_session_id -- a resume never reuses a prior session_id",
+      "record the resume in operational_sessions.jsonl with resume_reason and the prior session's session_end_type"
+    ],
+    "planned_clean_resume": {
+      "precondition": "prior session's session_end_cleanliness == CLEAN, AND the clean-shutdown marker is present and independently verified consistent with the persisted tails and checkpoint -- not merely a claimed CLEAN value.",
+      "same_dataset_id_continues": true,
+      "new_session_id_required": true,
+      "new_segment_id_required": "NOT required if continuity checkpoint shows no gap since the clean stop and the resume happens promptly enough that a fresh depth snapshot is still a valid continuation point per existing gap-resync rules; otherwise a new segment begins exactly as any other resync would require.",
+      "network_epoch_change": "Only if the fresh fingerprint differs from the one recorded at the prior session's close -- open a new network_epoch_id under change_reason=PLANNED_OPERATOR_CHANGE.",
+      "backfillable": "Not applicable -- no gap is expected in this path.",
+      "permanently_missing": "Not applicable.",
+      "approval_tier": "PROJECT_OWNER (per U3), conditional on all preflight checks PASS."
+    },
+    "unclean_crash_or_power_loss_resume": {
+      "precondition": "prior session's session_end_cleanliness == UNCLEAN or UNKNOWN, of ANY machine_observed_end_cause (including ordinary power loss, reboot, Task Manager termination, hang+kill, or unresolvable UNKNOWN) -- ALL such cases route through the SAME bounded mechanical_reconciliation_checklist_v6.",
+      "same_dataset_id_continues": "True, UNLESS the resume reconciliation surfaces one of the dataset_level_invalidation_reserved_for conditions.",
+      "new_session_id_required": true,
+      "new_segment_id_required": "Always -- the prior session ended without a proven-clean drain, so continuity across the boundary must be independently re-established (fresh depth snapshot, JSONL-tail structural check) before any claim of a gap-free boundary can be made; in practice this virtually always yields a new segment with an explicit gap record for diff_depth at minimum.",
+      "network_epoch_change": "Capture a fresh fingerprint regardless; if it differs from what was last recorded (which may itself be uncertain if the crash predated a checkpoint write), open a new network_epoch_id under change_reason=DETECTED_RUNTIME_CHANGE or UNKNOWN as appropriate.",
+      "backfillable": "aggTrade (and any stream with a complete REST historical endpoint) -- if the exchange's REST history still covers the missing window and the id chain aligns, per stream_specific_recovery.",
+      "permanently_missing": "diff_depth raw increment history during the outage window is UNRECOVERABLE by construction (per stream_specific_recovery) -- always closed as an explicit gap, never backfilled.",
+      "approval_tier": "v6 REVISED: PROJECT_OWNER ALONE if mechanical_reconciliation_checklist_v6 ALL PASS. PROJECT_OWNER + GPT ONLY if any checklist item FAILS, or provenance remains integrity-critical or ambiguous. GPT is no longer required for every ordinary UNCLEAN/UNKNOWN interruption -- only for a failed/ambiguous reconciliation outcome."
+    },
+    "long_hiatus_resume": {
+      "precondition": "Any prior session_end_type, after a downtime interval of any length (no maximum).",
+      "same_dataset_id_continues": true,
+      "new_session_id_required": true,
+      "new_segment_id_required": "Yes -- a hiatus of hours or more makes any 'no gap' claim unprovable by construction; treated as a fresh valid segment starting from a new REST snapshot.",
+      "network_epoch_change": "Very likely -- a long-idle machine has almost certainly changed network state (reboot, different Wi-Fi/proxy, Windows updates). Always re-capture the fingerprint and open a new network_epoch_id.",
+      "backfillable": "Same stream-specific rule as any other gap -- aggTrade potentially, via REST history, subject to how far back the exchange's REST window reaches (see area_11b's REQUEST_TIMEOUT_SECONDS / AGG_TRADE_BACKFILL_LIMIT constants -- a multi-day hiatus may exceed the exchange's own REST backfill window, in which case even aggTrade becomes UNRECOVERABLE for the exceeded portion).",
+      "permanently_missing": "diff_depth always; aggTrade for any portion beyond the exchange's REST backfill depth.",
+      "approval_tier": "Follows whatever the prior session_end_type dictates (PROJECT_OWNER for a prior CLEAN_* end, PROJECT_OWNER + GPT for a prior UNCLEAN_* end) -- duration of the hiatus itself does not change the approval tier."
+    },
+    "network_changed_resume": {
+      "precondition": "Fresh network fingerprint differs from the one recorded at the end of the prior session/epoch, regardless of session_end_type.",
+      "same_dataset_id_continues": true,
+      "new_session_id_required": "Only if this resume is also a process resume (usually yes, since a resume implies a new process invocation).",
+      "new_segment_id_required": "Only if data continuity cannot be mechanically proven across the network change -- per network_epoch_model.unexpected_change_while_running's three-way outcome (continue / new segment / PAUSE_REQUIRED), applied here to the resume moment instead of a mid-run event.",
+      "network_epoch_change": "Always -- a new network_epoch_id is opened, tagged PLANNED_OPERATOR_CHANGE if the operator changed it deliberately ahead of this resume, or DETECTED_RUNTIME_CHANGE if only discovered at resume time.",
+      "backfillable": "Not directly caused by the network change itself -- follows whatever gap (if any) resulted from the associated session boundary.",
+      "permanently_missing": "As above -- governed by the session boundary, not the network change per se.",
+      "approval_tier": "PROJECT_OWNER for a planned network change ahead of a clean resume; PROJECT_OWNER + GPT if the network change coincides with an unclean prior session end."
+    },
+    "approval_tier_note_v4": "CLEAN planned resume (session_end_type in {CLEAN_PLANNED_STOP, CLEAN_OPERATOR_PAUSE}) -> PROJECT_OWNER alone. UNCLEAN interruption reconciliation (any UNCLEAN_* or UNKNOWN_INTERRUPTION prior session_end_type) -> PROJECT_OWNER + GPT, for ALL unclean categories without exception, in this v4 design. Whether some UNCLEAN_* categories can later be safely downgraded to PROJECT_OWNER-alone approval is explicitly left to a FUTURE decision, made only after the DATASET_COLLECTION_RUNTIME_CONTROL implementation exists and has produced real operating evidence -- it is NOT decided now.",
+    "mechanical_evidence_checklist_governs_resume_v5": {
+      "principle": "Resume/recovery decisions are keyed PRIMARILY on mechanically-observable evidence, never on any operator self-report (Operations V1 has no operator self-report field at all -- see v6 human-input removal).",
+      "checklist": [
+        "clean marker present?",
+        "persisted tail valid? (JSONL structural validity of each stream's tail)",
+        "checkpoint reconcilable? (continuity_checkpoint.json readable and consistent with the persisted tails)",
+        "process/session identity known? (can the prior session's worker identity be established via the existing nonce+CIM chain, or the checkpoint's own recorded identity)",
+        "gap/resync provenance sufficient? (can any discontinuity across the boundary be either proven absent, or properly closed as an explicit gap with resync evidence)"
+      ],
+      "consequence": "SUPERSEDED IN v6 -- see mechanical_reconciliation_checklist_v6 above. session_end_cleanliness=CLEAN with a verified clean marker routes to planned_clean_resume (PROJECT_OWNER alone). ANY OTHER cleanliness value (UNCLEAN, UNKNOWN, or a claimed CLEAN marker that fails verification) routes through the mechanical_reconciliation_checklist_v6: if every item PASSES, PROJECT_OWNER alone may authorize resume; GPT escalation is triggered ONLY by a FAILED or ambiguous/integrity-critical checklist result, not by the UNCLEAN/UNKNOWN status itself."
+    },
+    "mechanical_reconciliation_checklist_v6": {
+      "applies_to": "Every resume where the prior session's session_end_cleanliness is UNCLEAN or UNKNOWN.",
+      "checklist": [
+        "Dataset/session identity -- can the prior session and its binding to this Dataset be established?",
+        "JSONL tail validity -- is the tail of every persisted stream structurally valid (parseable, not truncated mid-record)?",
+        "last checkpoint -- is continuity_checkpoint.json present, readable, and internally consistent?",
+        "writer state -- do the writer/backlog indicators show no unresolved evidence-loss condition?",
+        "gap boundaries -- can any discontinuity across the interruption be either proven absent, or properly closed as an explicit gap with resync evidence?",
+        "required REST resync -- where a gap exists, has the required REST resync (depth snapshot / aggTrade backfill) been completed and verified?",
+        "schema/source binding -- does the resumed session bind to the same frozen schema/source scope as the Dataset (no silent schema drift)?",
+        "no concurrent collector owner -- is there no other live process already holding ownership of this runtime root (ties into EXECUTION_BLOCKER-1)?"
+      ],
+      "outcome_all_pass": "Same Dataset ID may continue. A new collection_session_id is always assigned. A new segment_id is assigned wherever continuity cannot be proven to span the interruption. PROJECT_OWNER ALONE may authorize the resume -- no GPT escalation required merely because the prior end was UNCLEAN or UNKNOWN.",
+      "outcome_any_fail_or_ambiguous": "STOP. Escalate to PROJECT_OWNER + GPT adjudication. This is the ONLY trigger for GPT-level escalation on an ordinary interruption -- escalation is triggered by a FAILED or ambiguous/integrity-critical reconciliation result, never merely by the fact that the prior session ended UNCLEAN or UNKNOWN.",
+      "explicit_consequence": "Ordinary power outage, ordinary reboot, Task Manager termination, a hung process force-killed, and a long machine-off period are NOT automatically GPT-escalation events and do NOT automatically invalidate the Dataset -- they route through this same bounded mechanical checklist like any other UNCLEAN/UNKNOWN case, and resume under PROJECT_OWNER's own authorization once the checklist passes."
+    }
+  },
+  "resume_recovery_state_table": [
+    {
+      "session_end_cleanliness": "CLEAN (verified clean marker present + internally consistent)",
+      "path": "planned_clean_resume",
+      "same_dataset_id": "YES",
+      "new_session_id": "YES (always)",
+      "new_segment_id": "Usually NO (if checkpoint shows no gap)",
+      "network_epoch_change": "Only if fingerprint differs",
+      "approval_tier": "PROJECT_OWNER"
+    },
+    {
+      "session_end_cleanliness": "UNCLEAN or UNKNOWN, mechanical_reconciliation_checklist_v6 ALL PASS",
+      "path": "unclean_crash_or_power_loss_resume (reconciled)",
+      "same_dataset_id": "YES",
+      "new_session_id": "YES (always)",
+      "new_segment_id": "YES where continuity cannot be proven across the interruption",
+      "network_epoch_change": "Re-checked; new epoch if changed",
+      "approval_tier": "PROJECT_OWNER (no GPT needed)"
+    },
+    {
+      "session_end_cleanliness": "UNCLEAN or UNKNOWN, mechanical_reconciliation_checklist_v6 ANY FAIL or ambiguous/integrity-critical",
+      "path": "STOP -> adjudication",
+      "same_dataset_id": "TBD by adjudication",
+      "new_session_id": "not authorized until adjudicated",
+      "new_segment_id": "not authorized until adjudicated",
+      "network_epoch_change": "not authorized until adjudicated",
+      "approval_tier": "PROJECT_OWNER + GPT"
+    },
+    {
+      "session_end_cleanliness": "ANY -- after a long hiatus (hours/days/weeks, no maximum)",
+      "path": "long_hiatus_resume, still gated by the same cleanliness/reconciliation split above",
+      "same_dataset_id": "YES",
+      "new_session_id": "YES (always)",
+      "new_segment_id": "YES (continuity unprovable across a long idle gap)",
+      "network_epoch_change": "Almost always new epoch",
+      "approval_tier": "PROJECT_OWNER if reconciliation PASS (or prior end was CLEAN); PROJECT_OWNER + GPT only if reconciliation fails/ambiguous"
+    }
+  ],
+  "continuous_collection_operations_readiness": {
+    "CONTINUOUS_COLLECTION_OPERATIONS_READY": false,
+    "reasons": [
+      "no single-instance lock/PID ownership mechanism in the collector -- two accidental concurrent invocations against the same runtime root would both append, with no fail-closed refusal, risking duplicate collection and checkpoint/summary races",
+      "no operator-triggered graceful pause/stop path -- the only code path reaching the drain/checkpoint/summary sequence is --duration-seconds elapsing naturally (see area_02b v3 finding); an operator cannot request a clean stop mid-run today"
+    ],
+    "what_already_works_despite_this": "Sequential, non-overlapping, externally-single-instance-guaranteed bounded sessions ARE already safe to append to the same Dataset/runtime root today (per the corrected verdict above). What is NOT yet safe is UNATTENDED or casually-operated continuous collection where overlap or ad-hoc early stop could occur without a safety net.",
+    "PROJECT_OWNER_GPT_note": "These two facts are NOT blockers to freezing this DESIGN_GOVERNANCE_ONLY stage -- the design itself is sound and may be finalized and written to disk. They ARE blockers to authorizing an actual continuous-collection EXECUTION phase."
+  },
+  "execution_blockers": [
+    {
+      "id": "EXECUTION_BLOCKER-1",
+      "name": "SINGLE_INSTANCE_ENFORCEMENT_REQUIRED",
+      "risk_if_unaddressed": "Without single-instance enforcement, two Collector processes could be started against the same runtime root (e.g. by operator mistake, or a stale supervisor script re-launching one). Writers are not cross-process-locked, so this could cause duplicate/interleaved raw records, continuity-checkpoint write races, and soak_summary.json overwrite races -- none of which the current append-only design was built to arbitrate between two live writers.",
+      "must_be_solved_by": "A future narrow implementation changeset (see proposed_next_implementation_changeset below), NOT by this design-governance changeset (budget stays MAX_CODE_FILES_MODIFIED=0 here)."
+    },
+    {
+      "id": "EXECUTION_BLOCKER-2",
+      "name": "GRACEFUL_OPERATOR_STOP_REQUIRED",
+      "risk_if_unaddressed": "Without an operator-triggered graceful stop/pause path, every real-world 'I need to stop now' (reboot, gaming, end of day) that does not coincide with --duration-seconds elapsing naturally must be handled as an UNCLEAN_OPERATOR_INITIATED_EARLY_STOP kill -- mechanically safe (per the G6-proven checkpoint mechanism) but operationally heavier than necessary, and it forecloses ever recording a genuinely CLEAN_* end for an operator-initiated early stop.",
+      "must_be_solved_by": "The same future narrow implementation changeset."
+    },
+    {
+      "id": "note",
+      "text": "An actual power loss / OS crash / process crash / forced termination remains fully supported today through the already-designed UNCLEAN_* reconciliation path -- these two blockers concern only the DELIBERATE, OPERATOR-INITIATED cases (single-instance safety and on-demand graceful stop), not accident recovery."
+    }
+  ],
+  "proposed_next_implementation_changeset": {
+    "name": "DATASET_COLLECTION_RUNTIME_CONTROL",
+    "in_scope": [
+      "one verified collector owner per active Dataset/runtime root (single-instance ownership)",
+      "fail-closed refusal of a second concurrent session against the same runtime root",
+      "explicit worker/process identity (reusing, unmodified, the nonce+CIM verification chain already proven in NEXT_DATASET_FORMAL_START)",
+      "operator-requested graceful stop/pause: writer drain, backlog=0 when achievable, continuity checkpoint, clean session-end record"
+    ],
+    "explicitly_out_of_scope": [
+      "research / Discovery logic",
+      "schema changes",
+      "gap-detection or gap-resync algorithm changes",
+      "the long-term collection operation itself (this changeset only builds the control surface, it does not authorize or start continuous collection)"
+    ],
+    "relationship_to_this_changeset": "DATASET_COLLECTION_OPERATIONS (this changeset) closes as CLOSED_DESIGN_FREEZE_PASS independently and completely -- it does NOT stay open while DATASET_COLLECTION_RUNTIME_CONTROL executes. DATASET_COLLECTION_RUNTIME_CONTROL resolves EXECUTION_BLOCKER-1 and EXECUTION_BLOCKER-2 as its own self-contained changeset; once IT closes, a further separate future changeset (tentatively DATASET_COLLECTION_START) authorizes an actual continuous-collection START under the operational contract this (already-closed) changeset defined.",
+    "status": "NAME AND SCOPE PROPOSED AND ACCEPTED AS THE NEXT INDEPENDENT CHANGESET -- not yet opened, not yet budgeted, not yet started. Opening it requires its own separate PROJECT_OWNER + GPT authorization exactly like every other changeset in this project. It must close independently before any continuous-collection start is authorized; DATASET_COLLECTION_OPERATIONS itself is already closed (CLOSED_DESIGN_FREEZE_PASS) by the time this changeset would open -- it is not a parent kept open across the boundary."
+  },
+  "changelog_master_decision_v4": {
+    "changelog_append_now": false,
+    "master_append_now": false,
+    "reason": "Governance drafts (CHANGE_ROLES/SCOPE_DECLARATION) are not yet canonical -- neither has been written to disk, hashed, or committed. Appending a long draft-progress narrative to the append-only CHANGELOG now would permanently record pre-canonical, still-mutable content; CHANGELOG has no mechanism to later remove or correct an entry.",
+    "correct_sequence": [
+      "GPT final design approval (this message)",
+      "write final CHANGE_ROLES + SCOPE to D:\\EvidenceHunter\\research\\governance\\ (only on a SEPARATE explicit PROJECT_OWNER instruction to do so)",
+      "byte/hash verify the written files",
+      "commit design governance (git, exact whitelist, per standing discipline)",
+      "THEN append ONE concise DATASET_COLLECTION_OPERATIONS_DESIGN_FREEZE CHANGELOG entry containing the final governance commit SHA + file hashes -- not the long draft-progress narrative",
+      "MASTER_LIVING_DOCUMENT.txt stays untouched until either a separately-approved short design-freeze index entry, or the eventual DATASET_COLLECTION_OPERATIONS changeset closure"
+    ],
+    "confirmation": "No write has occurred to CHANGELOG.txt or EvidenceHunter_MASTER_LIVING_DOCUMENT.txt this round. Last independently-verified state: CHANGELOG.txt 270,229 bytes / sha256 007c4e511cbd3e530769b01b3875a1efc5b1f2ffc8d6993188b6d956d7a3cd18; MASTER_LIVING_DOCUMENT.txt 1,746,754 bytes / sha256 7ca2da30c93b1ae63ebe97f15f9f60ec40a7ced94e07d984f7e16c394838b059 -- both re-verified fresh earlier this session and unchanged since."
+  },
+  "resume_recovery_state_table_note_v5": "v6 REVISION: approval tier is now driven by session_end_cleanliness PLUS the mechanical_reconciliation_checklist_v6 OUTCOME, not by cleanliness alone. An ordinary UNCLEAN/UNKNOWN interruption that passes reconciliation resumes under PROJECT_OWNER alone -- GPT is reserved for genuinely failed or ambiguous/integrity-critical cases.",
+  "v5_confirmed_unchanged_from_v4": {
+    "area_02b_verdict": "CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE",
+    "continuous_collection_operations_ready": false,
+    "execution_blockers": [
+      {
+        "id": "EXECUTION_BLOCKER-1",
+        "name": "SINGLE_INSTANCE_ENFORCEMENT_REQUIRED",
+        "risk_if_unaddressed": "Without single-instance enforcement, two Collector processes could be started against the same runtime root (e.g. by operator mistake, or a stale supervisor script re-launching one). Writers are not cross-process-locked, so this could cause duplicate/interleaved raw records, continuity-checkpoint write races, and soak_summary.json overwrite races -- none of which the current append-only design was built to arbitrate between two live writers.",
+        "must_be_solved_by": "A future narrow implementation changeset (see proposed_next_implementation_changeset below), NOT by this design-governance changeset (budget stays MAX_CODE_FILES_MODIFIED=0 here)."
+      },
+      {
+        "id": "EXECUTION_BLOCKER-2",
+        "name": "GRACEFUL_OPERATOR_STOP_REQUIRED",
+        "risk_if_unaddressed": "Without an operator-triggered graceful stop/pause path, every real-world 'I need to stop now' (reboot, gaming, end of day) that does not coincide with --duration-seconds elapsing naturally must be handled as an UNCLEAN_OPERATOR_INITIATED_EARLY_STOP kill -- mechanically safe (per the G6-proven checkpoint mechanism) but operationally heavier than necessary, and it forecloses ever recording a genuinely CLEAN_* end for an operator-initiated early stop.",
+        "must_be_solved_by": "The same future narrow implementation changeset."
+      },
+      {
+        "id": "note",
+        "text": "An actual power loss / OS crash / process crash / forced termination remains fully supported today through the already-designed UNCLEAN_* reconciliation path -- these two blockers concern only the DELIBERATE, OPERATOR-INITIATED cases (single-instance safety and on-demand graceful stop), not accident recovery."
+      }
+    ],
+    "network_epoch_model": "unchanged, see network_epoch_model (full v3/v4 content retained verbatim)",
+    "disk_warning_threshold": "CONFIRMED: DISK_WARNING_FREE_GIB = 22.10 (= max(14 days * 1.5788728930452578 GiB/day = 22.104 GiB, 20 GiB floor)). Action at WARNING: alert only, collection continues.",
+    "disk_hard_pause_threshold": "CONFIRMED: DISK_HARD_PAUSE_FREE_GIB = 5.00 (= max(3 days * 1.5788728930452578 GiB/day = 4.737 GiB, 5 GiB floor) -- the 5 GiB floor dominates). Action at HARD_PAUSE: graceful pause if mechanically possible, preserve all evidence, NEVER auto-delete historical raw data to free space.",
+    "degraded_window": "CONFIRMED / APPROVED by PROJECT_OWNER + GPT: DEGRADED_AUTO_RECOVERY_WINDOW = 15 minutes. Scope clarification (per GPT's explicit adjudication): this timer applies ONLY while the machine/worker process remains alive and a transient runtime/network degradation is attempting automatic recovery under the existing frozen resilience rules. If unresolved after 15 minutes -> PAUSE_REQUIRED / ACTIVE_STOPPED (an operational stop requiring PROJECT_OWNER + GPT per the resume table above), NEVER an automatic Dataset-level invalidation. This timer has NO meaning for a power-off/machine-off downtime interval (long_hiatus / unplanned interruption resume path) -- those are governed entirely by the resume reconciliation procedure on next startup, not by any live timer.",
+    "u1_through_u10": "unchanged, see u1_through_u10_adjudicated (full v2/v3/v4 content retained verbatim)",
+    "note": "This v5 revision touches ONLY the session-end taxonomy (session_end_type -> the four-dimension model) and the resume-decision wording that referenced it. Every other v4 field, area_01 through area_20, permanent_principles_preserved, network_epoch_model, dataset_state_model.states, state_transition_table, area_11b thresholds, execution_blockers, proposed_next_implementation_changeset, and changelog_master_decision_v4 are carried forward byte-for-byte unchanged."
+  },
+  "v6_confirmed_unchanged_from_v5": {
+    "area_02b_verdict": "CURRENT_COLLECTOR_SEQUENTIAL_MULTI_SESSION_APPEND_SAFE",
+    "continuous_collection_operations_ready": false,
+    "execution_blockers": [
+      {
+        "id": "EXECUTION_BLOCKER-1",
+        "name": "SINGLE_INSTANCE_ENFORCEMENT_REQUIRED",
+        "risk_if_unaddressed": "Without single-instance enforcement, two Collector processes could be started against the same runtime root (e.g. by operator mistake, or a stale supervisor script re-launching one). Writers are not cross-process-locked, so this could cause duplicate/interleaved raw records, continuity-checkpoint write races, and soak_summary.json overwrite races -- none of which the current append-only design was built to arbitrate between two live writers.",
+        "must_be_solved_by": "A future narrow implementation changeset (see proposed_next_implementation_changeset below), NOT by this design-governance changeset (budget stays MAX_CODE_FILES_MODIFIED=0 here)."
+      },
+      {
+        "id": "EXECUTION_BLOCKER-2",
+        "name": "GRACEFUL_OPERATOR_STOP_REQUIRED",
+        "risk_if_unaddressed": "Without an operator-triggered graceful stop/pause path, every real-world 'I need to stop now' (reboot, gaming, end of day) that does not coincide with --duration-seconds elapsing naturally must be handled as an UNCLEAN_OPERATOR_INITIATED_EARLY_STOP kill -- mechanically safe (per the G6-proven checkpoint mechanism) but operationally heavier than necessary, and it forecloses ever recording a genuinely CLEAN_* end for an operator-initiated early stop.",
+        "must_be_solved_by": "The same future narrow implementation changeset."
+      },
+      {
+        "id": "note",
+        "text": "An actual power loss / OS crash / process crash / forced termination remains fully supported today through the already-designed UNCLEAN_* reconciliation path -- these two blockers concern only the DELIBERATE, OPERATOR-INITIATED cases (single-instance safety and on-demand graceful stop), not accident recovery."
+      }
+    ],
+    "network_epoch_model": "unchanged, see network_epoch_model (full content retained verbatim)",
+    "long_hiatus_policy_MAXIMUM_ALLOWED_PAUSE_DURATION": "MAXIMUM_ALLOWED_PAUSE_DURATION = NONE. A Dataset is never automatically invalidated merely because the operator leaves the machine off for hours, days, or weeks.",
+    "disk_warning_threshold": "CONFIRMED: DISK_WARNING_FREE_GIB = 22.10 (= max(14 days * 1.5788728930452578 GiB/day = 22.104 GiB, 20 GiB floor)). Action at WARNING: alert only, collection continues.",
+    "disk_hard_pause_threshold": "CONFIRMED: DISK_HARD_PAUSE_FREE_GIB = 5.00 (= max(3 days * 1.5788728930452578 GiB/day = 4.737 GiB, 5 GiB floor) -- the 5 GiB floor dominates). Action at HARD_PAUSE: graceful pause if mechanically possible, preserve all evidence, NEVER auto-delete historical raw data to free space.",
+    "degraded_window_15min_live_only": "CONFIRMED / APPROVED by PROJECT_OWNER + GPT: DEGRADED_AUTO_RECOVERY_WINDOW = 15 minutes. Scope clarification (per GPT's explicit adjudication): this timer applies ONLY while the machine/worker process remains alive and a transient runtime/network degradation is attempting automatic recovery under the existing frozen resilience rules. If unresolved after 15 minutes -> PAUSE_REQUIRED / ACTIVE_STOPPED (an operational stop requiring PROJECT_OWNER + GPT per the resume table above), NEVER an automatic Dataset-level invalidation. This timer has NO meaning for a power-off/machine-off downtime interval (long_hiatus / unplanned interruption resume path) -- those are governed entirely by the resume reconciliation procedure on next startup, not by any live timer.",
+    "u1_through_u10": "unchanged, see u1_through_u10_adjudicated (full content retained verbatim)",
+    "note": "This v6 revision touches ONLY: (1) removal of operator_reported_reason/operator_reported_at_utc, (2) simplification of the authoritative session-end fields to session_end_cleanliness + machine_observed_end_cause (demoting termination_initiator/preceding_condition to optional telemetry), and (3) resume approval semantics (GPT escalation now gated by reconciliation OUTCOME, not by UNCLEAN/UNKNOWN status alone). Every other v4/v5 field -- area_01 through area_20, permanent_principles_preserved, network_epoch_model, downtime/gap model, dataset_state_model.states, state_transition_table, area_11b thresholds, execution_blockers, proposed_next_implementation_changeset, and changelog_master_decision_v4 -- is carried forward byte-for-byte unchanged."
+  }
+}

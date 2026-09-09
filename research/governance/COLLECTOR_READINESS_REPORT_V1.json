@@ -1,0 +1,486 @@
+﻿{
+  "schema": "COLLECTOR_READINESS_REPORT_V1",
+  "changeset_id": "NEXT_DATASET_COLLECTOR_READINESS",
+  "generated_at": "2026-09-08T01:23:02.287713+08:00",
+  "evidence_sources": {
+    "soak_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544",
+    "gap_ledger": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\quality\\gap_ledger.jsonl",
+    "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\raw",
+    "soak_summary": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\soak_summary.json",
+    "process_samples": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\process_samples.json",
+    "process_exit_evidence": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\process_exit_evidence.json",
+    "version_bound_files": [
+      {
+        "path": "D:\\EvidenceHunter\\EvidenceHunter_collector_readiness.py",
+        "sha256": "2d18a5a2cbd62fbb8a0aa7207db4afe12338a1072def3e199436ae8657729082",
+        "bytes": 48723
+      },
+      {
+        "path": "D:\\EvidenceHunter\\tests\\test_collector_readiness.py",
+        "sha256": "041759d032a1ed6531cdf5e5c3d5c36b5bf7bb3a6503e5aa282c5d2287da991c",
+        "bytes": 58434
+      }
+    ],
+    "supplied_gate_provenance": "G1 direct targeted test in this thread; G6 user-supplied prior review plus local restart evidence; G7 actual environment and manifest. No claim of a newly performed restart/soak.",
+    "input_file_identity": [
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\soak_summary.json",
+        "sha256": "7842616c3afdbe1452aab6d29cbf7aeeaa13f56aa245afd2b01025e2b41e265a",
+        "bytes": 5231
+      },
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\process_samples.json",
+        "sha256": "f1c7a3eaddc7175d5966b3a4bf5905320dc9cece09113bc6f1e7e1e3734f5b1f",
+        "bytes": 19890
+      },
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\quality\\gap_ledger.jsonl",
+        "sha256": "0ce841d25f217bcb570a6e1cce70e4d533124d4ebdb7580ba9390a5389696b18",
+        "bytes": 1090
+      },
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\raw\\aggTrade.jsonl",
+        "sha256": "175c3e8fb5627cbf48ff90aa28776350a929539d260c09b2acc1f98c91b33f50",
+        "bytes": 22344764
+      },
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\raw\\depth.jsonl",
+        "sha256": "dffe1349c8cf6b0c74a56b38400eb47466c14acb780c6cf2f8f836622bd58b79",
+        "bytes": 79019823
+      },
+      {
+        "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\raw\\forceOrder.jsonl",
+        "sha256": "5873b5c89942bc037555cd6fe91826f218d182907d7d2582df9ff3ea9207addf",
+        "bytes": 28936
+      }
+    ],
+    "review_note": "G4/G5 conclusions remain machine-computed and unchanged. G5 has two BLOCKING findings; private-memory samples are not all identical. G6 supplied assessment corrected by bounded evidence reconciliation under PROJECT_OWNER event-stream semantics; see G6.stats.reconciliation. No collector code or restart/soak rerun. This remains a FAIL disposition, not release certification."
+  },
+  "gates": {
+    "G1_THREAD_CRASH_OBSERVABILITY": {
+      "gate": "G1_THREAD_CRASH_OBSERVABILITY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "kind": "direct_tool_execution_this_thread",
+            "command": ".\\.venv\\Scripts\\python.exe -m pytest -q tests\\test_collector_readiness.py",
+            "result": "75 passed in 11.14s",
+            "exit_code": 0,
+            "scope": "Targeted test file including G1 crash propagation and controlled-stop regressions; not full repo pytest"
+          },
+          {
+            "path": "D:\\EvidenceHunter\\tests\\test_collector_readiness.py",
+            "sha256": "041759d032a1ed6531cdf5e5c3d5c36b5bf7bb3a6503e5aa282c5d2287da991c",
+            "bytes": 58434
+          },
+          {
+            "path": "D:\\EvidenceHunter\\EvidenceHunter_collector_supervisor.py",
+            "sha256": "e74193cbd12bdc285a29c0e5c4acd765b28130ea99d55d60bfa5b90d1a521180",
+            "bytes": 15447
+          }
+        ]
+      }
+    },
+    "G2_GAP_LEDGER_SEMANTICS": {
+      "gate": "G2_GAP_LEDGER_SEMANTICS",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "ledger_path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\quality\\gap_ledger.jsonl",
+        "ledger_exists": true,
+        "event_count": 3,
+        "gap_count": 1,
+        "by_component": {
+          "diff_depth": 1
+        },
+        "by_repair_status": {
+          "REPAIRED": 1
+        },
+        "by_recoverability": {
+          "RECOVERABLE_VIA_BACKFILL": 1
+        },
+        "by_resync_status": {
+          "COMPLETED": 1
+        },
+        "open_at_end_count": 0
+      }
+    },
+    "G3_REPAIR_RESYNC_PROVENANCE": {
+      "gate": "G3_REPAIR_RESYNC_PROVENANCE",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_20260907_225544\\raw",
+        "raw_record_count": 78635,
+        "by_acquisition_mode": {
+          "LIVE": 78635
+        },
+        "repaired_gap_count": 1,
+        "unrecoverable_gap_count": 0,
+        "backfill_records_by_gap_id": {}
+      }
+    },
+    "G4_60_MINUTE_SOAK": {
+      "gate": "G4_60_MINUTE_SOAK",
+      "status": "FAIL",
+      "findings": [
+        {
+          "code": "REQUIRED_EXIT_STATUS_EVIDENCE_UNAVAILABLE",
+          "severity": "BLOCKING",
+          "detail": "no verified process exit-code evidence was supplied for the soak run (e.g. a harness's Start-Process handle resolved to a launcher/venv-shim PID rather than the actual worker process, so its exit code could not be captured); this is a gap in required verification evidence, not a claim that the collector itself failed -- see collector_runtime_behavior"
+        }
+      ],
+      "stats": {
+        "actual_duration_seconds": 3604.467,
+        "planned_duration_seconds": 3600.0,
+        "streams": {
+          "aggTrade": {
+            "message_count": 64306,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "diff_depth": {
+            "message_count": 14276,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "forceOrder": {
+            "message_count": 53,
+            "final_state": "HEALTHY",
+            "reconnect_count": 96,
+            "stale_events": 8
+          }
+        },
+        "writers": {
+          "aggTrade": {
+            "written_count": 64306,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 105,
+            "backlog_at_stop": 0
+          },
+          "diff_depth": {
+            "written_count": 14276,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 4,
+            "backlog_at_stop": 0
+          },
+          "forceOrder": {
+            "written_count": 53,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          }
+        },
+        "collector_runtime_behavior": "PASS",
+        "exit_evidence": null
+      }
+    },
+    "G5_STORAGE_THROUGHPUT_MEASURED": {
+      "gate": "G5_STORAGE_THROUGHPUT_MEASURED",
+      "status": "FAIL",
+      "findings": [
+        {
+          "code": "RESOURCE_SAMPLE_PROCESS_IDENTITY_UNVERIFIED",
+          "severity": "BLOCKING",
+          "detail": "process_samples.json carries no identity_verification evidence proving the sampled PID is the actual collector worker process (as opposed to, e.g., a venv launcher/shim whose real work happens in a child process); expected identity_verification={launcher_pid, worker_pid, method, verified: true}"
+        },
+        {
+          "code": "RESOURCE_SAMPLE_INCONSISTENT_WITH_WORKLOAD",
+          "severity": "BLOCKING",
+          "detail": "the soak ran 3604.5s and the collector's own counters recorded 78635 processed message(s), but the sampled process accumulated 0.0s of CPU time over that period -- the resource sample and the collector's own workload evidence cannot both be true of the same process"
+        }
+      ],
+      "stats": {
+        "streams": {
+          "aggTrade": {
+            "raw_bytes": 22344764,
+            "raw_lines": 64306,
+            "bytes_per_second": 6199.186731353068,
+            "projected_gb_per_day": 0.49882543607512964,
+            "message_count": 64306
+          },
+          "diff_depth": {
+            "raw_bytes": 79019823,
+            "raw_lines": 14276,
+            "bytes_per_second": 21922.748356414417,
+            "projected_gb_per_day": 1.764041798183886,
+            "message_count": 14276
+          },
+          "forceOrder": {
+            "raw_bytes": 28936,
+            "raw_lines": 53,
+            "bytes_per_second": 8.027816595352379,
+            "projected_gb_per_day": 0.0006459684612587518,
+            "message_count": 53
+          }
+        },
+        "totals": {
+          "message_count": 78635,
+          "raw_bytes": 101393523,
+          "bytes_per_second": 28129.962904362837,
+          "projected_gb_per_day": 2.2635132027202745
+        },
+        "threshold_policy": "no fixed GB/day or absolute-RSS pass/fail threshold is applied by this gate; the gate requires only that storage growth AND resource evidence are measured, internally consistent, and provably about the right process",
+        "process": {
+          "sample_count": 60,
+          "rss_sample_count": 60,
+          "cpu_sample_count": 60,
+          "rss_first_bytes": 4161536,
+          "rss_last_bytes": 4210688,
+          "rss_max_bytes": 4272128,
+          "rss_min_bytes": 4161536,
+          "cpu_total_seconds_delta": 0,
+          "rss_strictly_monotonic_increasing": false,
+          "rss_first_quarter_mean_bytes": 4220791.466666667,
+          "rss_last_quarter_mean_bytes": 4224341.333333333,
+          "rss_growth_ratio": 1.0008410428931875,
+          "obvious_monotonic_runaway": false,
+          "runaway_growth_ratio_threshold": 2.0,
+          "private_memory_sample_count": 60,
+          "private_memory_first_bytes": 811008,
+          "private_memory_last_bytes": 811008,
+          "private_memory_distinct_count": 3,
+          "private_memory_all_identical": false
+        },
+        "identity_verification": null
+      }
+    },
+    "G6_PROCESS_RESTART_RECOVERY": {
+      "gate": "G6_PROCESS_RESTART_RECOVERY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "kind": "user_supplied_prior_review_screenshot",
+            "source": {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\codex-clipboard-d0dccb9a-1127-4b77-8c49-596805deae5b.png",
+              "sha256": "40d93a307701c3dcf73ef5030d4ad8415563795ce7ce43f47083c7731b7fae91",
+              "bytes": 309270
+            },
+            "limitation": "Reviewer assertion, not a raw kill-command transcript; all-three-HEALTHY claim contradicted by local evidence"
+          },
+          {
+            "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\soak_summary.json",
+            "sha256": "72a48b03d409fb9df382228786935eaa0a72b9347748c469ef5ea262272a28b1",
+            "bytes": 6165
+          },
+          {
+            "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\raw\\forceOrder.jsonl",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\evidence_pre_restart_continuity_checkpoint.json",
+            "sha256": "9c4904308ce49c2d9b81c407c1cb680ed66481c12a12f9475bff0a7c1f9d8675",
+            "bytes": 825
+          },
+          {
+            "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\evidence_pre_restart_supervisor_state.json",
+            "sha256": "3053c919de86a8ff29bd5c09f8954706f0f0b9b35779677293e4e096a1dee561",
+            "bytes": 1113
+          },
+          {
+            "restart_g2": {
+              "gate": "G2_GAP_LEDGER_SEMANTICS",
+              "status": "PASS",
+              "findings": [],
+              "stats": {
+                "ledger_path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\quality\\gap_ledger.jsonl",
+                "ledger_exists": true,
+                "event_count": 11,
+                "gap_count": 4,
+                "by_component": {
+                  "diff_depth": 3,
+                  "aggTrade": 1
+                },
+                "by_repair_status": {
+                  "REPAIRED": 3,
+                  "UNRECOVERABLE_CONFIRMED": 1
+                },
+                "by_recoverability": {
+                  "RECOVERABLE_VIA_BACKFILL": 3,
+                  "UNRECOVERABLE": 1
+                },
+                "by_resync_status": {
+                  "COMPLETED": 3,
+                  "NOT_APPLICABLE": 1
+                },
+                "open_at_end_count": 0
+              }
+            },
+            "restart_g3": {
+              "gate": "G3_REPAIR_RESYNC_PROVENANCE",
+              "status": "PASS",
+              "findings": [],
+              "stats": {
+                "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\raw",
+                "raw_record_count": 5074,
+                "by_acquisition_mode": {
+                  "LIVE": 4296,
+                  "REST_BACKFILL": 778
+                },
+                "repaired_gap_count": 3,
+                "unrecoverable_gap_count": 1,
+                "backfill_records_by_gap_id": {
+                  "GAP_aggTrade_91d55330a7c3": 778
+                },
+                "backfill_coverage": {
+                  "GAP_aggTrade_91d55330a7c3": {
+                    "expected_count": 778,
+                    "covered_count": 778,
+                    "missing_count": 0
+                  }
+                }
+              }
+            },
+            "force_order_observed": {
+              "component": "forceOrder",
+              "raw_file": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\raw\\forceOrder.jsonl",
+              "message_count": 0,
+              "raw_bytes": 0,
+              "raw_lines": 0,
+              "bytes_per_second": 0.0,
+              "projected_gb_per_day": 0.0,
+              "final_state": "RECONNECTING",
+              "reconnect_count": 6,
+              "resync_count": 0,
+              "stale_events": 0,
+              "last_transition_reason": "CONNECTION_NOT_HEALTHY: DISCONNECTED (STREAM_NOT_READY_TIMEOUT)"
+            }
+          }
+        ],
+        "reconciliation": {
+          "at": "2026-09-07T17:26:41.433572+00:00",
+          "correction": "EVIDENCE_DESCRIPTION_CORRECTION_REQUIRED - corrected in this report",
+          "basis": "PROJECT_OWNER decision: zero forceOrder payload is not a G6 failure when restart lifecycle and supervisor observability are evidenced. Read-only reconciliation of the specified existing restart evidence; no code changes or new runtime experiment.",
+          "answers": {
+            "1_final_state": "RECONNECTING; 0 qualifying payloads; aggTrade and diff_depth reached HEALTHY.",
+            "2_restart_lifecycle": {
+              "first_connection_utc": "2026-09-07T14:49:10.520452+00:00",
+              "event_counts": {
+                "CONNECTED": 6,
+                "STREAM_NOT_READY_TIMEOUT": 6,
+                "DISCONNECTED": 6,
+                "HEALTHY": 0
+              },
+              "supervisor_reconnect_alerts": 6,
+              "detail": "Fresh post-start CONNECTED events followed by explicit STREAM_NOT_READY_TIMEOUT, RECONNECTING alerts and further connection attempts. This proves lifecycle activity within the recorded window, not liquidation-event delivery."
+            },
+            "3_blind_restore": "No evidence of blind prior-state restore. Post-start aggTrade/depth have fresh FIRST_PAYLOAD/HEALTHY timestamps and fresh counters; forceOrder has fresh connection/timeout/alert timestamps and no HEALTHY event. Prior checkpoint is explicitly non-authoritative for state restore; depth restart is a new snapshot segment. No silent death is evidenced in this bounded window.",
+            "4_report_consistency": "Prior all-three-HEALTHY claim is withdrawn. Prior G6 FAIL inferred from zero payload/non-HEALTHY state is withdrawn. Restart semantics are supported for the observed window; event readiness is a separate property."
+          },
+          "limitations": [
+            "This reconciliation does not independently prove the historical OS kill command or Windows Job Object child-termination semantics.",
+            "No event arriving in the recorded window does not prove no market liquidation occurred.",
+            "No exact CONNECTING transition event is claimed where stdout only records CONNECTED."
+          ],
+          "evidence": [
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\process1_stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\process1_stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\process2_stdout.log",
+              "sha256": "984deb6b15098f96e3a40b625c76b9cbd0615f660ba157ff9c726445f4a20751",
+              "bytes": 12121
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\process2_stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\evidence_pre_restart_supervisor_state.json",
+              "sha256": "3053c919de86a8ff29bd5c09f8954706f0f0b9b35779677293e4e096a1dee561",
+              "bytes": 1113
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\supervisor_state.json",
+              "sha256": "df96b102b1d766b2f6a63e524004ed554b2c4730228f6697e66d7a6120408b98",
+              "bytes": 1146
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\quality\\gap_ledger.jsonl",
+              "sha256": "ba4dd6d399368e124a543fbe322107551f78b57fbb14c831414b10a26a0c5981",
+              "bytes": 4947
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\continuity_checkpoint.json",
+              "sha256": "9ddf059b9082ff04a7e4c788aaaa80c66dee34aff30976d5045ea67f4c1cdeec",
+              "bytes": 825
+            },
+            {
+              "path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_readiness_restart_20260907_224456\\soak_summary.json",
+              "sha256": "72a48b03d409fb9df382228786935eaa0a72b9347748c469ef5ea262272a28b1",
+              "bytes": 6165
+            }
+          ],
+          "superseded_report_sha256": "5723b94a7e872f6fba74914b41101d08ebbd4c1cdf160f3e639b447f982ac4e3"
+        }
+      }
+    },
+    "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": {
+      "gate": "G7_ENVIRONMENT_DEPENDENCIES_FROZEN",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "path": "D:\\EvidenceHunter\\requirements-collector.txt",
+            "sha256": "404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6",
+            "bytes": 2168
+          },
+          {
+            "kind": "runtime_environment_measured",
+            "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+            "os": "Windows-11-10.0.26100-SP0",
+            "architecture": "AMD64",
+            "websocket_client": "1.9.2"
+          }
+        ]
+      }
+    },
+    "G8_FORMAL_DATASET_STARTUP_GUARD": {
+      "gate": "G8_FORMAL_DATASET_STARTUP_GUARD",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "gate_status": {
+          "G1_THREAD_CRASH_OBSERVABILITY": "PASS",
+          "G2_GAP_LEDGER_SEMANTICS": "PASS",
+          "G3_REPAIR_RESYNC_PROVENANCE": "PASS",
+          "G4_60_MINUTE_SOAK": "FAIL",
+          "G5_STORAGE_THROUGHPUT_MEASURED": "FAIL",
+          "G6_PROCESS_RESTART_RECOVERY": "PASS",
+          "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": "PASS"
+        }
+      }
+    }
+  },
+  "readiness": "FAIL",
+  "formal_dataset_start_allowed": false,
+  "blockers": [
+    "G4_60_MINUTE_SOAK: REQUIRED_EXIT_STATUS_EVIDENCE_UNAVAILABLE - no verified process exit-code evidence was supplied for the soak run (e.g. a harness's Start-Process handle resolved to a launcher/venv-shim PID rather than the actual worker process, so its exit code could not be captured); this is a gap in required verification evidence, not a claim that the collector itself failed -- see collector_runtime_behavior",
+    "G5_STORAGE_THROUGHPUT_MEASURED: RESOURCE_SAMPLE_PROCESS_IDENTITY_UNVERIFIED - process_samples.json carries no identity_verification evidence proving the sampled PID is the actual collector worker process (as opposed to, e.g., a venv launcher/shim whose real work happens in a child process); expected identity_verification={launcher_pid, worker_pid, method, verified: true}",
+    "G5_STORAGE_THROUGHPUT_MEASURED: RESOURCE_SAMPLE_INCONSISTENT_WITH_WORKLOAD - the soak ran 3604.5s and the collector's own counters recorded 78635 processed message(s), but the sampled process accumulated 0.0s of CPU time over that period -- the resource sample and the collector's own workload evidence cannot both be true of the same process"
+  ],
+  "interpretation": "A future changeset that creates a formal Dataset MUST read this file first and refuse to start unless readiness == PASS and formal_dataset_start_allowed is true. This field expresses only the readiness gate, not project-owner authorization. There is no third, ambiguous state: an unevaluated gate counts as FAIL."
+}
+

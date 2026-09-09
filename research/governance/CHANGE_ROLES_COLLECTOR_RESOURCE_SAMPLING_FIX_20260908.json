@@ -1,0 +1,13 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "COLLECTOR_RESOURCE_SAMPLING_FIX",
+  "project_owner": "PROJECT_OWNER (user)",
+  "primary_builder": "Claude (cloud session)",
+  "builder_may_self_certify_final_verified": false,
+  "verification_mechanism": "No separate independent_reviewer role this changeset (PROJECT_OWNER and GPT act as scope/governance approvers via chat relay, per PROJECT_OWNER's explicit decision 2026-09-08). Final verification of the single approved G4/G5 re-run comes from real command output pasted back by PROJECT_OWNER through EXECUTION_AGENT_VIA_USER_RELAY, and from the machine-generated COLLECTOR_READINESS_REPORT_V2.json itself -- never from builder self-certification.",
+  "scope": "Fix the verification-tooling defect found in NEXT_DATASET_COLLECTOR_READINESS (CLOSED, commit ddda5a4a8dcc4c528c77f966c124a6d443505e7f; READINESS=FAIL): the one approved 60-minute live soak sampled a Windows venv launcher PID instead of the actual worker child process, so no trustworthy exit-code/CPU/resource evidence exists for that run. This changeset covers exactly three things: (1) actual-worker process identity verification, independently OS-verified rather than merely trusted from a launcher handle; (2) trustworthy OS exit-code capture from that verified worker; (3) RSS/private-memory/CPU sampling from that same verified worker. It does NOT re-open G1/G2/G3/G6/G7, does not modify gap-ledger/order-book/restart logic, does not modify EvidenceHunter_collector.py's or EvidenceHunter_collector_supervisor.py's runtime behavior, and does not modify EvidenceHunter_collector_readiness.py. Only G4 (60_MINUTE_SOAK) and G5 (STORAGE_THROUGHPUT_MEASURED) may be re-evaluated, via exactly one new bounded 60-minute live re-verification run. Does not create or start a formal Dataset. Full bounded rules in SCOPE_DECLARATION_COLLECTOR_RESOURCE_SAMPLING_FIX_20260908.json.",
+  "canonical_artifact": "research/governance/SCOPE_DECLARATION_COLLECTOR_RESOURCE_SAMPLING_FIX_20260908.json",
+  "review_status": "SCOPE_APPROVED_2026-09-08_IN_PROGRESS",
+  "recorded_at": "2026-09-08"
+}
+

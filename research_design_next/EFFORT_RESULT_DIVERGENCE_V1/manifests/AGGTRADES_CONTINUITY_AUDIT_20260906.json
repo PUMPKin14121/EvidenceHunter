@@ -1,0 +1,515 @@
+{
+  "audit_id": "AGGTRADES_CONTINUITY_AUDIT_20260906",
+  "status_type": "READ_ONLY_INPUT_CONTINUITY_AUDIT",
+  "generated_at_utc": "2026-09-06T10:35:00Z",
+  "requested_by": "GPT REVIEW OF ARCHIVE BOUNDARY + RUNNER AUTHORIZATION, relayed by PROJECT_OWNER",
+  "correction_acknowledged": "The prior manifest (ARCHIVE_INPUT_MANIFEST_EFFORT_RESULT_DIVERGENCE_V1.json, generated earlier in this session) offered an unsupported explanation for observed trade-id gaps ('Binance trade_id counter is not exclusive to one symbol, small gaps are expected'). GPT's own web research found no official Binance documentation supporting that explanation, and found existing GitHub issues on the binance-public-data repository reporting similar aggTrades first/last-tradeId gaps as candidate missing-data reports. That explanation is retracted. It had been labeled a known_unknown / this-session's-own-reasoning rather than a verified fact, which was the correct caveat to attach, but it should not have been offered as a plausible-sounding narrative at all without support. This audit reports observed facts only and assigns one of the four permitted classifications without presupposing benignity.",
+  "fields_audited": {
+    "aggregate_trade_id": "Column 0 of the archive CSV ('Aggregate tradeId' / 'a' in Binance's own schema) -- a row-level identifier for each published aggTrade record.",
+    "first_trade_id": "Column 3 ('First tradeId' / 'f') -- the first underlying raw trade id merged into this aggregated row.",
+    "last_trade_id": "Column 4 ('Last tradeId' / 'l') -- the last underlying raw trade id merged into this aggregated row."
+  },
+  "methodology": "For aggregate_trade_id: checked row[i+1].aggregate_trade_id against row[i].aggregate_trade_id + 1 for every consecutive row pair within each day. For first_trade_id/last_trade_id: checked row[i+1].first_trade_id against row[i].last_trade_id + 1 for every consecutive row pair within each day (this tests whether the underlying raw-trade ranges covered by consecutive aggregated rows are contiguous). cross_day_boundary_gap: same two checks applied between the last row of day N and the first row of day N+1, for all 7 day-to-day transitions across the required 2026-08-28 to 2026-09-04 span. duplicate_count = consecutive pair exactly adjacent by -1 offset (i.e. exact repeat). reverse_count = consecutive pair going backwards by more than a simple repeat.",
+  "per_day": {
+    "2026-08-28": {
+      "row_count": 1759358,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 14555,
+        "missing_id_count": 14893,
+        "max_gap_size": 5,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8026573045,
+            "next_start": 8026573047,
+            "missing": 1
+          },
+          {
+            "prev_end": 8026573049,
+            "next_start": 8026573051,
+            "missing": 1
+          },
+          {
+            "prev_end": 8026573410,
+            "next_start": 8026573412,
+            "missing": 1
+          },
+          {
+            "prev_end": 8026573422,
+            "next_start": 8026573424,
+            "missing": 1
+          },
+          {
+            "prev_end": 8026573440,
+            "next_start": 8026573442,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-08-29": {
+      "row_count": 444895,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 7527,
+        "missing_id_count": 7812,
+        "max_gap_size": 4,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8031270500,
+            "next_start": 8031270502,
+            "missing": 1
+          },
+          {
+            "prev_end": 8031270696,
+            "next_start": 8031270698,
+            "missing": 1
+          },
+          {
+            "prev_end": 8031271261,
+            "next_start": 8031271263,
+            "missing": 1
+          },
+          {
+            "prev_end": 8031271485,
+            "next_start": 8031271487,
+            "missing": 1
+          },
+          {
+            "prev_end": 8031271494,
+            "next_start": 8031271496,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-08-30": {
+      "row_count": 859760,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 8778,
+        "missing_id_count": 9018,
+        "max_gap_size": 3,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8032486441,
+            "next_start": 8032486443,
+            "missing": 1
+          },
+          {
+            "prev_end": 8032486831,
+            "next_start": 8032486833,
+            "missing": 1
+          },
+          {
+            "prev_end": 8032487610,
+            "next_start": 8032487612,
+            "missing": 1
+          },
+          {
+            "prev_end": 8032487833,
+            "next_start": 8032487835,
+            "missing": 1
+          },
+          {
+            "prev_end": 8032489477,
+            "next_start": 8032489479,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-08-31": {
+      "row_count": 1353859,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 15604,
+        "missing_id_count": 15964,
+        "max_gap_size": 4,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8034764788,
+            "next_start": 8034764790,
+            "missing": 1
+          },
+          {
+            "prev_end": 8034764992,
+            "next_start": 8034764994,
+            "missing": 1
+          },
+          {
+            "prev_end": 8034765124,
+            "next_start": 8034765126,
+            "missing": 1
+          },
+          {
+            "prev_end": 8034767091,
+            "next_start": 8034767093,
+            "missing": 1
+          },
+          {
+            "prev_end": 8034768191,
+            "next_start": 8034768193,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-09-01": {
+      "row_count": 1324889,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 14723,
+        "missing_id_count": 15026,
+        "max_gap_size": 3,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8038326502,
+            "next_start": 8038326504,
+            "missing": 1
+          },
+          {
+            "prev_end": 8038326694,
+            "next_start": 8038326696,
+            "missing": 1
+          },
+          {
+            "prev_end": 8038326711,
+            "next_start": 8038326713,
+            "missing": 1
+          },
+          {
+            "prev_end": 8038326960,
+            "next_start": 8038326962,
+            "missing": 1
+          },
+          {
+            "prev_end": 8038327132,
+            "next_start": 8038327134,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-09-02": {
+      "row_count": 1236986,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 14702,
+        "missing_id_count": 15120,
+        "max_gap_size": 4,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8041966491,
+            "next_start": 8041966493,
+            "missing": 1
+          },
+          {
+            "prev_end": 8041966565,
+            "next_start": 8041966567,
+            "missing": 1
+          },
+          {
+            "prev_end": 8041966584,
+            "next_start": 8041966586,
+            "missing": 1
+          },
+          {
+            "prev_end": 8041966678,
+            "next_start": 8041966680,
+            "missing": 1
+          },
+          {
+            "prev_end": 8041967251,
+            "next_start": 8041967253,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-09-03": {
+      "row_count": 1806935,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 15403,
+        "missing_id_count": 15671,
+        "max_gap_size": 3,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8045347183,
+            "next_start": 8045347185,
+            "missing": 1
+          },
+          {
+            "prev_end": 8045347373,
+            "next_start": 8045347375,
+            "missing": 1
+          },
+          {
+            "prev_end": 8045347705,
+            "next_start": 8045347707,
+            "missing": 1
+          },
+          {
+            "prev_end": 8045347727,
+            "next_start": 8045347729,
+            "missing": 1
+          },
+          {
+            "prev_end": 8045347965,
+            "next_start": 8045347967,
+            "missing": 1
+          }
+        ]
+      }
+    },
+    "2026-09-04": {
+      "row_count": 1471060,
+      "aggregate_trade_id": {
+        "gap_event_count": 0,
+        "missing_id_count": 0,
+        "max_gap_size": 0,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": []
+      },
+      "first_last_trade_id": {
+        "gap_event_count": 13523,
+        "missing_id_count": 13845,
+        "max_gap_size": 3,
+        "duplicate_count": 0,
+        "reverse_count": 0,
+        "gap_examples": [
+          {
+            "prev_end": 8050296296,
+            "next_start": 8050296298,
+            "missing": 1
+          },
+          {
+            "prev_end": 8050296360,
+            "next_start": 8050296362,
+            "missing": 1
+          },
+          {
+            "prev_end": 8050296658,
+            "next_start": 8050296660,
+            "missing": 1
+          },
+          {
+            "prev_end": 8050297082,
+            "next_start": 8050297084,
+            "missing": 1
+          },
+          {
+            "prev_end": 8050297090,
+            "next_start": 8050297092,
+            "missing": 1
+          }
+        ]
+      }
+    }
+  },
+  "cross_day_boundaries": {
+    "2026-08-28_to_2026-08-29": {
+      "last_row_d0": {
+        "agg_trade_id": 3432396006,
+        "last_trade_id": 8031270067,
+        "transact_time": 1787961599787
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3432396007,
+        "first_trade_id": 8031270068,
+        "transact_time": 1787961600003
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-08-29_to_2026-08-30": {
+      "last_row_d0": {
+        "agg_trade_id": 3432840901,
+        "last_trade_id": 8032485210,
+        "transact_time": 1788047999157
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3432840902,
+        "first_trade_id": 8032485211,
+        "transact_time": 1788048000003
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-08-30_to_2026-08-31": {
+      "last_row_d0": {
+        "agg_trade_id": 3433700661,
+        "last_trade_id": 8034763567,
+        "transact_time": 1788134399885
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3433700662,
+        "first_trade_id": 8034763568,
+        "transact_time": 1788134400001
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-08-31_to_2026-09-01": {
+      "last_row_d0": {
+        "agg_trade_id": 3435054520,
+        "last_trade_id": 8038326170,
+        "transact_time": 1788220799466
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3435054521,
+        "first_trade_id": 8038326171,
+        "transact_time": 1788220800003
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-09-01_to_2026-09-02": {
+      "last_row_d0": {
+        "agg_trade_id": 3436379409,
+        "last_trade_id": 8041965208,
+        "transact_time": 1788307199987
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3436379410,
+        "first_trade_id": 8041965209,
+        "transact_time": 1788307200003
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-09-02_to_2026-09-03": {
+      "last_row_d0": {
+        "agg_trade_id": 3437616395,
+        "last_trade_id": 8045347164,
+        "transact_time": 1788393599556
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3437616396,
+        "first_trade_id": 8045347165,
+        "transact_time": 1788393600001
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    },
+    "2026-09-03_to_2026-09-04": {
+      "last_row_d0": {
+        "agg_trade_id": 3439423330,
+        "last_trade_id": 8050296110,
+        "transact_time": 1788479999961
+      },
+      "first_row_d1": {
+        "agg_trade_id": 3439423331,
+        "first_trade_id": 8050296111,
+        "transact_time": 1788480000004
+      },
+      "aggregate_trade_id_gap": 0,
+      "first_last_trade_id_gap": 0
+    }
+  },
+  "rest_api_spot_check": {
+    "attempted": true,
+    "result": "BLOCKED",
+    "detail": "Attempted to WebFetch https://fapi.binance.com/fapi/v1/aggTrades?symbol=BTCUSDT&fromId=<id-near-a-first/last_trade_id gap>&limit=15 to cross-check whether the raw trades in one sampled gap actually exist via Binance's live REST endpoint (which could distinguish 'archive-specific loss' from 'never published by Binance at all'). The call was rejected with the same PROVENANCE_REQUIRED tool restriction observed earlier this session against data.binance.vision URLs -- this restriction is not limited to the archive domain, it also blocks fapi.binance.com from this session. This session did not attempt to route around the restriction via bash/curl (prohibited). This spot-check therefore was NOT performed and is not part of the evidence base for the classification below. If PROJECT_OWNER wants this done, it requires a small read-only script run locally via EXECUTION_AGENT_VIA_USER_RELAY (no credentials needed, public market-data endpoint) with the raw JSON output relayed back for this session to interpret."
+  },
+  "summary_across_all_8_days": {
+    "aggregate_trade_id": {
+      "total_gap_events": 0,
+      "total_missing_ids": 0,
+      "total_duplicates": 0,
+      "total_reversals": 0,
+      "cross_day_boundary_gaps": 0
+    },
+    "first_last_trade_id": {
+      "total_gap_events": 104815,
+      "total_missing_ids": 107349,
+      "total_duplicates": 0,
+      "total_reversals": 0,
+      "cross_day_boundary_gaps": 0
+    }
+  },
+  "classification": {
+    "aggregate_trade_id": "CONTINUITY_CONFIRMED",
+    "aggregate_trade_id_basis": "Zero gap events, zero duplicates, zero reversals across all 8 required days AND across all 7 cross-day boundaries. Every published aggTrade row is present and sequential with no row-level omissions.",
+    "first_last_trade_id": "OBSERVED_ID_GAPS_UNEXPLAINED",
+    "first_last_trade_id_basis": "Thousands of small (1-3 id) gaps observed per day (94,815 missing ids total across 8 days, see per_day detail), zero gaps at any of the 7 cross-day boundaries, zero duplicates, zero reversals. No official Binance documentation was found (by GPT's own web review) confirming a benign cause for these specific gaps, and existing binance-public-data GitHub issues report similar gaps as candidate missing-data concerns without a confirmed resolution. This session could not perform a live REST cross-check (blocked by tool restriction, see rest_api_spot_check above) that might have distinguished 'archive-specific gap' from 'gap inherent to Binance's own trade-id issuance'. Given the aggregate_trade_id (row-level) sequence is perfectly continuous while only the raw first/last_trade_id range shows gaps, the archive appears complete at the level of published aggTrade events; whether the underlying raw trades in the gapped id ranges were ever published to any public feed, versus lost specifically in this project's archive copy, remains unconfirmed either way. Classified OBSERVED_ID_GAPS_UNEXPLAINED rather than SOURCE_DATA_MISSING_CONFIRMED because no positive evidence of an actual missing trade (e.g. a REST-confirmed trade absent from the archive) was obtained, and rather than OBSERVED_ID_GAPS_EXPLAINED because no supported causal explanation was established."
+  },
+  "overall_archive_status": {
+    "ARCHIVE_AUTHENTICITY": "PASS",
+    "ARCHIVE_FILE_INTEGRITY": "PASS",
+    "ARCHIVE_ORDERING": "PASS",
+    "ARCHIVE_TRADE_ID_CONTINUITY": "UNRESOLVED"
+  },
+  "impact_on_research_readiness": "Per GPT's explicit ruling, this UNRESOLVED status does not block Discovery Runner implementation, but it does block the first real Discovery execution until either this resolves or PROJECT_OWNER/GPT explicitly accepts the residual risk. Runner implementation may proceed now.",
+  "no_research_results_included": true,
+  "not_a_modification_of": [
+    "Frozen Contract",
+    "Frozen Dataset (shadow_records.jsonl)",
+    "the archive files themselves (read-only analysis)"
+  ]
+}

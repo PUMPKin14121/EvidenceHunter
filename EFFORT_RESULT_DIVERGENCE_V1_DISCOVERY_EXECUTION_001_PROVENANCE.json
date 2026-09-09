@@ -1,0 +1,39 @@
+{
+  "archive_manifest_sha256": "ee45921d4521b6ec3c7d2397568e404daf6ba30a720c02cdca8b1778b353dfa1",
+  "archive_sha256_per_day": {
+    "2026-08-28": "918af94802638af0a0d5fd826c18d827c2e09da69e8521badd9af38df90d6e27",
+    "2026-08-29": "0b0d0c729e027aeaa28762f2e0eea7fd99d17722337e249e10b7cce87314de19",
+    "2026-08-30": "c342e2f94b9a17b8a48205dd35e297d346bf067c2c1c0a9d90b2b38dfcd9b99e",
+    "2026-08-31": "454a1448bc2d8fa54e8372a3454d8aff1505ccec981c7c9e371333697ac0cc46",
+    "2026-09-01": "8ee2432189e091f8df2181a7bf894f6458cf4c24ffcb0de904e7bbb80f0245ba",
+    "2026-09-02": "e0c1ebeac376aca642c091f389bc9316c2cfc006606f4d9528c66ea17e4cd6d1",
+    "2026-09-03": "37f4135ac25f6cce4d82d38f577ccc9803619b7516d574a61afaa9db856254ca",
+    "2026-09-04": "9ec137c60c6bfce0473dac8a183e96ffae1db90b8c3fe829cf8ca2f8b2e5ee42"
+  },
+  "computation_failures": {},
+  "computed_count": 10083,
+  "contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+  "contract_sha256": "15ddd4b2a7d9fb8a88711ee73940a140e3ff6b409da54a643aadd9c329de453c",
+  "dataset_sha256": "571c497ab0e251e1e88b15bc9b6a2ca832a863b9c9d3ac69fb9ea175053de75d",
+  "elapsed_seconds": 246.16,
+  "eligible_records": 10083,
+  "execution_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001",
+  "generated_at_utc": "2026-09-06T16:48:31Z",
+  "identity_errors": [],
+  "identity_passed": true,
+  "ineligible_reason_counts": {},
+  "ineligible_records": 0,
+  "method_supplement_sha256": "8c457aab55ef7de77d618411daf8d3244576d878d50f501b68d4a0fe24e9b28f",
+  "raw_rows_artifact_path": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001_RAW_ROWS.jsonl",
+  "raw_rows_artifact_sha256": "818f63e72a5a39ac7b9790620cfeef196a23c69127ad90cb012b9e661df6a00c",
+  "raw_rows_count": 10083,
+  "runner_commit": "97ad9321efa53b450fb9b96c0cbcc5f49c3ca9ac",
+  "semantics": {
+    "DISCOVERY_RESULT_NOT_EQUAL_CONFIRMATION": true,
+    "TRADE_PERMISSION": false
+  },
+  "status": "FIRST_FORMAL_DISCOVERY_EXECUTION_SUCCEEDED",
+  "summary_artifact_path": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_EXECUTION_001_SUMMARY.json",
+  "summary_artifact_sha256": "7be3f599aea29b44798325a53e51e8d256c80d5c3cd8f0a7d95b35437088c7c1",
+  "total_records": 10083
+}

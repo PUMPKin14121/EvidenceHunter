@@ -1,0 +1,88 @@
+﻿{
+  "status_id": "DISCOVERY_READINESS_STATUS_20260906_FINAL_PREFLIGHT",
+  "status_type": "READ_ONLY_PRE_FLIGHT_READINESS_RECORD",
+  "supersedes_for_readiness_purposes": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/readiness/DISCOVERY_READINESS_STATUS_20260904.json",
+  "supersedes_note": "The prior status file is NOT deleted or overwritten (append-only / no-silent-overwrite convention). This is a new, separately dated file. The prior file remains on disk as a historical record of the 2026-09-04 audit.",
+  "generated_at_utc": "2026-09-06T09:01:28.498Z",
+  "requested_by": "PROJECT_OWNER, 'BTC HUNTER — FINAL DISCOVERY PRE-FLIGHT' instruction",
+  "code_commit": {
+    "value": "21e7e2d9813f8d7dcc796a446bc0e31b33413b76",
+    "verification_method": "This session has no shell access to the target machine, so a live 'git rev-parse HEAD' could not be executed directly. Instead this session independently read D:\\EvidenceHunter\\.git\\HEAD (contents: 'ref: refs/heads/master') and D:\\EvidenceHunter\\.git\\refs\\heads\\master (contents: the commit hash below) via the device file-bridge. This is the same value git rev-parse HEAD would compute from these exact files, but it is a direct read of git's internal ref files, not an invocation of the git binary.",
+    "matches_prior_freeze_record_value": true
+  },
+  "contract_reference": {
+    "contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+    "contract_path": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1.json",
+    "contract_sha256_recomputed": "15ddd4b2a7d9fb8a88711ee73940a140e3ff6b409da54a643aadd9c329de453c",
+    "matches_prior_recorded_value": true,
+    "contract_modified_by_this_status_file": false
+  },
+  "dataset_identity": {
+    "dataset_id": "BTCV12P3_20260828T000323Z_75696678",
+    "dataset_file": "logs/v2/EvidenceHunter_shadow_records.jsonl",
+    "dataset_sha256_recomputed": "571c497ab0e251e1e88b15bc9b6a2ca832a863b9c9d3ac69fb9ea175053de75d",
+    "dataset_file_size_bytes": 69989681,
+    "dataset_mtime_utc": "2026-09-04T01:28:18.342Z",
+    "matches_prior_recorded_value": true,
+    "verification_method": "File re-staged fresh from the device this turn and both re-hashed (sha256) and re-sized independently; both match the Freeze-time and 2026-09-04 readiness-status values exactly, with no change in mtime. This confirms the Frozen dataset has not been altered since the 168h closure."
+  },
+  "archive_coverage": {
+    "interpretation_basis": "Unchanged from PROJECT_OWNER's 2026-09-04 ruling: the Contract's archive-coverage gate is about verified provenance (a SHA256-checked local copy, checksummed against a checksum fetched from the same official source), not live re-fetchability at analysis time.",
+    "required_days": ["2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04"],
+    "days": {
+      "2026-08-28": {"coverage_status": "COVERED_REMOTE", "note": "Unchanged from 2026-09-04 audit; not independently re-checked this turn (undisputed, no new information)."},
+      "2026-08-29": {"coverage_status": "COVERED_REMOTE", "note": "Unchanged from 2026-09-04 audit; not independently re-checked this turn (undisputed, no new information)."},
+      "2026-08-30": {"coverage_status": "COVERED_REMOTE", "note": "Unchanged from 2026-09-04 audit; not independently re-checked this turn (undisputed, no new information)."},
+      "2026-08-31": {"coverage_status": "COVERED_LOCAL_AND_REMOTE", "note": "Unchanged; local .zip/.CHECKSUM/.VERIFIED files reconfirmed present via device_list_dir this turn."},
+      "2026-09-01": {"coverage_status": "COVERED_LOCAL_AND_REMOTE", "note": "Unchanged; local .zip/.CHECKSUM/.VERIFIED files reconfirmed present via device_list_dir this turn."},
+      "2026-09-02": {"coverage_status": "COVERED_LOCAL_AND_REMOTE", "note": "Unchanged; local .zip/.CHECKSUM/.VERIFIED files reconfirmed present via device_list_dir this turn."},
+      "2026-09-03": {"coverage_status": "COVERED_LOCAL_VERIFIED", "note": "Local .zip/.CHECKSUM/.VERIFIED files (both klines and aggTrades) reconfirmed present via device_list_dir this turn, byte-sizes unchanged from the prior independent SHA256 recompute (klines 62921 bytes, aggTrades 21991621 bytes). Treated as COVERED per PROJECT_OWNER's ruling regardless of any later remote re-fetch status."},
+      "2026-09-04": {
+        "coverage_status": "NOT_COVERED",
+        "local_verified": false,
+        "local_check_method": "device_list_dir on D:\\EvidenceHunter\\runtime\\binance_public_data_cache\\futures_um\\klines\\BTCUSDT\\1m\\ and \\...\\aggTrades\\BTCUSDT\\ performed fresh this turn.",
+        "local_check_result": "No 2026-09-04 files exist in either directory. The most recent locally cached/verified day in both directories is still 2026-09-03. This means the project's own archive_prefetch.py pipeline has not yet been run (or has not yet completed) against 2026-09-04.",
+        "project_owner_claim": "PROJECT_OWNER reported 2026-09-04 KLINE/AGG/INDEX all showed HTTP 200 via a manual PowerShell script issuing direct requests to the raw data.binance.vision URLs.",
+        "distinction_from_project_owner_claim": "An HTTP 200 from a manual ad-hoc script is evidence of remote reachability, but is not the same thing as this project's own archive_prefetch.py having downloaded the file and verified its SHA256 against the official .CHECKSUM sidecar into the local cache -- which is the exact standard PROJECT_OWNER's own 2026-09-04 ruling used to define 'covered' for 2026-09-03. Applying that same standard consistently, a remote-200-only day does not yet qualify as COVERED.",
+        "independent_remote_recheck_this_turn": "ATTEMPTED_AND_BLOCKED",
+        "independent_remote_recheck_detail": "This session attempted to independently WebFetch the 2026-09-04 KLINE and AGG .CHECKSUM sidecar URLs (the same URLs used in the 2026-09-03 investigation) to cross-check PROJECT_OWNER's claim. Both calls were rejected by the WebFetch tool with a new error not seen in earlier turns of this same project: PROVENANCE_REQUIRED -- 'URL not in provenance set. web_fetch can only retrieve URLs that appeared in a user message, a prior web_fetch result, or an approved fetch prompt.' This session did NOT attempt to route around this restriction via bash/curl/other means, per standing tooling rules. This is a newly discovered limitation of this session's own verification capability, recorded as a known_unknown below, not a finding about Binance's archive."
+      }
+    }
+  },
+  "eligibility": {
+    "audit_scope": "All 10083 shadow_records.jsonl rows matching dataset_id, re-run in full this turn against the freshly re-staged (hash-confirmed unchanged) dataset file.",
+    "non_archive_eligibility_failures": 0,
+    "non_archive_fields_checked": [
+      "dataset_id match", "data_quality_dimensions.freshness.pass",
+      "data_quality_dimensions.completeness.pass",
+      "data_quality_dimensions.continuity.pass",
+      "data_quality_dimensions.continuity.trade_gap == false",
+      "data_quality_dimensions.validity.pass",
+      "features.orderflow.ready", "features.orderflow.aggressive_buy_usdt + aggressive_sell_usdt > 0",
+      "features.timestamp present and parseable"
+    ],
+    "total_records": 10083,
+    "eligible_records": 9968,
+    "ineligible_records": 115,
+    "eligibility_rate_percent": 98.8595,
+    "ineligible_reason_counts": {"ARCHIVE_COVERAGE_MISSING": 115},
+    "earliest_eligible_time_utc": "2026-08-28T00:06:59.608Z",
+    "latest_eligible_time_utc": "2026-09-03T23:29:04.783Z",
+    "required_archive_days": ["2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04"],
+    "missing_archive_requirements": ["2026-09-04"],
+    "result_identical_to_prior_2026-09-04_audit": true,
+    "result_identical_note": "No record content changed (dataset SHA256 unchanged) and no new day was added to the covered-days set this turn, so this is an expected exact match, not a coincidence."
+  },
+  "discovery_ready": false,
+  "blocking_item": "2026-09-04 ARCHIVE_COVERAGE_MISSING -- not yet locally downloaded and SHA256-verified by this project's own pipeline; independently unconfirmable by this session this turn due to a new WebFetch tool restriction.",
+  "known_unknowns": [
+    "Whether 2026-09-04's Binance archive objects are actually retrievable in full and checksum-valid is not yet established by either party using the project's own verification standard (download + SHA256 match). PROJECT_OWNER's manual check only established HTTP-200 reachability from his own machine/script.",
+    "This session's WebFetch tool now refuses to fetch data.binance.vision URLs that were not already in an approved 'provenance set', with error PROVENANCE_REQUIRED. This is a change in tool behavior versus earlier turns of this same project (when the same domain was freely fetchable), and blocks this session from independently spot-checking Binance archive URLs going forward unless the user pastes the exact URL into the chat first or some other approval path is found. This limits this session's ability to independently corroborate future PROJECT_OWNER-reported archive-availability claims.",
+    "The 2026-09-03 remote-404-vs-local-verified discrepancy documented in the prior readiness status file remains unresolved as a causal matter (genuine Binance-side flux vs. this session's network path); it does not block discovery_ready under the adopted interpretation, but is carried forward as an open item.",
+    "Correction (requested by PROJECT_OWNER to be recorded here): the long-standing 'indexPriceKlines 404 for ~2 days' mystery from earlier sessions of this project was NOT a genuine Binance publish-delay. PROJECT_OWNER has confirmed it was caused by a human typo in a manually-constructed ZIP filename during a manual check. The 'INDEX OK' step referenced elsewhere in this project's own archive_prefetch.py is unrelated and was independently confirmed by source-code reading to be a purely local indexing step, not a third remote Binance asset type -- these are two separate, now both-resolved points that should not be conflated."
+  ],
+  "no_research_results_included": true,
+  "forbidden_content_confirmation": "This file contains no Effort x Response binning, no Future Return statistics, no 5x5 heatmap, no horizon comparison, and no subgroup findings.",
+  "next_gate": "Once 2026-09-04 archive is actually downloaded and SHA256-verified into the local cache (e.g. via a fresh run of python EvidenceHunter_archive_prefetch.py, relayed through EXECUTION_AGENT_VIA_USER_RELAY since this session has no shell access to the target machine), re-run this same Final Pre-Flight procedure. If MISSING_ARCHIVE_REQUIREMENTS = [] at that point, DISCOVERY_READY may be set to TRUE -- but per PROJECT_OWNER's governance sequencing, even then no real Discovery statistics may be run yet. The next authorized step after DISCOVERY_READY=TRUE is: Claude implements a Discovery Runner + tests strictly per the Frozen Contract, without viewing results, and submits code identity/diff/test results/dry-run schema output to GPT for independent review; only after GPT approval is the first real Discovery execution authorized. IMPLEMENTED != VERIFIED. READY != DISCOVERY_EXECUTED. DISCOVERY_RESULT != CONFIRMATION."
+}
+

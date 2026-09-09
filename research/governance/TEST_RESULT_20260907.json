@@ -1,0 +1,12 @@
+{
+  "command": ".venv/Scripts/python.exe -B -m pytest tests -q -p no:cacheprovider --basetemp runtime/codex_governance_final_tests_20260907",
+  "exit_code": 0,
+  "passed": 78,
+  "elapsed_seconds": 1.6,
+  "registry_sha256": "fe4305fc43895efe3ec789facd17180e8ee1f6b010b91a9e271ea16ba7bc6a38",
+  "raw_output": "TEST_OUTPUT_20260907.txt",
+  "raw_output_sha256": "d8acdf13093be5a0021dc2d7bdbb6117fe518d5c14bad4e5f898fbbe4265e78b",
+  "independent_review": "PENDING",
+  "builder": "Codex",
+  "generated_date": "2026-09-07"
+}

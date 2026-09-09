@@ -1,0 +1,13 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "NEXT_DATASET_COLLECTOR_IMPLEMENTATION",
+  "project_owner": "PROJECT_OWNER (user)",
+  "primary_builder": "Claude (cloud session)",
+  "independent_reviewer": "GPT",
+  "builder_may_self_certify_final_verified": false,
+  "scope": "Implementation only: raw aggTrade collector, raw diff-depth collector, REST snapshot + local order book reconstruction with U/u/pu continuity validation, raw payload persistence, local wall-clock + monotonic receive timestamps, WebSocket lifecycle logging, per-component health/progress, Supervisor reconnect/resync state machine with restart-state persistence, append-only gap_ledger.jsonl, aggTrade gap detection/REST backfill, unrecoverable depth-gap marking with repair provenance, Windows/local alert interface, and forceOrder (approved, schema independently confirmed). markPriceUpdate is explicitly DEFER_WITHOUT_BLOCKING_CORE_DATASET this round (WS field-level schema not cleanly verifiable from the primary docs page). No formal Dataset creation, no long-running live collection, no Discovery, no research feature derivation, no hypothesis testing, no Trade Permission change. Full bounded rules in SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_IMPLEMENTATION_20260907.json.",
+  "canonical_artifact": "research/governance/SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_IMPLEMENTATION_20260907.json",
+  "review_status": "SCOPE_APPROVED_IMPLEMENTATION_IN_PROGRESS_PENDING_OWNER_AND_REVIEWER_FINAL_SIGNOFF",
+  "recorded_at": "2026-09-07"
+}
+

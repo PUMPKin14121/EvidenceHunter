@@ -1,0 +1,272 @@
+﻿{
+  "schema": "COLLECTOR_READINESS_REPORT_V1",
+  "changeset_id": "NEXT_DATASET_COLLECTOR_READINESS",
+  "generated_at": "2026-09-08T08:32:00.364166+08:00",
+  "evidence_sources": {
+    "soak_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150",
+    "gap_ledger": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\quality\\gap_ledger.jsonl",
+    "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\raw",
+    "soak_summary": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\soak_summary.json",
+    "process_samples": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\process_samples.json",
+    "process_exit_evidence": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\process_exit_evidence.json"
+  },
+  "gates": {
+    "G1_THREAD_CRASH_OBSERVABILITY": {
+      "gate": "G1_THREAD_CRASH_OBSERVABILITY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "kind": "carried_forward_unchanged_from_prior_readiness_report",
+            "source_report": "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+            "source_report_sha256": "30668fc52e20965ee68f4b1dae126b3de3df41b919ae0473a1acc75af624ada0",
+            "note": "Not re-evaluated under COLLECTOR_RESOURCE_SAMPLING_FIX (out of scope per its SCOPE_DECLARATION). Original evidence: targeted pytest '75 passed in 11.14s' against tests/test_collector_readiness.py; EvidenceHunter_collector_supervisor.py sha256 e74193cbd12bdc285a29c0e5c4acd765b28130ea99d55d60bfa5b90d1a521180."
+          }
+        ]
+      }
+    },
+    "G2_GAP_LEDGER_SEMANTICS": {
+      "gate": "G2_GAP_LEDGER_SEMANTICS",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "ledger_path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\quality\\gap_ledger.jsonl",
+        "ledger_exists": true,
+        "event_count": 3,
+        "gap_count": 1,
+        "by_component": {
+          "diff_depth": 1
+        },
+        "by_repair_status": {
+          "REPAIRED": 1
+        },
+        "by_recoverability": {
+          "RECOVERABLE_VIA_BACKFILL": 1
+        },
+        "by_resync_status": {
+          "COMPLETED": 1
+        },
+        "open_at_end_count": 0
+      }
+    },
+    "G3_REPAIR_RESYNC_PROVENANCE": {
+      "gate": "G3_REPAIR_RESYNC_PROVENANCE",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150\\raw",
+        "raw_record_count": 30039,
+        "by_acquisition_mode": {
+          "LIVE": 30039
+        },
+        "repaired_gap_count": 1,
+        "unrecoverable_gap_count": 0,
+        "backfill_records_by_gap_id": {}
+      }
+    },
+    "G4_60_MINUTE_SOAK": {
+      "gate": "G4_60_MINUTE_SOAK",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "actual_duration_seconds": 3618.522,
+        "planned_duration_seconds": 3600.0,
+        "streams": {
+          "aggTrade": {
+            "message_count": 15771,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "diff_depth": {
+            "message_count": 14268,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "forceOrder": {
+            "message_count": 0,
+            "final_state": "RECONNECTING",
+            "reconnect_count": 91,
+            "stale_events": 0
+          }
+        },
+        "writers": {
+          "aggTrade": {
+            "written_count": 15771,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 56,
+            "backlog_at_stop": 0
+          },
+          "diff_depth": {
+            "written_count": 14268,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          },
+          "forceOrder": {
+            "written_count": 0,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 0,
+            "backlog_at_stop": 0
+          }
+        },
+        "collector_runtime_behavior": "PASS",
+        "exit_evidence": {
+          "schema": "COLLECTOR_PROCESS_EXIT_EVIDENCE_V1",
+          "worker_pid": 32180,
+          "creation_filetime": 134332837102638773,
+          "nonce": "376b88e08bc74a5aaddd2e319bff8703",
+          "verified": true,
+          "exit_code": 0,
+          "method": "GetExitCodeProcess on verified actual-worker handle after signaled wait",
+          "cpu_total_seconds_at_exit": 11.3125
+        }
+      }
+    },
+    "G5_STORAGE_THROUGHPUT_MEASURED": {
+      "gate": "G5_STORAGE_THROUGHPUT_MEASURED",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "streams": {
+          "aggTrade": {
+            "raw_bytes": 5479949,
+            "raw_lines": 15771,
+            "bytes_per_second": 1514.416383263664,
+            "projected_gb_per_day": 0.12185943826472441,
+            "message_count": 15771
+          },
+          "diff_depth": {
+            "raw_bytes": 40934437,
+            "raw_lines": 14268,
+            "bytes_per_second": 11312.474264354341,
+            "projected_gb_per_day": 0.910272613577745,
+            "message_count": 14268
+          },
+          "forceOrder": {
+            "raw_bytes": 0,
+            "raw_lines": 0,
+            "bytes_per_second": 0.0,
+            "projected_gb_per_day": 0.0,
+            "message_count": 0
+          }
+        },
+        "totals": {
+          "message_count": 30039,
+          "raw_bytes": 46414386,
+          "bytes_per_second": 12826.890647618005,
+          "projected_gb_per_day": 1.0321320518424695
+        },
+        "threshold_policy": "no fixed GB/day or absolute-RSS pass/fail threshold is applied by this gate; the gate requires only that storage growth AND resource evidence are measured, internally consistent, and provably about the right process",
+        "process": {
+          "sample_count": 61,
+          "rss_sample_count": 61,
+          "cpu_sample_count": 61,
+          "rss_first_bytes": 24432640,
+          "rss_last_bytes": 43409408,
+          "rss_max_bytes": 43941888,
+          "rss_min_bytes": 24432640,
+          "cpu_total_seconds_delta": 11.203125,
+          "rss_strictly_monotonic_increasing": false,
+          "rss_first_quarter_mean_bytes": 39641361.06666667,
+          "rss_last_quarter_mean_bytes": 43641514.666666664,
+          "rss_growth_ratio": 1.100908583670292,
+          "obvious_monotonic_runaway": false,
+          "runaway_growth_ratio_threshold": 2.0,
+          "private_memory_sample_count": 61,
+          "private_memory_first_bytes": 15306752,
+          "private_memory_last_bytes": 30023680,
+          "private_memory_distinct_count": 27,
+          "private_memory_all_identical": false
+        },
+        "identity_verification": {
+          "worker_pid": 32180,
+          "creation_filetime": 134332837102638773,
+          "image_path": "C:\\Users\\Kina\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "launcher_pid": 29816,
+          "nonce": "376b88e08bc74a5aaddd2e319bff8703",
+          "verified": true,
+          "method": "worker self-handshake + parent OS-handle PID/creation-time/image verification; same-process runpy",
+          "command": [
+            "D:\\EvidenceHunter\\.venv\\Scripts\\python.exe",
+            "-B",
+            "D:\\EvidenceHunter\\EvidenceHunter_resource_sampling.py",
+            "--worker",
+            "--output",
+            "C:\\Users\\Kina\\AppData\\Local\\Temp\\EvidenceHunter_resource_fix_20260908_034150",
+            "--nonce",
+            "376b88e08bc74a5aaddd2e319bff8703",
+            "--duration",
+            "3600.0",
+            "--probe-exit",
+            "0"
+          ]
+        }
+      }
+    },
+    "G6_PROCESS_RESTART_RECOVERY": {
+      "gate": "G6_PROCESS_RESTART_RECOVERY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "kind": "carried_forward_unchanged_from_prior_readiness_report",
+            "source_report": "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+            "source_report_sha256": "30668fc52e20965ee68f4b1dae126b3de3df41b919ae0473a1acc75af624ada0",
+            "note": "Not re-evaluated under COLLECTOR_RESOURCE_SAMPLING_FIX (out of scope; MAX_PROCESS_RESTART_TEST_RUNS=0 this changeset). See V1.gates.G6_PROCESS_RESTART_RECOVERY for the full real process-kill/restart evidence and the PROJECT_OWNER reconciliation regarding forceOrder's RECONNECTING state."
+          }
+        ]
+      }
+    },
+    "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": {
+      "gate": "G7_ENVIRONMENT_DEPENDENCIES_FROZEN",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          {
+            "kind": "carried_forward_unchanged_from_prior_readiness_report",
+            "source_report": "research/governance/COLLECTOR_READINESS_REPORT_V1.json",
+            "source_report_sha256": "30668fc52e20965ee68f4b1dae126b3de3df41b919ae0473a1acc75af624ada0",
+            "note": "Environment/dependency freeze unchanged this changeset."
+          },
+          {
+            "path": "requirements-collector.txt",
+            "sha256": "404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6",
+            "bytes": 2168
+          }
+        ]
+      }
+    },
+    "G8_FORMAL_DATASET_STARTUP_GUARD": {
+      "gate": "G8_FORMAL_DATASET_STARTUP_GUARD",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "gate_status": {
+          "G1_THREAD_CRASH_OBSERVABILITY": "PASS",
+          "G2_GAP_LEDGER_SEMANTICS": "PASS",
+          "G3_REPAIR_RESYNC_PROVENANCE": "PASS",
+          "G4_60_MINUTE_SOAK": "PASS",
+          "G5_STORAGE_THROUGHPUT_MEASURED": "PASS",
+          "G6_PROCESS_RESTART_RECOVERY": "PASS",
+          "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": "PASS"
+        }
+      }
+    }
+  },
+  "readiness": "PASS",
+  "formal_dataset_start_allowed": true,
+  "blockers": [],
+  "interpretation": "A future changeset that creates a formal Dataset MUST read this file first and refuse to start unless readiness == PASS and formal_dataset_start_allowed is true. This field expresses only the readiness gate, not project-owner authorization. There is no third, ambiguous state: an unevaluated gate counts as FAIL."
+}
+

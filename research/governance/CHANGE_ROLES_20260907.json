@@ -1,0 +1,20 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "LIFECYCLE_AND_GOVERNANCE_20260907",
+  "primary_writer": "Codex",
+  "independent_reviewer": "Claude (cloud session)",
+  "review_status": "PASS_WITH_REQUIRED_ACTIONS",
+  "builder_may_self_certify_final_verified": false,
+  "owner": "PROJECT_OWNER",
+  "scope": "This change only; no reviewer identity inferred from previous chats",
+  "required_actions_status": {
+    "add_outcome_diag_canonical_v2_regression_test": "DONE",
+    "cross_repo_test_path_existence_guard": "DONE",
+    "confirm_core_hypothesis_supported_no_provenance": "DONE (confirmed by PROJECT_OWNER 2026-09-07: GPT reviewer conclusion, not Codex-authored)",
+    "rerun_full_pytest_on_real_machine": "DONE (79 passed, 2026-09-07)",
+    "update_roles_and_registry": "DONE (this file + IMPLEMENTATION_STATE_REGISTRY.json, 2026-09-07)",
+    "commit_as_separate_changeset": "PENDING -- see PROJECT_CURRENT_STATE.json open_actions"
+  },
+  "review_delivered_at": "2026-09-07"
+}
+

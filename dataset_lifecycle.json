@@ -1,0 +1,34 @@
+﻿{
+  "schema_version": 1,
+  "recorded_date": "2026-09-07",
+  "frozen_datasets": {
+    "BTCV12P3_20260828T000323Z_75696678": {
+      "status": "FROZEN_CLOSED",
+      "protected_paths": [
+        "logs/v2/EvidenceHunter_shadow_records.jsonl",
+        "logs/v2/EvidenceHunter_shadow_outcomes.jsonl",
+        "logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+        "runtime/v2/dataset_session.json"
+      ],
+      "canonical_outcome": {
+        "path": "logs/v2/EvidenceHunter_shadow_outcomes_v2_corrected_20260906.jsonl",
+        "sha256": "184e307f31a3265ffa0fed7af824f8d558043254840ed2a87c5f6b28b6d68786"
+      },
+      "source": "archive/discovery_evidence_v1_to_v2/outcome_dataset_disposition.json",
+      "next_collection": "Requires separately prepared new dataset and output paths; do not clear frozen working directories."
+    }
+  },
+  "active_datasets": {
+    "BTCOF2C1_20260908T083048Z_fc9937db": {
+      "status": "ACTIVE",
+      "manifest_path": "research/governance/NEXT_DATASET_FORMAL_START_MANIFEST_V1.json",
+      "manifest_sha256": "3fd75a2ba33f86df8137471e27966cfe3978428265b7519be9ebf9ddecb5997a",
+      "collector_run_state": "STOPPED_AFTER_START_ACCEPTANCE",
+      "continuous_collection_authorized": true,
+      "authorized_runtime_root": "D:\\EvidenceHunter\\runtime_formal_BTCOF2C1_20260908T083048Z_fc9937db_7day_20260909T150833Z",
+      "authorized_duration_seconds": 604800,
+      "authorization_time": "2026-09-09T15:08:33Z"
+    }
+  }
+}
+

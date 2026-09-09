@@ -1,0 +1,25 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "NEXT_DATASET_FORMAL_START",
+  "project_owner": "PROJECT_OWNER",
+  "primary_builder": "Claude",
+  "primary_builder_correction_note": "Corrected from an earlier chat-only draft that named Codex as primary_builder. GPT ruling 2026-09-08 (correction 1 of 8): Codex has exited this phase; Claude is drafting governance and, via EXECUTION_AGENT_VIA_USER_RELAY, will draft the exact real-machine commands PROJECT_OWNER runs for PREPARE_PREFLIGHT and the 900-second startup acceptance. If Codex later resumes real-machine execution for any part of this changeset, a role correction must be recorded here BEFORE that execution begins, not after.",
+  "execution_agent": "EXECUTION_AGENT_VIA_USER_RELAY: PROJECT_OWNER runs each drafted PowerShell command and relays raw output back verbatim; no shell-execution tool exists for the cloud session on the Windows machine.",
+  "builder_may_self_certify_final_verified": false,
+  "verification_mechanism": "PROJECT_OWNER + GPT via chat relay. Claude drafts scope/budgets/commands and independently re-derives every claimed figure from raw evidence files before any acceptance verdict is asserted; PROJECT_OWNER performs all real-machine execution and deletion; GPT adjudicates scope and final result. Builder (Claude) never self-certifies PASS.",
+  "status": "SCOPE_REVIEW_APPROVED_WITH_REQUIRED_EDITS_2026-09-08; governance files write now authorized; DATASET_ID_MINTING_NOT_YET_AUTHORIZED; 900S_STARTUP_RUN_NOT_YET_AUTHORIZED; PREPARE_PREFLIGHT_NOT_YET_AUTHORIZED. Awaiting PROJECT_OWNER + GPT final scope-binding review of these two files' hashes before any further step.",
+  "canonical_artifact": "research/governance/SCOPE_DECLARATION_NEXT_DATASET_FORMAL_START_20260908.json",
+  "recorded_at": "2026-09-08",
+  "readiness_precondition": {
+    "changeset": "COLLECTOR_READINESS_REBIND",
+    "status": "CLOSED_2026-09-08_PASS",
+    "source_commit": "c59ad33d8694c9f5a33bcb0432ff6fb1b721f629",
+    "readiness_report": "research/governance/COLLECTOR_READINESS_REPORT_V3.json",
+    "readiness_report_sha256": "03ea57a0e50e07b8b6e17a17b245b3b0eb3f76db1d46354f15a1e656a3678bec",
+    "readiness": "PASS",
+    "formal_dataset_start_allowed": true,
+    "formal_dataset_started": false
+  },
+  "successor_changeset": "DATASET_COLLECTION_OPERATIONS -- any continuous or unattended collection authorization is a wholly separate, future, independently-authorized changeset and is NOT opened, scoped, or implied by this one."
+}
+

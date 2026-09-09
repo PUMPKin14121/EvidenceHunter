@@ -1,0 +1,71 @@
+﻿{
+  "changeset_id": "NEXT_DATASET_COLLECTOR_IMPLEMENTATION",
+  "recorded_at": "2026-09-07",
+  "approved_by": "PROJECT_OWNER, independently reviewed by GPT (relayed in chat 2026-09-07)",
+  "allowed_paths": [
+    "EvidenceHunter_collector_ws.py",
+    "EvidenceHunter_orderbook.py",
+    "EvidenceHunter_gap_ledger.py",
+    "EvidenceHunter_collector_supervisor.py",
+    "EvidenceHunter_collector.py",
+    "tests/test_collector_ws_client.py",
+    "tests/test_collector_orderbook.py",
+    "tests/test_collector_gap_ledger.py",
+    "tests/test_collector_supervisor.py",
+    "tests/test_collector_integration.py",
+    "research/governance/CHANGE_ROLES_NEXT_DATASET_COLLECTOR_IMPLEMENTATION_20260907.json",
+    "research/governance/SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_IMPLEMENTATION_20260907.json",
+    "PROJECT_CURRENT_STATE.json"
+  ],
+  "forbidden_paths": [
+    "EvidenceHunter_config.py",
+    "dataset_lifecycle.json",
+    "logs/v2/",
+    "research_design_next/",
+    "archive/",
+    ".venv/",
+    "research/governance/IMPLEMENTATION_STATE_REGISTRY.json",
+    "research/governance/AI_EXECUTION_CONTRACT_V1.json"
+  ],
+  "budget_overrides": {
+    "MAX_NEW_FILES": 12,
+    "MAX_NEW_DIRS": 0,
+    "MAX_FULL_TEST_RUNS": 2,
+    "MAX_RECONCILIATION_RUNS": 1
+  },
+  "dependency_policy": {
+    "bounded_manifest_lookup_performed": true,
+    "manifest_lookup_scope": "repo root only (D:\\EvidenceHunter), not a full-repo scan",
+    "manifest_lookup_result": "no requirements*.txt, pyproject.toml, or Pipfile found at repo root as of 2026-09-07 device_list_dir listing",
+    "decision": "no new dependency-management system created this changeset",
+    "runtime_dependency": "websocket-client==1.9.2",
+    "runtime_dependency_requires_python": ">=3.10",
+    "install_scope": "D:\\EvidenceHunter\\.venv only, via its own python.exe -m pip install, no global install, no optional extras, no incidental upgrade of other packages",
+    "missing_dependency_behavior": "FAIL_CLOSED -- collector code must raise a clear ImportError-derived error at startup if websocket-client is not importable, never silently degrade or substitute another transport",
+    "formal_environment_dependency_freeze": "deferred to NEXT_DATASET_COLLECTOR_READINESS (out of scope for this changeset)"
+  },
+  "smoke_test_policy": {
+    "offline_unit_integration_tests": "use pytest tmp_path exclusively; no repo-path artifacts",
+    "optional_short_live_network_smoke_test": "writes only under OS %TEMP%\\EvidenceHunter_collector_smoke_<timestamp>\\, never under the repo tree, and that temp directory must be removed at the end of the smoke run",
+    "repo_runtime_dirs_created_this_changeset": 0,
+    "note": "MAX_NEW_DIRS=0 has no runtime exception; this replaces the earlier draft's runtime/collector_smoke_* proposal, which PROJECT_OWNER rejected to keep the budget rule unambiguous"
+  },
+  "websocket_route_architecture": {
+    "source": "developers.binance.com USDS-M Futures websocket-market-streams docs, change-log, and Important-WebSocket-Change-Notice pages, independently verified 2026-09-07; PROJECT_OWNER/GPT decision recorded same day",
+    "market_route": ["aggTrade", "forceOrder", "markPrice (route reserved, stream itself DEFERRED)"],
+    "public_route": ["diff depth", "book ticker", "partial depth"],
+    "base_url_pattern": "wss://fstream.binance.com/<market|public>/ws/<streamName> (or /stream?streams=... combined form)",
+    "legacy_url_fallback": "NOT IMPLEMENTED -- no automatic fallback to the pre-restructuring flat wss://fstream.binance.com/ws/... path"
+  },
+  "connection_acceptance_requirement": {
+    "rule": "a stream must not be marked HEALTHY on TCP/WebSocket connect alone",
+    "required_sequence": ["handshake success", "subscription success", "first valid payload received within a bounded timeout"],
+    "pre_healthy_state": "STREAM_NOT_READY -- used whenever the first valid payload has not yet arrived within the bounded timeout",
+    "required_logged_fields": ["resolved_base_url", "route_class", "stream_name", "connected_at", "first_payload_at", "first_payload_valid"]
+  },
+  "supervisor_authority_note": "EvidenceHunter_collector_supervisor.py's state machine (CONNECTING -> STREAM_NOT_READY -> HEALTHY -> STALE -> RECONNECTING -> RESYNCING -> HEALTHY) is the sole project-level authority for component lifecycle and recovery. websocket-client's own built-in reconnect facilities (e.g. run_forever(reconnect=...)) must not be relied on as a second, independently-acting recovery mechanism running alongside the Supervisor; the low-level WS wrapper must use a mode where reconnect/retry decisions are driven explicitly by the Supervisor, not by the library internally.",
+  "force_order_semantics_note": "forceOrder is implemented as approved (schema independently confirmed against the primary docs page). Its official semantics are a windowed snapshot/update-frequency push (at most one message per symbol per ~1000ms window, representing the latest liquidation order in that window), not a guaranteed complete per-event liquidation stream. Raw payload persistence and provenance/documentation for this stream must state this explicitly; the collector and any future research layer must never treat the absence of a forceOrder message as proof that no liquidation occurred in that window.",
+  "mark_price_status": "DEFER_WITHOUT_BLOCKING_CORE_DATASET -- WS field-level schema for markPriceUpdate could not be cleanly verified from the primary docs page despite repeated attempts (only indirectly corroborated via REST premiumIndex fields and a third-party-adjacent official SDK repo, which PROJECT_OWNER/GPT ruled insufficient to implement against). Not implemented this changeset; the /market route reservation for it is documented but no markPrice stream code is written."
+}
+
+

@@ -1,0 +1,13 @@
+﻿{
+  "project": "EvidenceHunter",
+  "change_id": "OF2_NEXT_DATASET_PRESTART_DESIGN_20260907",
+  "project_owner": "PROJECT_OWNER (user)",
+  "design_author": "Claude (cloud session)",
+  "independent_reviewer": "GPT",
+  "builder_may_self_certify_final_verified": false,
+  "scope": "Prestart design only: SESSION_CONTEXT_V1 freeze proposal, next-dataset raw data sufficiency review, collector resilience and gap recovery design, OF2 prestart decision packet. No collector implementation, no collector start, no new dataset start, no Discovery execution authorized under this change_id.",
+  "canonical_artifact": "research_design_next/OF2_NEXT_DATASET_PRESTART_DESIGN/OF2_PRESTART_DESIGN_V1.json",
+  "review_status": "DESIGN_DELIVERED_PENDING_OWNER_AND_REVIEWER_SIGNOFF",
+  "recorded_at": "2026-09-07"
+}
+

@@ -1,0 +1,45 @@
+﻿# BTC HUNTER next-dataset collector -- runtime dependency freeze
+#
+# Changeset : NEXT_DATASET_COLLECTOR_READINESS (gate G7)
+# Recorded  : 2026-09-07
+# Scope     : research/governance/SCOPE_DECLARATION_NEXT_DATASET_COLLECTOR_READINESS_20260907.json
+#
+# WHY THIS FILE EXISTS
+# --------------------
+# A formal Dataset is only reproducible if the environment that produced it is
+# stated exactly. A bounded manifest lookup at the repo root on 2026-09-07
+# (requirements*.txt / pyproject.toml / Pipfile) found no existing manifest, so
+# this file was created as the collector's dependency record.
+#
+# WHAT THIS FILE DELIBERATELY DOES NOT DO
+# ---------------------------------------
+# It does NOT freeze the full transitive package set of D:\EvidenceHunter\.venv.
+# Pinning packages the collector never imports would misrepresent what the
+# collector actually depends on and would create false reproduction failures
+# later. Only the collector's own direct runtime dependency is pinned here.
+#
+# VERIFIED ENVIRONMENT (measured on the real machine, not asserted)
+# -----------------------------------------------------------------
+# Verified 2026-09-07 by running, inside D:\EvidenceHunter\.venv:
+#     python -c "import sys, platform, websocket; print(sys.version);
+#                print(platform.platform()); print(platform.machine());
+#                print(websocket.__version__)"
+#
+#   PYTHON            : 3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32)
+#                       [MSC v.1944 64 bit (AMD64)]
+#   OS                : Windows  (Windows-11-10.0.26100-SP0)
+#   ARCHITECTURE      : AMD64
+#   WEBSOCKET_CLIENT  : 1.9.2   (installed version confirmed at runtime)
+#   INSTALL SCOPE     : D:\EvidenceHunter\.venv only -- no global install
+#
+# The collector requires Python >= 3.10. Everything else it uses is standard
+# library (json, queue, threading, urllib, pathlib, datetime, argparse).
+#
+# MISSING-DEPENDENCY BEHAVIOUR
+# ----------------------------
+# FAIL_CLOSED. If websocket-client is not importable the collector must raise a
+# clear error at startup; it must never silently degrade or substitute another
+# transport.
+
+websocket-client==1.9.2
+

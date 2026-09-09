@@ -1,0 +1,309 @@
+﻿{
+  "schema_version": 1,
+  "scope": "20260907 lifecycle protections + minimal registered-asset reconciliation + OF2 plan only",
+  "catalog_complete": false,
+  "requirements": [
+    {
+      "requirement_id": "LIFECYCLE_READ_WRITE",
+      "canonical_name": "LIFECYCLE_READ_WRITE",
+      "master_section": "2-X/2-Z/2-AB/2-BL/2-BM",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "TESTED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "config",
+        "analysis",
+        "diagnostic",
+        "lifecycle_tests"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": [
+        "tests/test_lifecycle_guards.py",
+        "tests/test_project_reconciliation.py"
+      ],
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    },
+    {
+      "requirement_id": "FROZEN_START_GUARD",
+      "canonical_name": "FROZEN_START_GUARD",
+      "master_section": "2-X/2-Z/2-AB/2-BL/2-BM",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "TESTED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "dataset",
+        "shadow",
+        "outcome",
+        "backfill",
+        "lifecycle"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": [
+        "tests/test_lifecycle_guards.py",
+        "tests/test_project_reconciliation.py"
+      ],
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    },
+    {
+      "requirement_id": "CPH_RETIREMENT_GUARD",
+      "canonical_name": "CPH_RETIREMENT_GUARD",
+      "master_section": "2-X/2-Z/2-AB/2-BL/2-BM",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "TESTED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "cph",
+        "cph_lifecycle"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": [
+        "tests/test_lifecycle_guards.py",
+        "tests/test_project_reconciliation.py"
+      ],
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    },
+    {
+      "requirement_id": "DISCOVERY_DISPOSITION",
+      "canonical_name": "DISCOVERY_DISPOSITION",
+      "master_section": "2-X/2-Z/2-AB/2-BL/2-BM",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "DOCUMENTED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "discovery_disposition"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": null,
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    },
+    {
+      "requirement_id": "SCOPED_RECONCILIATION",
+      "canonical_name": "SCOPED_RECONCILIATION",
+      "master_section": "2-X/2-Z/2-AB/2-BL/2-BM",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "TESTED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "audit",
+        "reconciliation_tests"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": [
+        "tests/test_lifecycle_guards.py",
+        "tests/test_project_reconciliation.py"
+      ],
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    },
+    {
+      "requirement_id": "OF2_CONTEXT",
+      "canonical_name": "OF2_CONTEXT",
+      "master_section": "A5-7 PHASE OF-2",
+      "master_version_introduced": "2026-09-07 scoped mapping",
+      "requirement_class": "ACCEPTED_REQUIREMENT",
+      "desired_state": "Implemented, tested and independently reviewed before release",
+      "implementation_status": "PLANNED",
+      "implementation_owner": "Codex primary writer",
+      "code_assets": [
+        "of2_plan"
+      ],
+      "runtime_entrypoints": [],
+      "UI_surfaces": [],
+      "tests": null,
+      "dependencies": [],
+      "last_reconciled_at": "2026-09-07",
+      "last_verified_version": {
+        "verified_by": "Claude (independent reviewer, cloud session)",
+        "verified_at": "2026-09-07",
+        "verdict": "PASS_WITH_REQUIRED_ACTIONS",
+        "note": "Independent review delivered in chat 2026-09-07 as a REVIEW_HANDOFF_PACKET (15/15 registered asset hashes verified, corrected Outcome V2 hash independently re-verified, CPH retirement guard verified against real CP200_AUDIT.json content, mtime-based scope audit found no undeclared file changes). Two required actions (outcome_diag.py canonical-V2 regression test; existence-guard for the cross-repo test path assumption) were implemented and locally sandbox-verified by Claude on 2026-09-07, then confirmed on the real machine via a full pytest rerun: 79 passed. See research/governance/TEST_RESULT_20260907_POST_REVIEW_FIXES.json."
+      },
+      "retirement_status": "NOT_RETIRED",
+      "notes": "Limited mapping for current changes; does not claim all MASTER requirements have been cataloged."
+    }
+  ],
+  "assets": {
+    "config": {
+      "project": "formal",
+      "path": "EvidenceHunter_config.py",
+      "sha256": "5d19123a465bb5fd2e3048d84538cf6331bb0da4a10175c7db03dab190c9c34d",
+      "requirements": [
+        "LIFECYCLE_READ_WRITE"
+      ]
+    },
+    "dataset": {
+      "project": "formal",
+      "path": "EvidenceHunter_dataset.py",
+      "sha256": "f6bf2376473ee2dfe975e0caf12b8ef897b2c53a46e00a3d046b8ae72999116c",
+      "requirements": [
+        "FROZEN_START_GUARD"
+      ]
+    },
+    "shadow": {
+      "project": "formal",
+      "path": "EvidenceHunter_shadow.py",
+      "sha256": "a7996af20ab8415ccd2f1d1c6d198cf8bd21850a8aa253a5d0154080bca7653e",
+      "requirements": [
+        "FROZEN_START_GUARD"
+      ]
+    },
+    "outcome": {
+      "project": "formal",
+      "path": "EvidenceHunter_shadow_outcome.py",
+      "sha256": "dd0b57e5b84c37122012ac8438a89ec95dba1ecb7f181ca7ca5646b9ec6340d0",
+      "requirements": [
+        "FROZEN_START_GUARD"
+      ]
+    },
+    "backfill": {
+      "project": "formal",
+      "path": "EvidenceHunter_shadow_outcome_backfill.py",
+      "sha256": "b7b3b599a06dbaca08ae26254b8ca37f6be03dfcc159c80cf8b1be678a7aaf26",
+      "requirements": [
+        "FROZEN_START_GUARD"
+      ]
+    },
+    "analysis": {
+      "project": "formal",
+      "path": "EvidenceHunter_shadow_analysis_v2.py",
+      "sha256": "01bb24034abfb328525b3d7e9bd4a92e04bd4c42693f4ceb8c6d4846306c9270",
+      "requirements": [
+        "LIFECYCLE_READ_WRITE"
+      ]
+    },
+    "diagnostic": {
+      "project": "formal",
+      "path": "EvidenceHunter_shadow_outcome_diag.py",
+      "sha256": "3bc9b2494137151e9e9494aa6672e27ef7721c364a9c9425f7628b45fd1718f6",
+      "requirements": [
+        "LIFECYCLE_READ_WRITE"
+      ]
+    },
+    "audit": {
+      "project": "formal",
+      "path": "audit_order.py",
+      "sha256": "27d1853a7fccd30a957285d8e3bdf52865f24f675c3285556d8c1bf137afd472",
+      "requirements": [
+        "SCOPED_RECONCILIATION"
+      ]
+    },
+    "lifecycle": {
+      "project": "formal",
+      "path": "dataset_lifecycle.json",
+      "sha256": "b4c44ee670826bb715efb60510cee8f2317fcd863e41e2fba7b64286ea43d13e",
+      "requirements": [
+        "FROZEN_START_GUARD"
+      ]
+    },
+    "lifecycle_tests": {
+      "project": "formal",
+      "path": "tests/test_lifecycle_guards.py",
+      "sha256": "9ce5740a1dcf9bfeeeebc02974ba5d7138d9bbe50888163846d7958dcc6b11d7",
+      "requirements": [
+        "LIFECYCLE_READ_WRITE"
+      ]
+    },
+    "reconciliation_tests": {
+      "project": "formal",
+      "path": "tests/test_project_reconciliation.py",
+      "sha256": "890d4816738864623d90c7270898476855cc5b9354f6c6ba0ff0660c6a2a011f",
+      "requirements": [
+        "SCOPED_RECONCILIATION"
+      ]
+    },
+    "cph": {
+      "project": "v11r1",
+      "path": "control_persistence_horizon_v1_shadow_recorder.py",
+      "sha256": "f491557fd7838adb9de2e43d397844c112724c7480da0a339fa3a21d776e2474",
+      "requirements": [
+        "CPH_RETIREMENT_GUARD"
+      ]
+    },
+    "cph_lifecycle": {
+      "project": "v11r1",
+      "path": "research/control_transfer_outcome_v1/CONTROL_PERSISTENCE_HORIZON_V1_lifecycle.json",
+      "sha256": "e8d16e0a4d81fc14829f54ba50fac7eb2046b3c8b7fc3ec8b8ff0a82f9e896ff",
+      "requirements": [
+        "CPH_RETIREMENT_GUARD"
+      ]
+    },
+    "discovery_disposition": {
+      "project": "formal",
+      "path": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_DISPOSITION_20260907.json",
+      "sha256": "de87c72bdbe75f4aa922669f6814317a29f02b2f5ded5c977197616830768c08",
+      "requirements": [
+        "DISCOVERY_DISPOSITION"
+      ]
+    },
+    "of2_plan": {
+      "project": "formal",
+      "path": "research_design_next/SESSION_CONTEXT_V1/OF2_IMPLEMENTATION_PLAN.json",
+      "sha256": "bf1bcb2c73c1f14d14c602c69173bb0f29d449fcf44fd41d9898c02627eb1007",
+      "requirements": [
+        "OF2_CONTEXT"
+      ]
+    }
+  }
+}
+
+
+

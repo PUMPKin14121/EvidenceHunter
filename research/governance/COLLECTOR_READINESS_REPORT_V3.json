@@ -1,0 +1,307 @@
+﻿{
+  "schema": "COLLECTOR_READINESS_REPORT_V1",
+  "changeset_id": "NEXT_DATASET_COLLECTOR_READINESS",
+  "generated_at": "2026-09-08T15:35:29.439929+08:00",
+  "evidence_sources": {
+    "soak_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515",
+    "gap_ledger": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\quality\\gap_ledger.jsonl",
+    "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\raw",
+    "soak_summary": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\soak_summary.json",
+    "process_samples": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\process_samples.json",
+    "process_exit_evidence": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\process_exit_evidence.json"
+  },
+  "gates": {
+    "G1_THREAD_CRASH_OBSERVABILITY": {
+      "gate": "G1_THREAD_CRASH_OBSERVABILITY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          "real-machine pytest: tests/test_day1_completeness.py::test_clock_observer_thread_crash_becomes_visible_through_the_supervisor -- 1 passed in 0.09s, exit_code=0",
+          "recorded in CHANGE_ROLES_COLLECTOR_READINESS_REBIND_20260908.json (G1_plan) and PROJECT_CURRENT_STATE.json (current_changeset.G1_targeted_result); rebind MAX_TARGETED_TEST_RUNS=1 already exhausted, not independently re-run this round per budget"
+        ]
+      }
+    },
+    "G2_GAP_LEDGER_SEMANTICS": {
+      "gate": "G2_GAP_LEDGER_SEMANTICS",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "ledger_path": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\quality\\gap_ledger.jsonl",
+        "ledger_exists": true,
+        "event_count": 3,
+        "gap_count": 1,
+        "by_component": {
+          "diff_depth": 1
+        },
+        "by_repair_status": {
+          "REPAIRED": 1
+        },
+        "by_recoverability": {
+          "RECOVERABLE_VIA_BACKFILL": 1
+        },
+        "by_resync_status": {
+          "COMPLETED": 1
+        },
+        "open_at_end_count": 0
+      }
+    },
+    "G3_REPAIR_RESYNC_PROVENANCE": {
+      "gate": "G3_REPAIR_RESYNC_PROVENANCE",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "raw_dir": "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515\\raw",
+        "raw_record_count": 60797,
+        "by_acquisition_mode": {
+          "LIVE": 60797
+        },
+        "repaired_gap_count": 1,
+        "unrecoverable_gap_count": 0,
+        "backfill_records_by_gap_id": {}
+      }
+    },
+    "G4_60_MINUTE_SOAK": {
+      "gate": "G4_60_MINUTE_SOAK",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "actual_duration_seconds": 3605.66,
+        "planned_duration_seconds": 3600.0,
+        "streams": {
+          "aggTrade": {
+            "message_count": 46508,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "diff_depth": {
+            "message_count": 14273,
+            "final_state": "HEALTHY",
+            "reconnect_count": 0,
+            "stale_events": 0
+          },
+          "forceOrder": {
+            "message_count": 16,
+            "final_state": "HEALTHY",
+            "reconnect_count": 99,
+            "stale_events": 7
+          }
+        },
+        "writers": {
+          "aggTrade": {
+            "written_count": 46508,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 55,
+            "backlog_at_stop": 0
+          },
+          "clock_observations": {
+            "written_count": 60,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          },
+          "depth_snapshot": {
+            "written_count": 2,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          },
+          "diff_depth": {
+            "written_count": 14273,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 3,
+            "backlog_at_stop": 0
+          },
+          "forceOrder": {
+            "written_count": 16,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          },
+          "rest_telemetry": {
+            "written_count": 2,
+            "dropped_count": 0,
+            "queue_maxsize": 10000,
+            "queue_depth_peak": 1,
+            "backlog_at_stop": 0
+          }
+        },
+        "collector_runtime_behavior": "PASS",
+        "exit_evidence": {
+          "schema": "COLLECTOR_PROCESS_EXIT_EVIDENCE_V1",
+          "worker_pid": 14040,
+          "creation_filetime": 134333157171638967,
+          "nonce": "8ad6cdf14cf34349b40db8c143029542",
+          "verified": true,
+          "exit_code": 0,
+          "method": "GetExitCodeProcess on verified actual-worker handle after signaled wait",
+          "cpu_total_seconds_at_exit": 18.796875
+        }
+      }
+    },
+    "G5_STORAGE_THROUGHPUT_MEASURED": {
+      "gate": "G5_STORAGE_THROUGHPUT_MEASURED",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "streams": {
+          "aggTrade": {
+            "raw_bytes": 16161617,
+            "raw_lines": 46508,
+            "bytes_per_second": 4482.290898198943,
+            "projected_gb_per_day": 0.36067323163560466,
+            "message_count": 46508
+          },
+          "clock_observations": {
+            "raw_bytes": 73740,
+            "raw_lines": 60,
+            "bytes_per_second": 20.451179534398698,
+            "projected_gb_per_day": 0.0016456301433705235,
+            "message_count": 60
+          },
+          "depth_snapshot": {
+            "raw_bytes": 101442,
+            "raw_lines": 2,
+            "bytes_per_second": 28.134100275677685,
+            "projected_gb_per_day": 0.0022638461215594334,
+            "message_count": 2
+          },
+          "diff_depth": {
+            "raw_bytes": 71091850,
+            "raw_lines": 14273,
+            "bytes_per_second": 19716.737019020096,
+            "projected_gb_per_day": 1.5865322933004575,
+            "message_count": 14273
+          },
+          "forceOrder": {
+            "raw_bytes": 8733,
+            "raw_lines": 16,
+            "bytes_per_second": 2.4220253712219124,
+            "projected_gb_per_day": 0.0001948913485496987,
+            "message_count": 16
+          },
+          "rest_telemetry": {
+            "raw_bytes": 1083,
+            "raw_lines": 2,
+            "bytes_per_second": 0.3003610989388905,
+            "projected_gb_per_day": 2.416893741890801e-05,
+            "message_count": 2
+          }
+        },
+        "totals": {
+          "message_count": 60797,
+          "raw_bytes": 87438465,
+          "bytes_per_second": 24250.335583499276,
+          "projected_gb_per_day": 1.9513340614869608,
+          "raw_bytes_scope": "ALL collector-persisted evidence bytes: market streams (aggTrade, diff_depth, forceOrder) PLUS evidence streams (depth_snapshot, clock_observations, rest_telemetry)",
+          "message_count_scope": "market stream messages only; excludes evidence records"
+        },
+        "threshold_policy": "no fixed GB/day or absolute-RSS pass/fail threshold is applied by this gate; the gate requires only that storage growth AND resource evidence are measured, internally consistent, and provably about the right process",
+        "process": {
+          "sample_count": 61,
+          "rss_sample_count": 61,
+          "cpu_sample_count": 61,
+          "rss_first_bytes": 24391680,
+          "rss_last_bytes": 46620672,
+          "rss_max_bytes": 47255552,
+          "rss_min_bytes": 24391680,
+          "cpu_total_seconds_delta": 18.5625,
+          "rss_strictly_monotonic_increasing": false,
+          "rss_first_quarter_mean_bytes": 40725435.733333334,
+          "rss_last_quarter_mean_bytes": 46457105.06666667,
+          "rss_growth_ratio": 1.1407393003935873,
+          "obvious_monotonic_runaway": false,
+          "runaway_growth_ratio_threshold": 2.0,
+          "private_memory_sample_count": 61,
+          "private_memory_first_bytes": 15286272,
+          "private_memory_last_bytes": 33030144,
+          "private_memory_distinct_count": 39,
+          "private_memory_all_identical": false
+        },
+        "identity_verification": {
+          "worker_pid": 14040,
+          "creation_filetime": 134333157171638967,
+          "image_path": "C:\\Users\\Kina\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "launcher_pid": 25332,
+          "nonce": "8ad6cdf14cf34349b40db8c143029542",
+          "verified": true,
+          "method": "worker self-handshake + parent OS-handle PID/creation-time/image verification; same-process runpy",
+          "command": [
+            "D:\\EvidenceHunter\\.venv\\Scripts\\python.exe",
+            "-B",
+            "D:\\EvidenceHunter\\EvidenceHunter_resource_sampling.py",
+            "--worker",
+            "--output",
+            "C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g4g5_20260908_123515",
+            "--nonce",
+            "8ad6cdf14cf34349b40db8c143029542",
+            "--duration",
+            "3600.0",
+            "--probe-exit",
+            "0"
+          ]
+        }
+      }
+    },
+    "G6_PROCESS_RESTART_RECOVERY": {
+      "gate": "G6_PROCESS_RESTART_RECOVERY",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          "restart_execution.json (C:\\Users\\Kina\\AppData\\Local\\Temp\\btc_rebind_g6_20260908_133719), execution_status=COMPLETED, total_seconds=249.49 (cap 420)",
+          "pre worker_pid=33240, identity-verified via nonce handshake, ran 90.17s (cap 180), verified_exit_code=137 via GetExitCodeProcess on verified handle",
+          "interruption_seconds_before_relaunch=30.0004 (required 30s)",
+          "post worker_pid=31504, distinct PID/creation_filetime from pre (fresh identity, no launcher/state reuse), ran 129.15s (cap 180), verified_exit_code=0",
+          "post-restart fresh initialization/resync occurred: runtime/quality/gap_ledger.jsonl record gap_id=GAP_diff_depth_0f55e927f4da (detection_time 2026-09-08T05:39:20.011041+00:00) carries reason=PROCESS_RESTART_ORDERBOOK_DISCONTINUITY with extra.continuity_status=BROKEN_BY_PROCESS_RESTART, extra.old_segment=CLOSED, extra.new_segment=STARTED_FROM_FRESH_REST_SNAPSHOT, extra.new_snapshot_last_update_id=11502127794107; runtime/supervisor_state.json shows diff_depth and aggTrade both entering a fresh state_entered_at=2026-09-08T05:39:20.8xx (not inherited from the pre-process's 2026-09-08T05:37:20.xx) with last_transition_reason=FIRST_VALID_PAYLOAD_RECEIVED, the same cold-start transition used at original process start -- not a resumed/carried-forward state",
+          "a fresh REST depth snapshot was persisted post-restart: runtime/raw/depth_snapshot.jsonl grew from 2 lines (pre_evidence copy) to 4 lines; the two NEW records are rest_request_id=4bf91bd3c2754b0d9288c32b92f764cb (last_update_id=11502127794107, parse_status=PARSED, received_local_wall_ms=1788845960010) and rest_request_id=046e68b5d6fe40aaa0ddaaea09584a01 (last_update_id=11502128062881, parse_status=PARSED, received_local_wall_ms=1788845961332), both strictly greater than the pre-restart last last_update_id=11502114322120; each rest_request_id is present with http_status=200 in the matching runtime/quality/rest_telemetry.jsonl entries (transaction-level correlation intact)",
+          "restart-discontinuity provenance was persisted for BOTH sequential streams, not silently repaired: diff_depth's GAP_diff_depth_0f55e927f4da is recorded recoverability=UNRECOVERABLE / repair_status=UNRECOVERABLE_CONFIRMED (gap_start=11502123639534, matching the pre-process's continuity_checkpoint.json last_durably_persisted_update_id exactly; gap_end=11502127794107, matching the new post-restart snapshot's last_update_id; update_id_span_crossed=4154573), with extra.unrecoverable_semantics explicitly stating event-level continuity across the restart cannot be reconstructed and this is not a claim of confirmed missing events; aggTrade's GAP_aggTrade_e000d0e2709d (gap_start=3442778251, i.e. continuity_checkpoint's last_durably_persisted_trade_id+1) is recorded reason=PROCESS_RESTART_SEQUENCE_GAP, recoverability=RECOVERABLE_VIA_BACKFILL, and was REPAIRED via repair_source=REST_AGGTRADES_FROM_ID with backfilled_id_count=1081 matching expected_id_count=1081 and continuity_verified=true",
+          "no prior HEALTHY or reconstructed book state was restored from continuity_checkpoint.json: the checkpoint file itself is written with authoritative_for_restore=false and semantics='diagnostic / gap-detection / recovery-provenance evidence only; a restarted process must never use this file to resume a component's state or to skip a fresh order-book snapshot'; the post-process's own gap-ledger record independently confirms compliance by stating new_segment=STARTED_FROM_FRESH_REST_SNAPSHOT rather than any restored/resumed segment, and diff_depth/aggTrade's post-restart HEALTHY state_entered_at is a fresh transition (see above), not a value carried over from the pre-process's supervisor_state.json",
+          "post-restart acquisition resumed and advanced past the discontinuity: aggTrade last_durably_persisted_trade_id 3442778250->3442780403 and diff_depth last_durably_persisted_update_id 11502123639534->11502142049101 (runtime/continuity_checkpoint.json, written_at 2026-09-08T05:41:28.579403+00:00)",
+          "independently staged and read by Claude from the real G6 evidence directory (pre_evidence/ and runtime/ subfolders) on 2026-09-08; no test, soak, restart or source change was re-run to produce this evidence -- all of it was already on disk from the single approved G6 execution"
+        ]
+      }
+    },
+    "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": {
+      "gate": "G7_ENVIRONMENT_DEPENDENCIES_FROZEN",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "supplied_status": "PASS",
+        "evidence": [
+          "requirements-collector.txt unchanged: 2168 bytes, sha256 404db958aa2b5243f7f423fb0c0227dbd8b232e0df9f09e7a321777ed0c875f6, independently recomputed by Claude 2026-09-08, matches source_binding in CHANGE_ROLES_COLLECTOR_READINESS_REBIND_20260908.json and the original V1/V2 lineage",
+          "NO NEW PIP DEPENDENCY constraint held: EvidenceHunter_clock_observer.py uses stdlib + Windows w32tm only, EXTERNAL_TIME_SERVER_QUERIED=False confirmed by reading the module"
+        ]
+      }
+    },
+    "G8_FORMAL_DATASET_STARTUP_GUARD": {
+      "gate": "G8_FORMAL_DATASET_STARTUP_GUARD",
+      "status": "PASS",
+      "findings": [],
+      "stats": {
+        "gate_status": {
+          "G1_THREAD_CRASH_OBSERVABILITY": "PASS",
+          "G2_GAP_LEDGER_SEMANTICS": "PASS",
+          "G3_REPAIR_RESYNC_PROVENANCE": "PASS",
+          "G4_60_MINUTE_SOAK": "PASS",
+          "G5_STORAGE_THROUGHPUT_MEASURED": "PASS",
+          "G6_PROCESS_RESTART_RECOVERY": "PASS",
+          "G7_ENVIRONMENT_DEPENDENCIES_FROZEN": "PASS"
+        }
+      }
+    }
+  },
+  "readiness": "PASS",
+  "formal_dataset_start_allowed": true,
+  "blockers": [],
+  "interpretation": "A future changeset that creates a formal Dataset MUST read this file first and refuse to start unless readiness == PASS and formal_dataset_start_allowed is true. This field expresses only the readiness gate, not project-owner authorization. There is no third, ambiguous state: an unevaluated gate counts as FAIL."
+}
+

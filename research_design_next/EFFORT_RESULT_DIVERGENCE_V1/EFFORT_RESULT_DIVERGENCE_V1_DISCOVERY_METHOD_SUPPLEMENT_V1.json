@@ -1,0 +1,76 @@
+{
+  "supplement_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_METHOD_SUPPLEMENT_V1",
+  "supplements_contract_id": "EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1",
+  "supplements_contract_sha256": "15ddd4b2a7d9fb8a88711ee73940a140e3ff6b409da54a643aadd9c329de453c",
+  "status": "FROZEN_PRE_EXECUTION_METHOD_SPECIFICATION",
+  "method_specified_before_results": true,
+  "created_before_any_real_dry_run_false_execution": true,
+  "purpose": "Operationalizes the exact execution parameters that Contract discovery_protocol.dependence_controls requires but does not itself fix numerically (the raw chronological descriptive sample already has zero remaining ambiguity and needs no supplement). This file does NOT modify, reinterpret, or override any field of EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1.json. The original Contract file and its SHA256 above are unchanged and must remain unchanged by this supplement's existence.",
+  "does_not_change": [
+    "hypothesis_id",
+    "the 5x5 grid definition (effort_magnitude quintiles x directional_response quintiles)",
+    "the three horizons (300s / 900s / 1800s)",
+    "the eligibility block",
+    "the confirmed_effort_fields formulas",
+    "the contemporaneous_result / future_targets formulas",
+    "the forbidden_actions list"
+  ],
+  "bin_boundary_policy": {
+    "rule": "Quintile boundaries for effort_magnitude and directional_response are computed exactly once, from the FULL chronological eligible-and-computed sample, using the Runner's existing quantile_boundaries()/assign_bin() implementation (already unit-tested). Every downstream view -- grid summary, greedy non-overlap samples, moving-block bootstrap -- reuses these frozen bin labels verbatim. No downstream view may recompute its own quintile boundaries on a subsample or a resample."
+  },
+  "grid_summary_layer": {
+    "grid_shape": "5x5 (effort_magnitude_quintile x directional_response_quintile), per Contract discovery_protocol.fixed_binning",
+    "per_cell_per_horizon_fields": [
+      "n",
+      "mean_raw_future_return_bps",
+      "median_raw_future_return_bps",
+      "mean_effort_signed_future_return_bps",
+      "median_effort_signed_future_return_bps",
+      "positive_effort_signed_rate"
+    ],
+    "horizons": ["5m", "15m", "30m"],
+    "forbidden": [
+      "ranking cells by any statistic",
+      "flagging a 'best' or 'significant' cell",
+      "selecting a best cell or best horizon of any kind"
+    ]
+  },
+  "greedy_non_overlap_layer": {
+    "purpose": "Contract dependence_controls item 2: chronological greedy non-overlap sample separately for each horizon",
+    "computed_separately_for_horizons_seconds": [300, 900, 1800],
+    "sort_order": "ascending by (decision_time, record_id); ties on identical decision_time are broken by record_id, lexicographic ascending",
+    "selection_rule": "The first row in sorted order is always accepted. A subsequent row is accepted if and only if its decision_time >= (last_selected_row's decision_time + horizon_seconds). Interval semantics are half-open [t, t+H) -- a row landing exactly on the prior selected window's end boundary IS eligible to be accepted.",
+    "bin_reuse": "Each selected row keeps its ORIGINAL full-sample quintile bin labels (per bin_boundary_policy above); the non-overlap selection step never re-bins anything.",
+    "reported_fields": "The same per_cell_per_horizon_fields as grid_summary_layer, computed only over that horizon's own selected (non-overlapping) subsample -- a horizon's non-overlap sample is never shared with, or mixed into, another horizon's grid."
+  },
+  "moving_block_bootstrap_layer": {
+    "purpose": "Contract dependence_controls item 3: a pre-specified serial-dependence-aware interval estimator",
+    "method": "MOVING_BLOCK_BOOTSTRAP",
+    "source_sample": "The FULL chronological eligible sample (NOT the greedy non-overlap subsample -- non-overlap sampling and bootstrap are two independent dependence controls per the Contract, not layered on top of each other).",
+    "block_length_rows": 30,
+    "block_length_rationale": "PRE_EXECUTION_DESIGN_DECISION_NOT_UNIVERSAL_STATISTICAL_TRUTH -- records are stored at roughly one-per-minute cadence and the longest pre-registered future horizon is 30 minutes, so a single block length of 30 rows is used uniformly across all three horizons, avoiding a per-horizon block-length choice or any choice made after seeing results.",
+    "replicates": 2000,
+    "confidence_level": 0.95,
+    "interval_type": "percentile",
+    "random_seed": 20260906,
+    "resampling_procedure": "Standard moving-block bootstrap: with N = length of the full chronological eligible sample and L = block_length_rows, the set of all N-L+1 overlapping length-L blocks (starting at every row index 0..N-L) is the block population. Each replicate draws ceil(N/L) blocks independently with replacement from that population, concatenates them in the drawn order, and truncates to length N, preserving each row's original identity (and therefore its frozen bin labels) but not its original chronological position.",
+    "bin_reuse": "Every resampled row keeps its frozen full-sample quintile bin labels; the bootstrap step never re-bins anything.",
+    "statistics_bootstrapped_per_cell_per_horizon": [
+      "mean_raw_future_return_bps",
+      "mean_effort_signed_future_return_bps"
+    ],
+    "forbidden": [
+      "p-values",
+      "significance stars",
+      "best-cell selection",
+      "best-horizon selection"
+    ],
+    "insufficient_replicates_rule": "A replicate is 'valid' for a given cell if that replicate's resampled data contains at least one row landing in that cell. If a cell has fewer than 1900 valid replicates out of 2000 (95%), that cell's CI is reported as the literal string BOOTSTRAP_INSUFFICIENT_VALID_REPLICATES instead of a silently-computed interval from fewer replicates."
+  },
+  "explicitly_out_of_scope_for_this_supplement": [
+    "does not modify EFFORT_RESULT_DIVERGENCE_V1_DISCOVERY_CONTRACT_V1.json in any way",
+    "does not change the Contract's SHA256",
+    "does not by itself authorize Formal Discovery Execution -- authorization is tracked separately in the project's living document / disposition files",
+    "does not compute, view, or report any statistic from the real Frozen Dataset -- this file is pure method specification, frozen and hashed before any real dry_run=False execution"
+  ]
+}
