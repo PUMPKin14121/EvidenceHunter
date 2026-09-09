@@ -1,8 +1,8 @@
-\# EvidenceHunter
+# EvidenceHunter
 
 
 
-\## An AI-assisted market observation and evidence evaluation framework
+## An AI-assisted market observation and evidence evaluation framework
 
 
 
@@ -18,23 +18,23 @@ The goal is to build a transparent workflow where:
 
 
 
-\- observations are separated from interpretations
+- observations are separated from interpretations
 
-\- evidence is preserved and auditable
+- evidence is preserved and auditable
 
-\- assumptions are explicitly tracked
+- assumptions are explicitly tracked
 
-\- research decisions are documented
+- research decisions are documented
 
-\- AI is used as an engineering and reasoning assistant
-
-
-
-\---
+- AI is used as an engineering and reasoning assistant
 
 
 
-\## Project Motivation
+---
+
+
+
+## Project Motivation
 
 
 
@@ -50,21 +50,21 @@ The project explores:
 
 
 
-\- AI-assisted software development
+- AI-assisted software development
 
-\- evidence-driven research workflows
+- evidence-driven research workflows
 
-\- reproducible market observation
+- reproducible market observation
 
-\- governance and documentation practices
-
-
-
-\---
+- governance and documentation practices
 
 
 
-\## Architecture Overview
+---
+
+
+
+## Architecture Overview
 
 
 
@@ -72,7 +72,7 @@ Core components:
 
 
 
-\### Data Collection
+### Data Collection
 
 
 
@@ -80,7 +80,7 @@ Responsible for gathering and recording market observations.
 
 
 
-\### Evidence Layer
+### Evidence Layer
 
 
 
@@ -88,7 +88,7 @@ Stores observations, provenance, and validation information.
 
 
 
-\### Evaluation Layer
+### Evaluation Layer
 
 
 
@@ -96,7 +96,7 @@ Supports structured analysis and outcome comparison.
 
 
 
-\### Governance Layer
+### Governance Layer
 
 
 
@@ -104,11 +104,11 @@ Tracks research decisions, scope changes, and implementation state.
 
 
 
-\---
+---
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
