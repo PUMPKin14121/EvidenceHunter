@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """BTC HUNTER Shadow Outcome Evaluator V2.3.
 

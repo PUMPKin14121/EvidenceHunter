@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Tests for EvidenceHunter_discovery_result_builder_effort_result_divergence_v1.py
 -- Layer 2 (5x5 grid summary) and Layer 3 (chronological greedy non-overlap

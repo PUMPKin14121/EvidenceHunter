@@ -1,4 +1,4 @@
-﻿"""COLLECTOR_DAY1_COMPLETENESS_FIX: targeted tests for the three Day-1 raw-truth
+"""COLLECTOR_DAY1_COMPLETENESS_FIX: targeted tests for the three Day-1 raw-truth
 gaps only (REST depth snapshot evidence, OS-native clock observation, REST
 telemetry). No network, no collector run, no soak, no Dataset."""
 import base64

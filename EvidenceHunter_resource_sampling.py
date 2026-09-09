@@ -1,4 +1,4 @@
-﻿"""COLLECTOR_RESOURCE_SAMPLING_FIX: Windows worker measurement harness.
+"""COLLECTOR_RESOURCE_SAMPLING_FIX: Windows worker measurement harness.
 
 Owner scope: actual-worker identity, OS exit code, RSS/private-memory/CPU only.
 Primary builder: Claude (cloud session), per

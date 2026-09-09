@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER collector readiness validator (NEXT_DATASET_COLLECTOR_READINESS).
 
 This module answers exactly one question: is the collector implemented under

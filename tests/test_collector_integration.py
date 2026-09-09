@@ -1,4 +1,4 @@
-﻿"""End-to-end wiring smoke tests using fakes only -- no real network. Exercises
+"""End-to-end wiring smoke tests using fakes only -- no real network. Exercises
 AggTradeCollector / DiffDepthCollector / ForceOrderCollector composed with a
 real RawPayloadWriter, real Supervisor, and real gap_ledger against tmp_path,
 plus the full run_component_lifecycle reconnect cycle driven by a fake

@@ -1,4 +1,4 @@
-﻿{
+{
   "changeset_id": "COLLECTOR_DAY1_COMPLETENESS_FIX",
   "recorded_at": "2026-09-08",
   "approved_by": "PROJECT_OWNER + GPT, 2026-09-08: APPROVED_WITH_REQUIRED_EDITS (E1-E6), then corrected the same day per the implementation-architecture review (E7: run_component_lifecycle wording + smoke closure-acceptance checks). headers_to_dict() approved to stay in EvidenceHunter_orderbook.py as a pure HTTP response-header normalization helper; MAX_NEW_FILES remains 4. CHANGE_ROLES unchanged.",

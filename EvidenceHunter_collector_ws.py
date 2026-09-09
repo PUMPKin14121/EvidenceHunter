@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER collector WebSocket wrapper - USDS-M Futures split-route V1.
 
 Binance restructured USDS-M Futures WebSocket market streams onto three

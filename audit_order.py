@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """BTC HUNTER V1.2.3 clean-dataset audit.
 

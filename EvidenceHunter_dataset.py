@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """Prepare a clean BTC HUNTER dataset session safely.
 

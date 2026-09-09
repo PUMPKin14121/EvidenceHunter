@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """BTC HUNTER Shadow Observation Recorder V2.2.
 

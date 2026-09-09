@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Tests for EvidenceHunter_discovery_runner_effort_result_divergence_v1.py.
 

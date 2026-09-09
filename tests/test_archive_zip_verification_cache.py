@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 ARCHIVE_ZIP_VERIFICATION_CACHE -- regression tests.
 

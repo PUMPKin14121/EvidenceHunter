@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """BTC HUNTER USD-M Futures market layer - recent-trade canonical price + exchange-clock synchronized, read only.
 

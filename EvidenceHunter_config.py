@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """BTC HUNTER shared configuration - recent-trade canonical price + exchange-clock baseline V1.2.3."""
 

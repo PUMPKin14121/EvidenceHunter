@@ -1,4 +1,4 @@
-﻿# BTC HUNTER next-dataset collector -- runtime dependency freeze
+# BTC HUNTER next-dataset collector -- runtime dependency freeze
 #
 # Changeset : NEXT_DATASET_COLLECTOR_READINESS (gate G7)
 # Recorded  : 2026-09-07

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 FIRST FORMAL DISCOVERY EXECUTION -- EFFORT_RESULT_DIVERGENCE_V1 (real machine).
 

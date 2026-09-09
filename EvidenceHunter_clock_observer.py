@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER local clock / time-sync observation component.
 
 COLLECTOR_DAY1_COMPLETENESS_FIX / GAP2. OF2_PRESTART_DESIGN_V1 classifies

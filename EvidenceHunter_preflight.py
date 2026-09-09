@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """Pre-start safety/data-integrity checks for BTC HUNTER V1.2.3."""
 

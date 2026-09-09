@@ -1,4 +1,4 @@
-﻿"""Fault-injection coverage for EvidenceHunter_collector_ws.WSConnection: no real
+"""Fault-injection coverage for EvidenceHunter_collector_ws.WSConnection: no real
 network is used anywhere in this file -- every test injects connect_fn with a
 FakeSocket standing in for the real websocket-client connection object."""
 import json

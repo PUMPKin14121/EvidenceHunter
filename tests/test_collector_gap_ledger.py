@@ -1,4 +1,4 @@
-﻿"""EvidenceHunter_gap_ledger: append-only gap evidence, aggTrade ID gap / REST
+"""EvidenceHunter_gap_ledger: append-only gap evidence, aggTrade ID gap / REST
 backfill and unrecoverable-depth-gap + repair-provenance record-keeping."""
 import json
 import threading

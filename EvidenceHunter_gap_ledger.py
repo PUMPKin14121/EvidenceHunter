@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER collector gap ledger - append-only, evidence-preserving.
 
 Records every detected data-continuity gap (aggTrade id gap, WS disconnect,

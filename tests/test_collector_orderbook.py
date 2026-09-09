@@ -1,4 +1,4 @@
-﻿"""EvidenceHunter_orderbook.LocalOrderBook: pu continuity mismatch + snapshot
+"""EvidenceHunter_orderbook.LocalOrderBook: pu continuity mismatch + snapshot
 resync, using an injected request_fn -- no real network anywhere here."""
 import pytest
 

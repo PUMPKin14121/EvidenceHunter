@@ -1,4 +1,4 @@
-﻿import json
+import json
 import threading
 import time
 from urllib.error import URLError

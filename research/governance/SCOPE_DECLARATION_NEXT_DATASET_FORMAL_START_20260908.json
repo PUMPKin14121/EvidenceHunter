@@ -1,4 +1,4 @@
-﻿{
+{
   "changeset_id": "NEXT_DATASET_FORMAL_START",
   "recorded_at": "2026-09-08",
   "stage": "GOVERNANCE_REDRAFT_WITH_REQUIRED_EDITS_APPLIED -- writing these two governance files to disk is the ONLY action authorized by the current review state. No manifest, no Dataset ID, no dataset_lifecycle.json edit, no collector run, no 900-second acceptance run are authorized yet.",

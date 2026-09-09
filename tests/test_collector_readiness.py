@@ -1,4 +1,4 @@
-﻿"""NEXT_DATASET_COLLECTOR_READINESS test file. Covers G1 (worker/thread
+"""NEXT_DATASET_COLLECTOR_READINESS test file. Covers G1 (worker/thread
 unexpected-death observability) and the validation logic of
 EvidenceHunter_collector_readiness.py (G2 gap-ledger semantics, G3 repair/resync
 provenance, G4 soak execution, G5 storage/throughput, supplied-gate shape

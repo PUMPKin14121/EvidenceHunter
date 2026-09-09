@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER next-dataset collector V1 - entrypoint and component wiring.
 
 Implementation-only changeset (NEXT_DATASET_COLLECTOR_IMPLEMENTATION). This

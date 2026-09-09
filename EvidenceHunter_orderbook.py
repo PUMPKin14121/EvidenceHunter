@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER local order book reconstruction - diff depth + REST snapshot.
 
 Implements Binance's official U/u/pu continuity procedure for maintaining a

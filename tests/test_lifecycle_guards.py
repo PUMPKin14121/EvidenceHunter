@@ -1,4 +1,4 @@
-﻿"""Synthetic lifecycle regression checks; never run real collectors or research."""
+"""Synthetic lifecycle regression checks; never run real collectors or research."""
 import hashlib
 import importlib.util
 import json

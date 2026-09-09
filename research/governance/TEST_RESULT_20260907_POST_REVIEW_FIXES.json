@@ -1,4 +1,4 @@
-﻿{
+{
   "command": ".venv\\Scripts\\python.exe -B -m pytest tests -q -p no:cacheprovider",
   "exit_code": 0,
   "passed": 79,

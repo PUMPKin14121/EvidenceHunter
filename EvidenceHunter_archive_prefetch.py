@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Prefetch official Binance historical archives required by mature unlocked outcomes."""
 
 from datetime import datetime, timezone

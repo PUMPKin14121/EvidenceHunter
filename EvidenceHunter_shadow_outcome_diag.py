@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Read-only diagnostic for BTC HUNTER historical outcome gaps and archive fallback."""
 
 from datetime import datetime, timezone

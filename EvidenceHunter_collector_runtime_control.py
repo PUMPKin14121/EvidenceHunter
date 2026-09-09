@@ -1,4 +1,4 @@
-﻿"""Windows single-instance lease and session-bound operational evidence.
+"""Windows single-instance lease and session-bound operational evidence.
 
 Does not authorize collection, reconcile previous sessions, or alter raw schemas.
 """

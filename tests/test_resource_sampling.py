@@ -1,4 +1,4 @@
-﻿"""Only tests the new measurement chain. Does not run collector/restart/soak."""
+"""Only tests the new measurement chain. Does not run collector/restart/soak."""
 import json
 import os
 import tempfile

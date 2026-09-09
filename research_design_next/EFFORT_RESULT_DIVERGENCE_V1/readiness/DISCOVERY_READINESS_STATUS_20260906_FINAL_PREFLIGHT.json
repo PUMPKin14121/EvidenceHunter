@@ -1,4 +1,4 @@
-﻿{
+{
   "status_id": "DISCOVERY_READINESS_STATUS_20260906_FINAL_PREFLIGHT",
   "status_type": "READ_ONLY_PRE_FLIGHT_READINESS_RECORD",
   "supersedes_for_readiness_purposes": "research_design_next/EFFORT_RESULT_DIVERGENCE_V1/readiness/DISCOVERY_READINESS_STATUS_20260904.json",

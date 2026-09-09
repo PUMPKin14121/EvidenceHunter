@@ -1,4 +1,4 @@
-﻿"""Static/synthetic tests for the read-only Dataset Audit Framework V1."""
+"""Static/synthetic tests for the read-only Dataset Audit Framework V1."""
 
 from datetime import datetime, timedelta, timezone
 import hashlib

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 Discovery result builder for EFFORT_RESULT_DIVERGENCE_V1.
 

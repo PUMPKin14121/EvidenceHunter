@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """Checkpointed historical Outcome backfill for BTC HUNTER V1.2.3.
 
 - Only fills mature horizons whose locked_<h> is not True.

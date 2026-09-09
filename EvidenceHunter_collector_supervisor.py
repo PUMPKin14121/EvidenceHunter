@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """BTC HUNTER collector supervisor - single project-level recovery authority.
 
 Owns, for each named component (e.g. "aggTrade", "diff_depth", "forceOrder"):

@@ -1,4 +1,4 @@
-﻿"""Bounded local control tests: no live network and no formal Dataset."""
+"""Bounded local control tests: no live network and no formal Dataset."""
 import ctypes
 import json
 import os

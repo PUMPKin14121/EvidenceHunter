@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 ARCHIVE_AGG_INDEX_FIRST_ANCHOR_FIX -- regression tests.
 

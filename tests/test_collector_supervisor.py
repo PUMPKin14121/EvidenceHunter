@@ -1,4 +1,4 @@
-﻿"""EvidenceHunter_collector_supervisor.Supervisor: state-machine legality, alert
+"""EvidenceHunter_collector_supervisor.Supervisor: state-machine legality, alert
 firing, restart-state persistence (diagnostic-only, never auto-resume), and
 EvidenceHunter_collector.RawPayloadWriter's writer/queue-stall behavior."""
 import json
